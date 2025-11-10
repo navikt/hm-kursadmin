@@ -24,7 +24,7 @@ func main() {
 	opts := &hotbff.Options{
 		BasePath: "/hjelpemidler/kursadmin/",
 		RootDir:  "dist",
-		IDP: "",
+		IDP: "IDP",
 		EnvKeys: []string{
 			"SOKNAD_URL",
 		},

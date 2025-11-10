@@ -1,4 +1,4 @@
-module hm-formidler-server
+module hm-kursadmin-server
 
 go 1.25.1
 
