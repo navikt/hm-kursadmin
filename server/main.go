@@ -11,7 +11,7 @@ import (
 
 var (
 	useMSW = os.Getenv("USE_MSW") == "true"
-	idp    = texas.IDPorten
+	idp    = texas.EntraID
 )
 
 func init() {
@@ -24,7 +24,7 @@ func main() {
 	opts := &hotbff.Options{
 		BasePath: "/hjelpemidler/kursadmin/",
 		RootDir:  "dist",
-		IDP: "IDP",
+		IDP: idp,
 		EnvKeys: []string{
 			"SOKNAD_URL",
 		},
