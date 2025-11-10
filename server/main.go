@@ -4,7 +4,6 @@ import (
 	"os"
 
 	"github.com/navikt/hotbff"
-	"github.com/navikt/hotbff/decorator"
 	"github.com/navikt/hotbff/proxy"
 	"github.com/navikt/hotbff/texas"
 )
