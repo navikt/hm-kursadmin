@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Button, Pagination, Table, Tag, VStack } from '@navikt/ds-react';
 import type { SortState } from '@navikt/ds-react';
 import { fodselsnummerTilDato, formaterNorskDato } from '../helpers/utils';
+import FjernGodkjenningModal from './FjernGodkjenningModal';
 
 interface ScopedSortState extends SortState {
 	orderBy: keyof (typeof data)[0];
@@ -11,6 +12,9 @@ const Tabell = () => {
 	const [page, setPage] = useState(1);
 	const [tableData, setTableData] = useState(data);
 	const [sort, setSort] = useState<ScopedSortState | undefined>();
+	const [modalOpen, setModalOpen] = useState(false);
+	const [selectedFnr, setSelectedFnr] = useState<string | null>(null);
+	const [selectedNavn, setSelectedNavn] = useState<string>('');
 	const rowsPerPage = 8;
 
 	const handleSort = (sortKey: ScopedSortState['orderBy']) => {
@@ -65,6 +69,17 @@ const Tabell = () => {
 
 	return (
 		<VStack gap="space-16">
+			<FjernGodkjenningModal
+				person={selectedNavn}
+				open={modalOpen}
+				onClose={() => setModalOpen(false)}
+				onConfirm={() => {
+					if (selectedFnr) {
+						fjernGodkjenning(selectedFnr);
+					}
+					setModalOpen(false);
+				}}
+			/>
 			<Table
 				size="medium"
 				sort={sort}
@@ -125,7 +140,11 @@ const Tabell = () => {
 											<Button
 												size="small"
 												variant="secondary-neutral"
-												onClick={() => fjernGodkjenning(fnr)}
+												onClick={() => {
+													setSelectedFnr(fnr);
+													setSelectedNavn(navn);
+													setModalOpen(true);
+												}}
 											>
 												Fjern godkjenning
 											</Button>
