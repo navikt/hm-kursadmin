@@ -1,14 +1,19 @@
+import { useState } from 'react';
 import { Heading, Theme, VStack } from '@navikt/ds-react';
 import Tabell from './components/Tabell';
+import Filtrering from './components/Filtrering';
 
 function App() {
+	const [sokeverdi, setSokeverdi] = useState('');
+
 	return (
 		<Theme theme="light">
-			<VStack margin="space-20">
+			<VStack margin="space-20" gap="space-16">
 				<Heading size="large" level="1">
 					Administreringsverktøy for ERS kurs del 2
 				</Heading>
-				<Tabell />
+				<Filtrering sokeverdi={sokeverdi} setSokeverdi={setSokeverdi} />
+				<Tabell sokeverdi={sokeverdi} />
 			</VStack>
 		</Theme>
 	);

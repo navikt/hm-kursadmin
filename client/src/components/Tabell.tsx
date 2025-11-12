@@ -10,7 +10,11 @@ interface ScopedSortState extends SortState {
 	orderBy: keyof (typeof data)[0];
 }
 
-const Tabell = () => {
+interface Props {
+	sokeverdi: string;
+}
+
+const Tabell = ({ sokeverdi }: Props) => {
 	const [tabellside, setTabellside] = useState(1);
 	const [tabellData, setTabellData] = useState(data);
 	const [sort, setSort] = useState<ScopedSortState | undefined>();
@@ -50,7 +54,16 @@ const Tabell = () => {
 		return 0;
 	}
 
-	let sortData = tabellData.slice().sort((a, b) => {
+	const filtrerteData = tabellData.filter((person) => {
+		if (!sokeverdi) return true;
+		const lowercaseSok = sokeverdi.toLowerCase();
+		return (
+			person.navn.toLowerCase().includes(lowercaseSok) ||
+			person.epost.toLowerCase().includes(lowercaseSok)
+		);
+	});
+
+	let sortData = filtrerteData.slice().sort((a, b) => {
 		if (sort) {
 			return sort.direction === 'ascending'
 				? comparator(b, a, sort.orderBy)
@@ -125,7 +138,7 @@ const Tabell = () => {
 			<Pagination
 				page={tabellside}
 				onPageChange={setTabellside}
-				count={Math.ceil(tabellData.length / raderPerSide)}
+				count={Math.ceil(filtrerteData.length / raderPerSide)}
 				size="small"
 			/>
 		</VStack>
