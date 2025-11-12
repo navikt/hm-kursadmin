@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { Button, Pagination, Table, Tag, VStack } from '@navikt/ds-react';
+import { Pagination, Table, VStack } from '@navikt/ds-react';
 import type { SortState } from '@navikt/ds-react';
 import { fodselsnummerTilDato, formaterNorskDato } from '../helpers/utils';
-import FjernGodkjenningModal from './FjernGodkjenningModal';
+import Del2Tag from './Del2Tag';
+import GodkjennEllerFjernGodkjenning from './GodkjennEllerFjernGodkjenning';
 
 interface ScopedSortState extends SortState {
 	orderBy: keyof (typeof data)[0];
@@ -12,10 +13,15 @@ const Tabell = () => {
 	const [page, setPage] = useState(1);
 	const [tableData, setTableData] = useState(data);
 	const [sort, setSort] = useState<ScopedSortState | undefined>();
-	const [modalOpen, setModalOpen] = useState(false);
-	const [selectedFnr, setSelectedFnr] = useState<string | null>(null);
-	const [selectedNavn, setSelectedNavn] = useState<string>('');
 	const rowsPerPage = 8;
+
+	const oppdaterDel2Status = (fnr: string, del2Dato: string | null) => {
+		setTableData((forrigData) =>
+			forrigData.map((person) =>
+				person.fnr === fnr ? { ...person, del2Dato } : person
+			)
+		);
+	};
 
 	const handleSort = (sortKey: ScopedSortState['orderBy']) => {
 		setSort(
@@ -51,35 +57,8 @@ const Tabell = () => {
 	});
 	sortData = sortData.slice((page - 1) * rowsPerPage, page * rowsPerPage);
 
-	const godkjennKurs = (fnr: string) => {
-		setTableData(
-			tableData.map((row) =>
-				row.fnr === fnr ? { ...row, del2Dato: new Date().toISOString() } : row
-			)
-		);
-	};
-
-	const fjernGodkjenning = (fnr: string) => {
-		setTableData(
-			tableData.map((row) =>
-				row.fnr === fnr ? { ...row, del2Dato: null } : row
-			)
-		);
-	};
-
 	return (
 		<VStack gap="space-16">
-			<FjernGodkjenningModal
-				person={selectedNavn}
-				open={modalOpen}
-				onClose={() => setModalOpen(false)}
-				onConfirm={() => {
-					if (selectedFnr) {
-						fjernGodkjenning(selectedFnr);
-					}
-					setModalOpen(false);
-				}}
-			/>
 			<Table
 				size="medium"
 				sort={sort}
@@ -97,10 +76,10 @@ const Tabell = () => {
 						</Table.ColumnHeader>
 						<Table.HeaderCell scope="col">E-post</Table.HeaderCell>
 						<Table.HeaderCell scope="col">Arbeidssted</Table.HeaderCell>
-						<Table.ColumnHeader sortKey="del1Dato" sortable>
+						<Table.ColumnHeader scope="col" sortKey="del1Dato" sortable>
 							Dato tatt del 1
 						</Table.ColumnHeader>
-						<Table.ColumnHeader sortKey="del2Dato" sortable>
+						<Table.ColumnHeader scope="col" sortKey="del2Dato" sortable>
 							Dato tatt del 2
 						</Table.ColumnHeader>
 						<Table.HeaderCell scope="col">Status del 2</Table.HeaderCell>
@@ -121,34 +100,15 @@ const Tabell = () => {
 										{del2Dato ? formaterNorskDato(del2Dato) : '-'}
 									</Table.DataCell>
 									<Table.DataCell>
-										{del2Dato ? (
-											<Tag variant="success">Fullført</Tag>
-										) : (
-											<Tag variant="neutral">Ikke fullført</Tag>
-										)}
+										<Del2Tag del2Dato={del2Dato} />
 									</Table.DataCell>
 									<Table.DataCell>
-										{!del2Dato ? (
-											<Button
-												size="small"
-												variant="primary-neutral"
-												onClick={() => godkjennKurs(fnr)}
-											>
-												Godkjenn del 2
-											</Button>
-										) : (
-											<Button
-												size="small"
-												variant="secondary-neutral"
-												onClick={() => {
-													setSelectedFnr(fnr);
-													setSelectedNavn(navn);
-													setModalOpen(true);
-												}}
-											>
-												Fjern godkjenning
-											</Button>
-										)}
+										<GodkjennEllerFjernGodkjenning
+											fnr={fnr}
+											navn={navn}
+											del2Dato={del2Dato}
+											onUpdateDel2={oppdaterDel2Status}
+										/>
 									</Table.DataCell>
 								</Table.Row>
 							);
