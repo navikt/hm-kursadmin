@@ -10,27 +10,29 @@ interface ScopedSortState extends SortState {
 }
 
 const Tabell = () => {
-	const [page, setPage] = useState(1);
-	const [tableData, setTableData] = useState(data);
+	const [tabellside, setTabellside] = useState(1);
+	const [tabellData, setTabellData] = useState(data);
 	const [sort, setSort] = useState<ScopedSortState | undefined>();
-	const rowsPerPage = 8;
+	const raderPerSide = 8;
 
 	const oppdaterDel2Status = (fnr: string, del2Dato: string | null) => {
-		setTableData((forrigData) =>
+		setTabellData((forrigData) =>
 			forrigData.map((person) =>
 				person.fnr === fnr ? { ...person, del2Dato } : person
 			)
 		);
 	};
 
-	const handleSort = (sortKey: ScopedSortState['orderBy']) => {
+	const handleSortering = (kolonnenavn: ScopedSortState['orderBy']) => {
 		setSort(
-			sort && sortKey === sort.orderBy && sort.direction === 'descending'
+			sort && kolonnenavn === sort.orderBy && sort.direction === 'descending'
 				? undefined
 				: {
-						orderBy: sortKey,
+						orderBy: kolonnenavn,
 						direction:
-							sort && sortKey === sort.orderBy && sort.direction === 'ascending'
+							sort &&
+							kolonnenavn === sort.orderBy &&
+							sort.direction === 'ascending'
 								? 'descending'
 								: 'ascending',
 				  }
@@ -47,7 +49,7 @@ const Tabell = () => {
 		return 0;
 	}
 
-	let sortData = tableData.slice().sort((a, b) => {
+	let sortData = tabellData.slice().sort((a, b) => {
 		if (sort) {
 			return sort.direction === 'ascending'
 				? comparator(b, a, sort.orderBy)
@@ -55,15 +57,18 @@ const Tabell = () => {
 		}
 		return 0;
 	});
-	sortData = sortData.slice((page - 1) * rowsPerPage, page * rowsPerPage);
+	sortData = sortData.slice(
+		(tabellside - 1) * raderPerSide,
+		tabellside * raderPerSide
+	);
 
 	return (
 		<VStack gap="space-16">
 			<Table
 				size="medium"
 				sort={sort}
-				onSortChange={(sortKey) =>
-					handleSort(sortKey as ScopedSortState['orderBy'])
+				onSortChange={(sorteringsnøkkel) =>
+					handleSortering(sorteringsnøkkel as ScopedSortState['orderBy'])
 				}
 			>
 				<Table.Header>
@@ -117,9 +122,9 @@ const Tabell = () => {
 				</Table.Body>
 			</Table>
 			<Pagination
-				page={page}
-				onPageChange={setPage}
-				count={Math.ceil(tableData.length / rowsPerPage)}
+				page={tabellside}
+				onPageChange={setTabellside}
+				count={Math.ceil(tabellData.length / raderPerSide)}
 				size="small"
 			/>
 		</VStack>
