@@ -1,13 +1,13 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Pagination, Table, VStack } from '@navikt/ds-react';
 import type { SortState } from '@navikt/ds-react';
 import { fodselsnummerTilDato, formaterNorskDato } from '../helpers/utils';
 import Del2Tag from './Del2Tag';
 import GodkjennEllerFjernGodkjenning from './GodkjennEllerFjernGodkjenning';
-import data from '../data/tabelldata.json';
+import type { Person } from '../mocks/handlers/personer';
 
 interface ScopedSortState extends SortState {
-	orderBy: keyof (typeof data)[0];
+	orderBy: keyof Person;
 }
 
 interface Props {
@@ -17,9 +17,23 @@ interface Props {
 
 const Tabell = ({ sokeverdi, kommuneVerdi }: Props) => {
 	const [tabellside, setTabellside] = useState(1);
-	const [tabellData, setTabellData] = useState(data);
+	const [tabellData, setTabellData] = useState<Person[]>([]);
 	const [sort, setSort] = useState<ScopedSortState | undefined>();
 	const raderPerSide = 8;
+
+	useEffect(() => {
+		const hentPersoner = async () => {
+			try {
+				const response = await fetch('/api/personer');
+				const data: Person[] = await response.json();
+				setTabellData(data);
+			} catch (error) {
+				console.error('Feil ved henting av personer:', error);
+			}
+		};
+
+		hentPersoner();
+	}, []);
 
 	const oppdaterDel2Status = (fnr: string, del2Dato: string | null) => {
 		setTabellData((forrigData) =>
