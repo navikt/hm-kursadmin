@@ -5,6 +5,7 @@ import Filtrering from './components/Filtrering';
 
 function App() {
 	const [sokeverdi, setSokeverdi] = useState('');
+	const [kommuneVerdi, setKommuneVerdi] = useState('');
 
 	return (
 		<Theme theme="light">
@@ -12,8 +13,13 @@ function App() {
 				<Heading size="large" level="1">
 					Administreringsverktøy for ERS kurs del 2
 				</Heading>
-				<Filtrering sokeverdi={sokeverdi} setSokeverdi={setSokeverdi} />
-				<Tabell sokeverdi={sokeverdi} />
+				<Filtrering
+					sokeverdi={sokeverdi}
+					setSokeverdi={setSokeverdi}
+					kommuneVerdi={kommuneVerdi}
+					setKommuneVerdi={setKommuneVerdi}
+				/>
+				<Tabell sokeverdi={sokeverdi} kommuneVerdi={kommuneVerdi} />
 			</VStack>
 		</Theme>
 	);

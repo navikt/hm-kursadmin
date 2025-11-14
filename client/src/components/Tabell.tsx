@@ -12,9 +12,10 @@ interface ScopedSortState extends SortState {
 
 interface Props {
 	sokeverdi: string;
+	kommuneVerdi: string;
 }
 
-const Tabell = ({ sokeverdi }: Props) => {
+const Tabell = ({ sokeverdi, kommuneVerdi }: Props) => {
 	const [tabellside, setTabellside] = useState(1);
 	const [tabellData, setTabellData] = useState(data);
 	const [sort, setSort] = useState<ScopedSortState | undefined>();
@@ -55,12 +56,14 @@ const Tabell = ({ sokeverdi }: Props) => {
 	}
 
 	const filtrerteData = tabellData.filter((person) => {
-		if (!sokeverdi) return true;
-		const lowercaseSok = sokeverdi.toLowerCase();
-		return (
-			person.navn.toLowerCase().includes(lowercaseSok) ||
-			person.epost.toLowerCase().includes(lowercaseSok)
-		);
+		const matcherSok =
+			!sokeverdi ||
+			person.navn.toLowerCase().includes(sokeverdi.toLowerCase()) ||
+			person.epost.toLowerCase().includes(sokeverdi.toLowerCase());
+
+		const matcherKommune = !kommuneVerdi || person.arbeidssted === kommuneVerdi;
+
+		return matcherSok && matcherKommune;
 	});
 
 	let sortData = filtrerteData.slice().sort((a, b) => {
