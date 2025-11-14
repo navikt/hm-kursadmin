@@ -1,10 +1,12 @@
-import { useEffect, useState } from 'react';
-import { Pagination, Table, VStack } from '@navikt/ds-react';
+import { useState } from 'react';
+import { Pagination, Table, VStack, Loader, Alert } from '@navikt/ds-react';
 import type { SortState } from '@navikt/ds-react';
+import { useQuery } from '@tanstack/react-query';
 import { fodselsnummerTilDato, formaterNorskDato } from '../helpers/utils';
 import Del2Tag from './Del2Tag';
 import GodkjennEllerFjernGodkjenning from './GodkjennEllerFjernGodkjenning';
 import type { Person } from '../mocks/handlers/personer';
+import { hentPersoner } from '../api/personer';
 
 interface ScopedSortState extends SortState {
 	orderBy: keyof Person;
@@ -21,19 +23,14 @@ const Tabell = ({ sokeverdi, kommuneVerdi }: Props) => {
 	const [sort, setSort] = useState<ScopedSortState | undefined>();
 	const raderPerSide = 8;
 
-	useEffect(() => {
-		const hentPersoner = async () => {
-			try {
-				const response = await fetch('/api/personer');
-				const data: Person[] = await response.json();
-				setTabellData(data);
-			} catch (error) {
-				console.error('Feil ved henting av personer:', error);
-			}
-		};
-
-		hentPersoner();
-	}, []);
+	const {
+		data: personer = [],
+		isLoading,
+		error,
+	} = useQuery({
+		queryKey: ['personer'],
+		queryFn: hentPersoner,
+	});
 
 	const oppdaterDel2Status = (fnr: string, del2Dato: string | null) => {
 		setTabellData((forrigData) =>
@@ -42,6 +39,12 @@ const Tabell = ({ sokeverdi, kommuneVerdi }: Props) => {
 			)
 		);
 	};
+
+	const aktuelleData = tabellData.length > 0 ? tabellData : personer;
+
+	if (personer.length > 0 && tabellData.length === 0) {
+		setTabellData(personer);
+	}
 
 	const handleSortering = (kolonnenavn: ScopedSortState['orderBy']) => {
 		setSort(
@@ -69,7 +72,7 @@ const Tabell = ({ sokeverdi, kommuneVerdi }: Props) => {
 		return 0;
 	}
 
-	const filtrerteData = tabellData.filter((person) => {
+	const filtrerteData = aktuelleData.filter((person) => {
 		const matcherSok =
 			!sokeverdi ||
 			person.navn.toLowerCase().includes(sokeverdi.toLowerCase()) ||
@@ -92,6 +95,22 @@ const Tabell = ({ sokeverdi, kommuneVerdi }: Props) => {
 		(tabellside - 1) * raderPerSide,
 		tabellside * raderPerSide
 	);
+
+	if (isLoading) {
+		return (
+			<VStack gap="space-16" align="center">
+				<Loader size="large" title="Laster personer..." />
+			</VStack>
+		);
+	}
+
+	if (error) {
+		return (
+			<Alert variant="error">
+				Kunne ikke laste personer. Vennligst prøv igjen senere.
+			</Alert>
+		);
+	}
 
 	return (
 		<VStack gap="space-16">
@@ -155,7 +174,7 @@ const Tabell = ({ sokeverdi, kommuneVerdi }: Props) => {
 			<Pagination
 				page={tabellside}
 				onPageChange={setTabellside}
-				count={Math.ceil(filtrerteData.length / raderPerSide)}
+				count={Math.max(1, Math.ceil(filtrerteData.length / raderPerSide))}
 				size="small"
 			/>
 		</VStack>
