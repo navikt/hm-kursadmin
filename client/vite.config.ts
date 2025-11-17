@@ -31,7 +31,7 @@ function htmlPlugin({ development }: { development?: boolean }): Plugin {
 					{
 						tag: 'script',
 						attrs: {
-							src: '/settings.js',
+							src: '/hjelpemidler/kursadmin/settings.js',
 						},
 					}
 				);
