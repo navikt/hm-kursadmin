@@ -18,7 +18,7 @@ declare global {
 }
 
 async function enableMocking() {
-	if (import.meta.env.MODE !== 'development') {
+	if (window.appSettings.USE_MSW !== true) {
 		return;
 	}
 

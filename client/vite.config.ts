@@ -17,7 +17,7 @@ function htmlPlugin({ development }: { development?: boolean }): Plugin {
             UMAMI_ENABLED: false,
             UMAMI_WEBSITE_ID: '',
             
-            USE_MSW: 'true',
+            USE_MSW: true,
             
             GIT_COMMIT: '',
           }`,
@@ -45,7 +45,7 @@ function htmlPlugin({ development }: { development?: boolean }): Plugin {
 }
 
 // https://vite.dev/config/
-export default defineConfig({
+export default defineConfig((env) => ({
 	base: '/hjelpemidler/kursadmin/',
-	plugins: [react(), htmlPlugin({ development: true })],
-});
+	plugins: [react(), htmlPlugin({ development: env.mode === 'development' })],
+}));
