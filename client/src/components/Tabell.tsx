@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Pagination, Table, VStack } from '@navikt/ds-react';
 import type { SortState } from '@navikt/ds-react';
 import { fodselsnummerTilDato, formaterNorskDato } from '../helpers/utils';
 import Del2Tag from './Del2Tag';
 import GodkjennEllerFjernGodkjenning from './GodkjennEllerFjernGodkjenning';
-import type { Person } from '../mocks/handlers/personer';
+import { useQuery } from '@tanstack/react-query';
+import type { Person } from '../types/person';
 
 interface ScopedSortState extends SortState {
 	orderBy: keyof Person;
@@ -17,30 +18,26 @@ interface Props {
 
 const Tabell = ({ sokeverdi, kommuneVerdi }: Props) => {
 	const [tabellside, setTabellside] = useState(1);
-	const [tabellData, setTabellData] = useState<Person[]>([]);
 	const [sort, setSort] = useState<ScopedSortState | undefined>();
 	const raderPerSide = 8;
 
-	useEffect(() => {
-		const hentPersoner = async () => {
-			try {
-				const response = await fetch('/api/personer');
-				const data: Person[] = await response.json();
-				setTabellData(data);
-			} catch (error) {
-				console.error('Feil ved henting av personer:', error);
-			}
-		};
-
-		hentPersoner();
-	}, []);
+	const {
+		isPending,
+		error,
+		data: personer = [],
+	} = useQuery<Person[]>({
+		queryKey: ['personer'],
+		queryFn: () => fetch('/api/personer').then((res) => res.json()),
+	});
 
 	const oppdaterDel2Status = (fnr: string, del2Dato: string | null) => {
-		setTabellData((forrigData) =>
-			forrigData.map((person) =>
-				person.fnr === fnr ? { ...person, del2Dato } : person
-			)
-		);
+		// setTabellData((forrigData) =>
+		//	  forrigData.map((person) =>
+		// 		person.fnr === fnr ? { ...person, del2Dato } : person
+		// 	)
+		// );
+
+		console.log('Oppdater del2 for', fnr, 'til', del2Dato);
 	};
 
 	const handleSortering = (kolonnenavn: ScopedSortState['orderBy']) => {
@@ -69,7 +66,7 @@ const Tabell = ({ sokeverdi, kommuneVerdi }: Props) => {
 		return 0;
 	}
 
-	const filtrerteData = tabellData.filter((person) => {
+	const filtrerteData = personer.filter((person) => {
 		const matcherSok =
 			!sokeverdi ||
 			person.navn.toLowerCase().includes(sokeverdi.toLowerCase()) ||
@@ -92,6 +89,10 @@ const Tabell = ({ sokeverdi, kommuneVerdi }: Props) => {
 		(tabellside - 1) * raderPerSide,
 		tabellside * raderPerSide
 	);
+
+	if (isPending) return 'Loading...';
+
+	if (error) return 'An error has occurred: ' + error.message;
 
 	return (
 		<VStack gap="space-16">
