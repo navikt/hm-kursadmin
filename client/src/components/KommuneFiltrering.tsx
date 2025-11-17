@@ -16,6 +16,7 @@ const KommuneFiltrering = ({ kommuneVerdi, setKommuneVerdi }: Props) => {
 			<option value="Oslo kommune">Oslo kommune</option>
 			<option value="Bergen kommune">Bergen kommune</option>
 			<option value="Trondheim kommune">Trondheim kommune</option>
+			<option value="Drammen kommune">Drammen kommune</option>
 		</Select>
 	);
 };
