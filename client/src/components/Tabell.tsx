@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Pagination, Table, VStack } from '@navikt/ds-react';
 import type { SortState } from '@navikt/ds-react';
-import { fodselsnummerTilDato, formaterNorskDato } from '../helpers/utils';
+import { formaterNorskDato } from '../helpers/utils';
 import Del2Tag from './Del2Tag';
 import GodkjennEllerFjernGodkjenning from './GodkjennEllerFjernGodkjenning';
 import { useQuery } from '@tanstack/react-query';
@@ -30,14 +30,14 @@ const Tabell = ({ sokeverdi, kommuneVerdi }: Props) => {
 		queryFn: () => fetch('/api/personer').then((res) => res.json()),
 	});
 
-	const oppdaterDel2Status = (fnr: string, del2Dato: string | null) => {
+	const oppdaterDel2Status = (id: number, del2Dato: string | null) => {
 		// setTabellData((forrigData) =>
 		//	  forrigData.map((person) =>
 		// 		person.fnr === fnr ? { ...person, del2Dato } : person
 		// 	)
 		// );
 
-		console.log('Oppdater del2 for', fnr, 'til', del2Dato);
+		console.log('Oppdater del2 for', id, 'til', del2Dato);
 	};
 
 	const handleSortering = (kolonnenavn: ScopedSortState['orderBy']) => {
@@ -124,33 +124,40 @@ const Tabell = ({ sokeverdi, kommuneVerdi }: Props) => {
 					</Table.Row>
 				</Table.Header>
 				<Table.Body>
-					{sortData.map(
-						({ navn, fnr, epost, arbeidssted, del1Dato, del2Dato }, i) => {
-							return (
-								<Table.Row key={i + fnr}>
-									<Table.DataCell>{fodselsnummerTilDato(fnr)}</Table.DataCell>
-									<Table.HeaderCell scope="row">{navn}</Table.HeaderCell>
-									<Table.DataCell>{epost}</Table.DataCell>
-									<Table.DataCell>{arbeidssted}</Table.DataCell>
-									<Table.DataCell>{formaterNorskDato(del1Dato)}</Table.DataCell>
-									<Table.DataCell>
-										{del2Dato ? formaterNorskDato(del2Dato) : '-'}
-									</Table.DataCell>
-									<Table.DataCell>
-										<Del2Tag del2Dato={del2Dato} />
-									</Table.DataCell>
-									<Table.DataCell>
-										<GodkjennEllerFjernGodkjenning
-											fnr={fnr}
-											navn={navn}
-											del2Dato={del2Dato}
-											onUpdateDel2={oppdaterDel2Status}
-										/>
-									</Table.DataCell>
-								</Table.Row>
-							);
-						}
-					)}
+					{sortData.map((person) => {
+						const {
+							id,
+							navn,
+							fodselsdato,
+							epost,
+							arbeidssted,
+							del1Dato,
+							del2Dato,
+						} = person;
+						return (
+							<Table.Row key={id}>
+								<Table.DataCell>{fodselsdato}</Table.DataCell>
+								<Table.HeaderCell scope="row">{navn}</Table.HeaderCell>
+								<Table.DataCell>{epost}</Table.DataCell>
+								<Table.DataCell>{arbeidssted}</Table.DataCell>
+								<Table.DataCell>{formaterNorskDato(del1Dato)}</Table.DataCell>
+								<Table.DataCell>
+									{del2Dato ? formaterNorskDato(del2Dato) : '-'}
+								</Table.DataCell>
+								<Table.DataCell>
+									<Del2Tag del2Dato={del2Dato} />
+								</Table.DataCell>
+								<Table.DataCell>
+									<GodkjennEllerFjernGodkjenning
+										person={person}
+										navn={navn}
+										del2Dato={del2Dato}
+										onUpdateDel2={oppdaterDel2Status}
+									/>
+								</Table.DataCell>
+							</Table.Row>
+						);
+					})}
 				</Table.Body>
 			</Table>
 			<Pagination

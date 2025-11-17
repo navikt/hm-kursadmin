@@ -2,9 +2,8 @@ import { useState } from 'react';
 import { Heading, Theme, VStack } from '@navikt/ds-react';
 import Tabell from './components/Tabell';
 import Filtrering from './components/Filtrering';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-
-const queryClient = new QueryClient();
+import { QueryClientProvider } from '@tanstack/react-query';
+import { queryClient } from './queryClient';
 
 function App() {
 	const [sokeverdi, setSokeverdi] = useState('');

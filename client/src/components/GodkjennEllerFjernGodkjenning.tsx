@@ -1,34 +1,41 @@
 import { useState } from 'react';
 import { Button } from '@navikt/ds-react/Button';
 import FjernGodkjenningModal from './FjernGodkjenningModal';
+import type { Person } from '../types/person';
+import { useMutation } from '@tanstack/react-query';
+import { queryClient } from '../queryClient';
 
 interface Props {
-	fnr: string;
+	person: Person;
 	navn: string;
 	del2Dato: string | null;
-	onUpdateDel2: (fnr: string, del2Dato: string | null) => void;
+	onUpdateDel2: (id: number, del2Dato: string | null) => void;
 }
 
-const GodkjennEllerFjernGodkjenning = ({
-	fnr,
-	navn,
-	del2Dato,
-	onUpdateDel2,
-}: Props) => {
+const GodkjennEllerFjernGodkjenning = ({ person, del2Dato }: Props) => {
 	const [modalOpen, setModalOpen] = useState(false);
 
-	const godkjennKurs = () => {
-		onUpdateDel2(fnr, new Date().toISOString());
-	};
-
-	const fjernGodkjenning = () => {
-		onUpdateDel2(fnr, null);
-		setModalOpen(false);
-	};
+	const opprettDel2Mutation = useMutation({
+		mutationFn: () => {
+			return fetch(`/api/personer/${person.id}/opprett-del2`, {
+				method: 'PATCH',
+			});
+		},
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ['personer'] });
+		},
+	});
 
 	if (!del2Dato) {
 		return (
-			<Button size="small" variant="primary-neutral" onClick={godkjennKurs}>
+			<Button
+				size="small"
+				variant="primary-neutral"
+				onClick={() => {
+					opprettDel2Mutation.mutate();
+				}}
+				loading={opprettDel2Mutation.isPending}
+			>
 				Godkjenn del 2
 			</Button>
 		);
@@ -36,10 +43,10 @@ const GodkjennEllerFjernGodkjenning = ({
 		return (
 			<>
 				<FjernGodkjenningModal
-					person={navn}
+					person={person}
 					open={modalOpen}
 					onClose={() => setModalOpen(false)}
-					onConfirm={fjernGodkjenning}
+					onConfirm={() => setModalOpen(false)}
 				/>
 				<Button
 					size="small"

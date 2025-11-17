@@ -1,6 +1,7 @@
 export interface Person {
+	id: number;
 	navn: string;
-	fnr: string;
+	fodselsdato: string;
 	epost: string;
 	arbeidssted: string;
 	del1Dato: string;
