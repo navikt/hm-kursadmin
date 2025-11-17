@@ -53,7 +53,7 @@ const mockPersoner: Person[] = [
 ];
 
 const personerHandler = [
-	http.get<never, never, Person[]>('/api/personer', () => {
+	http.get('/api/personer', () => {
 		return HttpResponse.json(mockPersoner);
 	}),
 ];
