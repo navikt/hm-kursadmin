@@ -13,10 +13,10 @@ interface ScopedSortState extends SortState {
 
 interface Props {
 	sokeverdi: string;
-	kommuneVerdi: string;
+	hjelpemiddelsentralVerdi: string;
 }
 
-const Tabell = ({ sokeverdi, kommuneVerdi }: Props) => {
+const Tabell = ({ sokeverdi, hjelpemiddelsentralVerdi }: Props) => {
 	const [tabellside, setTabellside] = useState(1);
 	const [sort, setSort] = useState<ScopedSortState | undefined>();
 	const raderPerSide = 8;
@@ -72,9 +72,12 @@ const Tabell = ({ sokeverdi, kommuneVerdi }: Props) => {
 			person.navn.toLowerCase().includes(sokeverdi.toLowerCase()) ||
 			person.epost.toLowerCase().includes(sokeverdi.toLowerCase());
 
-		const matcherKommune = !kommuneVerdi || person.arbeidssted === kommuneVerdi;
+		const matcherHjelpemiddelsentral =
+			!hjelpemiddelsentralVerdi ||
+			person.hjelpemiddelsentral.toLowerCase() ===
+				hjelpemiddelsentralVerdi.toLowerCase();
 
-		return matcherSok && matcherKommune;
+		return matcherSok && matcherHjelpemiddelsentral;
 	});
 
 	let sortData = filtrerteData.slice().sort((a, b) => {
@@ -113,11 +116,12 @@ const Tabell = ({ sokeverdi, kommuneVerdi }: Props) => {
 						</Table.ColumnHeader>
 						<Table.HeaderCell scope="col">E-post</Table.HeaderCell>
 						<Table.HeaderCell scope="col">Arbeidssted</Table.HeaderCell>
+						<Table.HeaderCell scope="col">Hjelpemiddelsentral</Table.HeaderCell>
 						<Table.ColumnHeader scope="col" sortKey="del1Dato" sortable>
-							Dato tatt del 1
+							Dato for del 1
 						</Table.ColumnHeader>
 						<Table.ColumnHeader scope="col" sortKey="del2Dato" sortable>
-							Dato tatt del 2
+							Dato for del 2
 						</Table.ColumnHeader>
 						<Table.HeaderCell scope="col">Status del 2</Table.HeaderCell>
 						<Table.HeaderCell scope="col">Handling</Table.HeaderCell>
@@ -140,6 +144,7 @@ const Tabell = ({ sokeverdi, kommuneVerdi }: Props) => {
 								<Table.HeaderCell scope="row">{navn}</Table.HeaderCell>
 								<Table.DataCell>{epost}</Table.DataCell>
 								<Table.DataCell>{arbeidssted}</Table.DataCell>
+								<Table.DataCell>{person.hjelpemiddelsentral}</Table.DataCell>
 								<Table.DataCell>{formaterNorskDato(del1Dato)}</Table.DataCell>
 								<Table.DataCell>
 									{del2Dato ? formaterNorskDato(del2Dato) : '-'}

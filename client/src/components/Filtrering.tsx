@@ -1,26 +1,26 @@
 import { HStack } from '@navikt/ds-react';
 import Sok from './Sok';
-import KommuneFiltrering from './KommuneFiltrering';
+import HjelpemiddelsentralFilter from './HjelpemiddelsentralFilter';
 
 interface Props {
 	sokeverdi: string;
 	setSokeverdi: (verdi: string) => void;
-	kommuneVerdi: string;
-	setKommuneVerdi: (verdi: string) => void;
+	hjelpemiddelsentralVerdi: string;
+	setHjelpemiddelsentralVerdi: (verdi: string) => void;
 }
 
 const Filtrering = ({
 	sokeverdi,
 	setSokeverdi,
-	kommuneVerdi,
-	setKommuneVerdi,
+	hjelpemiddelsentralVerdi,
+	setHjelpemiddelsentralVerdi,
 }: Props) => {
 	return (
 		<HStack gap={'4'}>
 			<Sok sokeverdi={sokeverdi} setSokeverdi={setSokeverdi} />
-			<KommuneFiltrering
-				kommuneVerdi={kommuneVerdi}
-				setKommuneVerdi={setKommuneVerdi}
+			<HjelpemiddelsentralFilter
+				hjelpemiddelsentralVerdi={hjelpemiddelsentralVerdi}
+				setHjelpemiddelsentralVerdi={setHjelpemiddelsentralVerdi}
 			/>
 		</HStack>
 	);

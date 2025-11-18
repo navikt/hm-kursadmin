@@ -7,7 +7,7 @@ import { queryClient } from './queryClient';
 
 function App() {
 	const [sokeverdi, setSokeverdi] = useState('');
-	const [kommuneVerdi, setKommuneVerdi] = useState('');
+	const [hjelpemiddelsentralVerdi, setHjelpemiddelsentralVerdi] = useState('');
 
 	return (
 		<QueryClientProvider client={queryClient}>
@@ -19,10 +19,13 @@ function App() {
 					<Filtrering
 						sokeverdi={sokeverdi}
 						setSokeverdi={setSokeverdi}
-						kommuneVerdi={kommuneVerdi}
-						setKommuneVerdi={setKommuneVerdi}
+						hjelpemiddelsentralVerdi={hjelpemiddelsentralVerdi}
+						setHjelpemiddelsentralVerdi={setHjelpemiddelsentralVerdi}
 					/>
-					<Tabell sokeverdi={sokeverdi} kommuneVerdi={kommuneVerdi} />
+					<Tabell
+						sokeverdi={sokeverdi}
+						hjelpemiddelsentralVerdi={hjelpemiddelsentralVerdi}
+					/>
 				</VStack>
 			</Theme>
 		</QueryClientProvider>
