@@ -4,7 +4,6 @@ import type { SortState } from '@navikt/ds-react';
 import { formaterNorskDato } from '../helpers/utils';
 import Del2Tag from './Del2Tag';
 import GodkjennEllerFjernGodkjenning from './GodkjennEllerFjernGodkjenning';
-import { useQuery } from '@tanstack/react-query';
 import type { Person } from '../types/person';
 
 interface ScopedSortState extends SortState {
@@ -14,21 +13,13 @@ interface ScopedSortState extends SortState {
 interface Props {
 	sokeverdi: string;
 	hjelpemiddelsentralVerdi: string;
+	personer: Person[];
 }
 
-const Tabell = ({ sokeverdi, hjelpemiddelsentralVerdi }: Props) => {
+const Tabell = ({ sokeverdi, hjelpemiddelsentralVerdi, personer }: Props) => {
 	const [tabellside, setTabellside] = useState(1);
 	const [sort, setSort] = useState<ScopedSortState | undefined>();
 	const raderPerSide = 8;
-
-	const {
-		isPending,
-		error,
-		data: personer = [],
-	} = useQuery<Person[]>({
-		queryKey: ['personer'],
-		queryFn: () => fetch('/api/personer').then((res) => res.json()),
-	});
 
 	const oppdaterDel2Status = (id: number, del2Dato: string | null) => {
 		// setTabellData((forrigData) =>
@@ -92,10 +83,6 @@ const Tabell = ({ sokeverdi, hjelpemiddelsentralVerdi }: Props) => {
 		(tabellside - 1) * raderPerSide,
 		tabellside * raderPerSide
 	);
-
-	if (isPending) return 'Loading...';
-
-	if (error) return 'An error has occurred: ' + error.message;
 
 	return (
 		<VStack gap="space-16">
