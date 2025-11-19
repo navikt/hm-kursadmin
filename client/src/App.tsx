@@ -46,7 +46,6 @@ function App() {
 					hjelpemiddelsentralVerdi={hjelpemiddelsentralVerdi}
 					personer={personer}
 					isPending={isPending}
-					error={error}
 				/>
 			</VStack>
 		</Theme>

@@ -15,7 +15,6 @@ interface Props {
 	hjelpemiddelsentralVerdi: string;
 	personer: Person[];
 	isPending?: boolean;
-	error?: Error | null;
 }
 
 const Tabell = ({
@@ -62,8 +61,7 @@ const Tabell = ({
 
 		const matcherHjelpemiddelsentral =
 			!hjelpemiddelsentralVerdi ||
-			person.hjelpemiddelsentral.toLowerCase() ===
-				hjelpemiddelsentralVerdi.toLowerCase();
+			person.hjelpemiddelsentral === hjelpemiddelsentralVerdi;
 
 		return matcherSok && matcherHjelpemiddelsentral;
 	});
