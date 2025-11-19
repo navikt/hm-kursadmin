@@ -110,7 +110,11 @@ const Tabell = ({
 					</Table.Row>
 				</Table.Header>
 				<Table.Body>
-					{isPending && <div>Laster personer...</div>}
+					{isPending && (
+						<Table.Row>
+							<Table.DataCell colSpan={9}>Laster personer...</Table.DataCell>
+						</Table.Row>
+					)}
 					{sortData.map((person) => {
 						const {
 							id,
