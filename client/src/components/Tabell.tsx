@@ -142,7 +142,6 @@ const Tabell = ({
 								<Table.DataCell>
 									<GodkjennEllerFjernGodkjenning
 										person={person}
-										navn={navn}
 										del2Dato={del2Dato}
 									/>
 								</Table.DataCell>

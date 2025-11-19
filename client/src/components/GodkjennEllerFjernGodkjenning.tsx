@@ -7,7 +7,6 @@ import { queryClient } from '../queryClient';
 
 interface Props {
 	person: Person;
-	navn: string;
 	del2Dato: string | null;
 }
 
