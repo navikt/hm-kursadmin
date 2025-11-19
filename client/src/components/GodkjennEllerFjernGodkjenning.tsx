@@ -74,7 +74,7 @@ const GodkjennEllerFjernGodkjenning = ({ person, del2Dato }: Props) => {
 					onClick={() => setDatePickerOpen(!datePickerOpen)}
 					loading={godkjennDel2Mutation.isPending}
 				>
-					Godkjenn del 2
+					{datePickerOpen ? 'Avbryt' : 'Godkjenn del 2'}
 				</Button>
 			</DatePicker>
 		);
