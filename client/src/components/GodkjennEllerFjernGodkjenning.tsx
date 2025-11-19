@@ -16,7 +16,7 @@ const GodkjennEllerFjernGodkjenning = ({ person, del2Dato }: Props) => {
 
 	const godkjennDel2Mutation = useMutation({
 		mutationFn: () => {
-			return fetch(`/api/personer/${person.id}/opprett-del2`, {
+			return fetch(`/api/personer/${person.id}/godkjenn-del2`, {
 				method: 'PATCH',
 			}).then((response) => {
 				if (!response.ok) {
