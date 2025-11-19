@@ -21,9 +21,10 @@ const personerHandler = [
 	http.get('/api/personer', () => {
 		return HttpResponse.json(mockPersoner);
 	}),
-	http.patch('/api/personer/:id/godkjenn-del2', (req) => {
+	http.patch('/api/personer/:id/godkjenn-del2', async (req) => {
 		const { id } = req.params;
-		return updateDel2Status(id as string, new Date().toISOString());
+		const body = (await req.request.json()) as { kursDato: string };
+		return updateDel2Status(id as string, body.kursDato);
 	}),
 	http.patch('/api/personer/:id/fjern-del2', (req) => {
 		const { id } = req.params;

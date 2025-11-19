@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { Button } from '@navikt/ds-react/Button';
+import { Button, DatePicker } from '@navikt/ds-react';
 import FjernGodkjenningModal from './FjernGodkjenningModal';
 import type { Person } from '../types/person';
 import { useMutation } from '@tanstack/react-query';
 import { queryClient } from '../queryClient';
+import { formaterTilISODato } from '../helpers/utils';
 
 interface Props {
 	person: Person;
@@ -12,11 +13,16 @@ interface Props {
 
 const GodkjennEllerFjernGodkjenning = ({ person, del2Dato }: Props) => {
 	const [modalOpen, setModalOpen] = useState(false);
+	const [datePickerOpen, setDatePickerOpen] = useState(false);
 
 	const godkjennDel2Mutation = useMutation({
-		mutationFn: () => {
+		mutationFn: (kursDato: string) => {
 			return fetch(`/api/personer/${person.id}/godkjenn-del2`, {
 				method: 'PATCH',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({ kursDato }),
 			}).then((response) => {
 				if (!response.ok) {
 					return response
@@ -34,6 +40,7 @@ const GodkjennEllerFjernGodkjenning = ({ person, del2Dato }: Props) => {
 		},
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ['personer'] });
+			setDatePickerOpen(false);
 		},
 		onError: (error) => {
 			console.error('Feil ved godkjenning av del 2:', error);
@@ -43,16 +50,26 @@ const GodkjennEllerFjernGodkjenning = ({ person, del2Dato }: Props) => {
 
 	if (!del2Dato) {
 		return (
-			<Button
-				size="small"
-				variant="primary-neutral"
-				onClick={() => {
-					godkjennDel2Mutation.mutate();
+			<DatePicker
+				onSelect={(date) => {
+					if (date) {
+						const kursDato = formaterTilISODato(date);
+						godkjennDel2Mutation.mutate(kursDato);
+					}
 				}}
-				loading={godkjennDel2Mutation.isPending}
+				mode="single"
+				onClose={() => setDatePickerOpen(false)}
+				open={datePickerOpen}
 			>
-				Godkjenn del 2
-			</Button>
+				<Button
+					size="small"
+					variant="primary-neutral"
+					onClick={() => setDatePickerOpen(!datePickerOpen)}
+					loading={godkjennDel2Mutation.isPending}
+				>
+					Godkjenn del 2
+				</Button>
+			</DatePicker>
 		);
 	} else {
 		return (
