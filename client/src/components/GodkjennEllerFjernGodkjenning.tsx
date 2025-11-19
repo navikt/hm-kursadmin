@@ -60,6 +60,13 @@ const GodkjennEllerFjernGodkjenning = ({ person, del2Dato }: Props) => {
 				mode="single"
 				onClose={() => setDatePickerOpen(false)}
 				open={datePickerOpen}
+				disabled={[
+					(date: Date) => {
+						const today = new Date();
+						today.setHours(0, 0, 0, 0);
+						return date > today;
+					},
+				]}
 			>
 				<Button
 					size="small"
