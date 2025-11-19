@@ -103,7 +103,10 @@ const Tabell = ({
 							Dato for del 2
 						</Table.ColumnHeader>
 						<Table.HeaderCell scope="col">Status del 2</Table.HeaderCell>
-						<Table.HeaderCell scope="col">Handling</Table.HeaderCell>
+						<Table.HeaderCell
+							scope="col"
+							aria-label="Handlinger"
+						></Table.HeaderCell>
 					</Table.Row>
 				</Table.Header>
 				<Table.Body>
@@ -127,7 +130,7 @@ const Tabell = ({
 								<Table.DataCell>
 									<Del2Tag del2Dato={del2Dato} />
 								</Table.DataCell>
-								<Table.DataCell>
+								<Table.DataCell className="text-align-right">
 									<GodkjennEllerFjernGodkjenning
 										person={person}
 										del2Dato={del2Dato}
