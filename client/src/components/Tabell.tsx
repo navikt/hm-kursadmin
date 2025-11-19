@@ -13,6 +13,7 @@ interface ScopedSortState extends SortState {
 interface Props {
 	sokeverdi: string;
 	hjelpemiddelsentralVerdi: string;
+	statusDel2Verdi: string;
 	personer: Person[];
 	isPending?: boolean;
 }
@@ -20,6 +21,7 @@ interface Props {
 const Tabell = ({
 	sokeverdi,
 	hjelpemiddelsentralVerdi,
+	statusDel2Verdi,
 	personer,
 	isPending,
 }: Props) => {
@@ -63,7 +65,12 @@ const Tabell = ({
 			!hjelpemiddelsentralVerdi ||
 			person.hjelpemiddelsentral === hjelpemiddelsentralVerdi;
 
-		return matcherSok && matcherHjelpemiddelsentral;
+		const matcherStatusDel2 =
+			!statusDel2Verdi ||
+			(statusDel2Verdi === 'fullfort' && person.del2Dato !== null) ||
+			(statusDel2Verdi === 'ikke-fullfort' && person.del2Dato === null);
+
+		return matcherSok && matcherHjelpemiddelsentral && matcherStatusDel2;
 	});
 
 	let sortData = filtrerteData.slice().sort((a, b) => {
