@@ -13,8 +13,8 @@ const StatusDel2Filter = ({ statusDel2Verdi, setStatusDel2Verdi }: Props) => {
 			onChange={(e) => setStatusDel2Verdi(e.target.value)}
 		>
 			<option value="">- Velg status Del 2 -</option>
-			<option value="ikke-fullfort">Ikke fullført</option>
-			<option value="fullfort">Fullført</option>
+			<option value="ikke-fullført">Ikke fullført</option>
+			<option value="fullført">Fullført</option>
 		</Select>
 	);
 };

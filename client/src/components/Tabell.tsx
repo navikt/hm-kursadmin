@@ -67,8 +67,8 @@ const Tabell = ({
 
 		const matcherStatusDel2 =
 			!statusDel2Verdi ||
-			(statusDel2Verdi === 'fullfort' && person.del2Dato !== null) ||
-			(statusDel2Verdi === 'ikke-fullfort' && person.del2Dato === null);
+			(statusDel2Verdi === 'fullført' && person.del2Dato !== null) ||
+			(statusDel2Verdi === 'ikke-fullført' && person.del2Dato === null);
 
 		return matcherSok && matcherHjelpemiddelsentral && matcherStatusDel2;
 	});
