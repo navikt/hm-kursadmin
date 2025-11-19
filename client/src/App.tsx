@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Alert, Heading, Theme, VStack } from '@navikt/ds-react';
 import Tabell from './components/Tabell';
-import Filtrering from './components/Filtrering';
+import Filtrering from './components/Filtrering/Filtrering';
 import { useQuery } from '@tanstack/react-query';
 import type { Person } from './types/person';
 

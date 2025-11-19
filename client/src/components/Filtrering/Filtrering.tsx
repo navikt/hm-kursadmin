@@ -1,7 +1,7 @@
 import { HStack } from '@navikt/ds-react';
 import Sok from './Sok';
 import HjelpemiddelsentralFilter from './HjelpemiddelsentralFilter';
-import type { Person } from '../types/person';
+import type { Person } from '../../types/person';
 
 interface Props {
 	sokeverdi: string;
