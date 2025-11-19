@@ -15,6 +15,12 @@ const GodkjennEllerFjernGodkjenning = ({ person, del2Dato }: Props) => {
 	const [modalOpen, setModalOpen] = useState(false);
 	const [datePickerOpen, setDatePickerOpen] = useState(false);
 
+	const erDatoIFremtiden = (date: Date) => {
+		const today = new Date();
+		today.setHours(0, 0, 0, 0);
+		return date > today;
+	};
+
 	const godkjennDel2Mutation = useMutation({
 		mutationFn: (kursDato: string) => {
 			return fetch(`/api/personer/${person.id}/godkjenn-del2`, {
@@ -60,13 +66,7 @@ const GodkjennEllerFjernGodkjenning = ({ person, del2Dato }: Props) => {
 				mode="single"
 				onClose={() => setDatePickerOpen(false)}
 				open={datePickerOpen}
-				disabled={[
-					(date: Date) => {
-						const today = new Date();
-						today.setHours(0, 0, 0, 0);
-						return date > today;
-					},
-				]}
+				disabled={[erDatoIFremtiden]}
 			>
 				<Button
 					size="small"
