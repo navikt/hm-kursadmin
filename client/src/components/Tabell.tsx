@@ -14,9 +14,16 @@ interface Props {
 	sokeverdi: string;
 	hjelpemiddelsentralVerdi: string;
 	personer: Person[];
+	isPending?: boolean;
+	error?: Error | null;
 }
 
-const Tabell = ({ sokeverdi, hjelpemiddelsentralVerdi, personer }: Props) => {
+const Tabell = ({
+	sokeverdi,
+	hjelpemiddelsentralVerdi,
+	personer,
+	isPending,
+}: Props) => {
 	const [tabellside, setTabellside] = useState(1);
 	const [sort, setSort] = useState<ScopedSortState | undefined>();
 	const raderPerSide = 8;
@@ -105,6 +112,7 @@ const Tabell = ({ sokeverdi, hjelpemiddelsentralVerdi, personer }: Props) => {
 					</Table.Row>
 				</Table.Header>
 				<Table.Body>
+					{isPending && <div>Laster personer...</div>}
 					{sortData.map((person) => {
 						const {
 							id,

@@ -14,14 +14,31 @@ interface Props {
 const GodkjennEllerFjernGodkjenning = ({ person, del2Dato }: Props) => {
 	const [modalOpen, setModalOpen] = useState(false);
 
-	const opprettDel2Mutation = useMutation({
+	const godkjennDel2Mutation = useMutation({
 		mutationFn: () => {
 			return fetch(`/api/personer/${person.id}/opprett-del2`, {
 				method: 'PATCH',
+			}).then((response) => {
+				if (!response.ok) {
+					return response
+						.json()
+						.catch(() => ({ message: 'Ukjent feil' }))
+						.then((errorData) => {
+							throw new Error(
+								errorData.message ||
+									`HTTP ${response.status}: ${response.statusText}`
+							);
+						});
+				}
+				return response.json();
 			});
 		},
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ['personer'] });
+		},
+		onError: (error) => {
+			console.error('Feil ved godkjenning av del 2:', error);
+			alert(`Kunne ikke godkjenne del 2: ${error.message}`); // TODO: Bedre feilhåndtering
 		},
 	});
 
@@ -31,9 +48,9 @@ const GodkjennEllerFjernGodkjenning = ({ person, del2Dato }: Props) => {
 				size="small"
 				variant="primary-neutral"
 				onClick={() => {
-					opprettDel2Mutation.mutate();
+					godkjennDel2Mutation.mutate();
 				}}
-				loading={opprettDel2Mutation.isPending}
+				loading={godkjennDel2Mutation.isPending}
 			>
 				Godkjenn del 2
 			</Button>

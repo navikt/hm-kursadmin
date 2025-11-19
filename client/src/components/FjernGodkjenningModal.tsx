@@ -1,4 +1,5 @@
-import { BodyLong, Button, Modal } from '@navikt/ds-react';
+import { useState } from 'react';
+import { Alert, BodyLong, Button, Modal } from '@navikt/ds-react';
 import { useMutation } from '@tanstack/react-query';
 import { queryClient } from '../queryClient';
 import type { Person } from '../types/person';
@@ -16,15 +17,33 @@ const FjernGodkjenningModal = ({
 	onClose,
 	onConfirm,
 }: FjernGodkjenningModalProps) => {
+	const [errorMessage, setErrorMessage] = useState<string | null>(null);
 	const fjernDel2Mutation = useMutation({
 		mutationFn: () => {
 			return fetch(`/api/personer/${person.id}/fjern-del2`, {
 				method: 'PATCH',
+			}).then((response) => {
+				if (!response.ok) {
+					return response
+						.json()
+						.catch(() => ({ message: 'Ukjent feil' }))
+						.then((errorData) => {
+							throw new Error(
+								errorData.message ||
+									`HTTP ${response.status}: ${response.statusText}`
+							);
+						});
+				}
+				return response.json();
 			});
 		},
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ['personer'] });
 			onConfirm();
+		},
+		onError: (error) => {
+			console.error('Feil ved fjerning av del 2 godkjenning:', error);
+			setErrorMessage(error.message);
 		},
 	});
 
@@ -49,7 +68,10 @@ const FjernGodkjenningModal = ({
 				<Button
 					type="button"
 					variant="danger"
-					onClick={() => fjernDel2Mutation.mutate()}
+					onClick={() => {
+						setErrorMessage(null);
+						fjernDel2Mutation.mutate();
+					}}
 					loading={fjernDel2Mutation.isPending}
 				>
 					Ja, jeg er sikker
@@ -57,6 +79,11 @@ const FjernGodkjenningModal = ({
 				<Button type="button" variant="secondary" onClick={onClose}>
 					Avbryt
 				</Button>
+				{errorMessage && (
+					<Alert inline variant="error" size="small">
+						{errorMessage}
+					</Alert>
+				)}
 			</Modal.Footer>
 		</Modal>
 	);
