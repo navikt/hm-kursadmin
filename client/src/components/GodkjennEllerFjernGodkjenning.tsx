@@ -7,9 +7,7 @@ import { queryClient } from '../queryClient';
 
 interface Props {
 	person: Person;
-	navn: string;
 	del2Dato: string | null;
-	onUpdateDel2: (id: number, del2Dato: string | null) => void;
 }
 
 const GodkjennEllerFjernGodkjenning = ({ person, del2Dato }: Props) => {

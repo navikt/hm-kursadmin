@@ -21,16 +21,6 @@ const Tabell = ({ sokeverdi, hjelpemiddelsentralVerdi, personer }: Props) => {
 	const [sort, setSort] = useState<ScopedSortState | undefined>();
 	const raderPerSide = 8;
 
-	const oppdaterDel2Status = (id: number, del2Dato: string | null) => {
-		// setTabellData((forrigData) =>
-		//	  forrigData.map((person) =>
-		// 		person.fnr === fnr ? { ...person, del2Dato } : person
-		// 	)
-		// );
-
-		console.log('Oppdater del2 for', id, 'til', del2Dato);
-	};
-
 	const handleSortering = (kolonnenavn: ScopedSortState['orderBy']) => {
 		setSort(
 			sort && kolonnenavn === sort.orderBy && sort.direction === 'descending'
@@ -142,9 +132,7 @@ const Tabell = ({ sokeverdi, hjelpemiddelsentralVerdi, personer }: Props) => {
 								<Table.DataCell>
 									<GodkjennEllerFjernGodkjenning
 										person={person}
-										navn={navn}
 										del2Dato={del2Dato}
-										onUpdateDel2={oppdaterDel2Status}
 									/>
 								</Table.DataCell>
 							</Table.Row>
