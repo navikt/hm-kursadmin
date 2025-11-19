@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Button, DatePicker } from '@navikt/ds-react';
+import { Button, DatePicker, ActionMenu } from '@navikt/ds-react';
+import { MenuElipsisVerticalIcon } from '@navikt/aksel-icons';
 import FjernGodkjenningModal from './FjernGodkjenningModal';
 import type { Person } from '../types/person';
 import { useMutation } from '@tanstack/react-query';
@@ -87,13 +88,20 @@ const GodkjennEllerFjernGodkjenning = ({ person, del2Dato }: Props) => {
 					onClose={() => setModalOpen(false)}
 					onConfirm={() => setModalOpen(false)}
 				/>
-				<Button
-					size="small"
-					variant="secondary-neutral"
-					onClick={() => setModalOpen(true)}
-				>
-					Fjern godkjenning
-				</Button>
+				<ActionMenu>
+					<ActionMenu.Trigger>
+						<Button
+							variant="tertiary-neutral"
+							icon={<MenuElipsisVerticalIcon title="handlinger" />}
+							size="small"
+						/>
+					</ActionMenu.Trigger>
+					<ActionMenu.Content>
+						<ActionMenu.Item onSelect={() => setModalOpen(true)}>
+							Fjern godkjenning
+						</ActionMenu.Item>
+					</ActionMenu.Content>
+				</ActionMenu>
 			</>
 		);
 	}
