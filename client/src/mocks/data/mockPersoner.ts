@@ -4,7 +4,6 @@ export const mockPersoner: Person[] = [
 	{
 		id: 1,
 		navn: 'Testesen, Kari',
-		fodselsdato: '14.5.1990',
 		epost: 'kari.testesen@example.no',
 		arbeidssted: 'Sunnaas Sykehus',
 		hjelpemiddelsentral: 'Oslo',
@@ -14,7 +13,6 @@ export const mockPersoner: Person[] = [
 	{
 		id: 2,
 		navn: 'Mockmann, Ola',
-		fodselsdato: '16.9.1993',
 		epost: 'ola.mockmann@testdata.no',
 		arbeidssted: 'Haukeland Universitetssjukehus',
 		hjelpemiddelsentral: 'Vestland',
@@ -24,7 +22,6 @@ export const mockPersoner: Person[] = [
 	{
 		id: 3,
 		navn: 'Dummysen, Per',
-		fodselsdato: '3.12.1988',
 		epost: 'per.dummysen@fake.no',
 		arbeidssted: 'St. Olavs Hospital',
 		hjelpemiddelsentral: 'Trøndelag',
@@ -34,7 +31,6 @@ export const mockPersoner: Person[] = [
 	{
 		id: 4,
 		navn: 'Fakerud, Anne',
-		fodselsdato: '22.3.1985',
 		epost: 'anne.fakerud@mock.no',
 		arbeidssted: 'Kristiansand Fysioterapi AS',
 		hjelpemiddelsentral: 'Agder',
@@ -44,7 +40,6 @@ export const mockPersoner: Person[] = [
 	{
 		id: 5,
 		navn: 'Testowski, Bjørn',
-		fodselsdato: '11.11.1991',
 		epost: 'bjorn.testowski@example.no',
 		arbeidssted: 'Bærum Hjelpemiddelsentral',
 		hjelpemiddelsentral: 'Vest-Viken',
@@ -54,7 +49,6 @@ export const mockPersoner: Person[] = [
 	{
 		id: 6,
 		navn: 'Simulatorsen, Lise',
-		fodselsdato: '8.7.1992',
 		epost: 'lise.simulatorsen@testdata.no',
 		arbeidssted: 'NAV Hjelpemiddelsentral Oslo',
 		hjelpemiddelsentral: 'Oslo',
@@ -64,7 +58,6 @@ export const mockPersoner: Person[] = [
 	{
 		id: 7,
 		navn: 'Mockesen, Truls',
-		fodselsdato: '15.2.1989',
 		epost: 'truls.mockesen@fake.no',
 		arbeidssted: 'Ergoterapeuten Bergen',
 		hjelpemiddelsentral: 'Vestland',
@@ -74,7 +67,6 @@ export const mockPersoner: Person[] = [
 	{
 		id: 8,
 		navn: 'Testrud, Ingeborg',
-		fodselsdato: '28.4.1994',
 		epost: 'ingeborg.testrud@example.no',
 		arbeidssted: 'Trondheim Ergoterapi Klinikk',
 		hjelpemiddelsentral: 'Trøndelag',
@@ -84,7 +76,6 @@ export const mockPersoner: Person[] = [
 	{
 		id: 9,
 		navn: 'Dummyrud, Geir',
-		fodselsdato: '19.10.1987',
 		epost: 'geir.dummyrud@mock.no',
 		arbeidssted: 'Haugesund Sykehus',
 		hjelpemiddelsentral: 'Rogaland',
@@ -94,7 +85,6 @@ export const mockPersoner: Person[] = [
 	{
 		id: 10,
 		navn: 'Fakestad, Marit',
-		fodselsdato: '5.6.1996',
 		epost: 'marit.fakestad@testdata.no',
 		arbeidssted: 'Universitetssykehuset Nord-Norge',
 		hjelpemiddelsentral: 'Troms og Finnmark',
@@ -104,7 +94,6 @@ export const mockPersoner: Person[] = [
 	{
 		id: 11,
 		navn: 'Testmann, Erlend',
-		fodselsdato: '12.1.1990',
 		epost: 'erlend.testmann@fake.no',
 		arbeidssted: 'Stavanger Universitetssjukehus',
 		hjelpemiddelsentral: 'Rogaland',
@@ -114,7 +103,6 @@ export const mockPersoner: Person[] = [
 	{
 		id: 12,
 		navn: 'Mockmyr, Astrid',
-		fodselsdato: '27.8.1991',
 		epost: 'astrid.mockmyr@example.no',
 		arbeidssted: 'Molde Sjukehus',
 		hjelpemiddelsentral: 'Møre og Romsdal',
@@ -124,7 +112,6 @@ export const mockPersoner: Person[] = [
 	{
 		id: 13,
 		navn: 'Simulerstad, Rune',
-		fodselsdato: '3.3.1993',
 		epost: 'rune.simulerstad@mock.no',
 		arbeidssted: 'Lillehammer Rehabiliteringssenter',
 		hjelpemiddelsentral: 'Innlandet (Gjøvik)',
@@ -134,7 +121,6 @@ export const mockPersoner: Person[] = [
 	{
 		id: 14,
 		navn: 'Testberg, Siri',
-		fodselsdato: '21.11.1988',
 		epost: 'siri.testberg@testdata.no',
 		arbeidssted: 'Diakonhjemmet Sykehus',
 		hjelpemiddelsentral: 'Oslo',
@@ -144,7 +130,6 @@ export const mockPersoner: Person[] = [
 	{
 		id: 15,
 		navn: 'Dummyholt, Magnus',
-		fodselsdato: '14.9.1995',
 		epost: 'magnus.dummyholt@fake.no',
 		arbeidssted: 'Ålesund Sjukehus',
 		hjelpemiddelsentral: 'Møre og Romsdal',
@@ -154,7 +139,6 @@ export const mockPersoner: Person[] = [
 	{
 		id: 16,
 		navn: 'Fakevik, Tone',
-		fodselsdato: '7.5.1992',
 		epost: 'tone.fakevik@example.no',
 		arbeidssted: 'Bodø Sjukehus',
 		hjelpemiddelsentral: 'Nordland',
@@ -164,7 +148,6 @@ export const mockPersoner: Person[] = [
 	{
 		id: 17,
 		navn: 'Testli, Knut',
-		fodselsdato: '30.12.1989',
 		epost: 'knut.testli@mock.no',
 		arbeidssted: 'Tønsberg Rehabiliteringsklinikk',
 		hjelpemiddelsentral: 'Vestfold og Telemark',
@@ -174,7 +157,6 @@ export const mockPersoner: Person[] = [
 	{
 		id: 18,
 		navn: 'Mockdal, Berit',
-		fodselsdato: '18.2.1994',
 		epost: 'berit.mockdal@testdata.no',
 		arbeidssted: 'Rikshospitalet',
 		hjelpemiddelsentral: 'Oslo',
@@ -184,7 +166,6 @@ export const mockPersoner: Person[] = [
 	{
 		id: 19,
 		navn: 'Simulberg, Frode',
-		fodselsdato: '9.8.1986',
 		epost: 'frode.simulberg@fake.no',
 		arbeidssted: 'Haraldsplass Diakonale Sykehus',
 		hjelpemiddelsentral: 'Vestland',
@@ -194,7 +175,6 @@ export const mockPersoner: Person[] = [
 	{
 		id: 20,
 		navn: 'Testmo, Gunnhild',
-		fodselsdato: '26.10.1993',
 		epost: 'gunnhild.testmo@example.no',
 		arbeidssted: 'Fredrikstad Blødersenter',
 		hjelpemiddelsentral: 'Øst-Viken',

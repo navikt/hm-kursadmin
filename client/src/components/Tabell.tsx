@@ -90,9 +90,6 @@ const Tabell = ({
 			>
 				<Table.Header>
 					<Table.Row>
-						<Table.ColumnHeader sortKey="fnr" sortable>
-							Fødselsdato
-						</Table.ColumnHeader>
 						<Table.ColumnHeader sortKey="navn" sortable>
 							Navn
 						</Table.ColumnHeader>
@@ -116,18 +113,9 @@ const Tabell = ({
 						</Table.Row>
 					)}
 					{sortData.map((person) => {
-						const {
-							id,
-							navn,
-							fodselsdato,
-							epost,
-							arbeidssted,
-							del1Dato,
-							del2Dato,
-						} = person;
+						const { id, navn, epost, arbeidssted, del1Dato, del2Dato } = person;
 						return (
 							<Table.Row key={id}>
-								<Table.DataCell>{fodselsdato}</Table.DataCell>
 								<Table.HeaderCell scope="row">{navn}</Table.HeaderCell>
 								<Table.DataCell>{epost}</Table.DataCell>
 								<Table.DataCell>{arbeidssted}</Table.DataCell>

@@ -1,7 +1,6 @@
 export interface Person {
 	id: number;
 	navn: string;
-	fodselsdato: string;
 	epost: string;
 	arbeidssted: string;
 	hjelpemiddelsentral: string;
