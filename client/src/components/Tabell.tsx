@@ -14,9 +14,15 @@ interface Props {
 	sokeverdi: string;
 	hjelpemiddelsentralVerdi: string;
 	personer: Person[];
+	isPending?: boolean;
 }
 
-const Tabell = ({ sokeverdi, hjelpemiddelsentralVerdi, personer }: Props) => {
+const Tabell = ({
+	sokeverdi,
+	hjelpemiddelsentralVerdi,
+	personer,
+	isPending,
+}: Props) => {
 	const [tabellside, setTabellside] = useState(1);
 	const [sort, setSort] = useState<ScopedSortState | undefined>();
 	const raderPerSide = 8;
@@ -55,8 +61,7 @@ const Tabell = ({ sokeverdi, hjelpemiddelsentralVerdi, personer }: Props) => {
 
 		const matcherHjelpemiddelsentral =
 			!hjelpemiddelsentralVerdi ||
-			person.hjelpemiddelsentral.toLowerCase() ===
-				hjelpemiddelsentralVerdi.toLowerCase();
+			person.hjelpemiddelsentral === hjelpemiddelsentralVerdi;
 
 		return matcherSok && matcherHjelpemiddelsentral;
 	});
@@ -105,6 +110,11 @@ const Tabell = ({ sokeverdi, hjelpemiddelsentralVerdi, personer }: Props) => {
 					</Table.Row>
 				</Table.Header>
 				<Table.Body>
+					{isPending && (
+						<Table.Row>
+							<Table.DataCell colSpan={9}>Laster personer...</Table.DataCell>
+						</Table.Row>
+					)}
 					{sortData.map((person) => {
 						const {
 							id,

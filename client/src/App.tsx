@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Heading, Theme, VStack } from '@navikt/ds-react';
+import { Alert, Heading, Theme, VStack } from '@navikt/ds-react';
 import Tabell from './components/Tabell';
 import Filtrering from './components/Filtrering';
 import { useQuery } from '@tanstack/react-query';
@@ -15,12 +15,17 @@ function App() {
 		data: personer = [],
 	} = useQuery<Person[]>({
 		queryKey: ['personer'],
-		queryFn: () => fetch('/api/personer').then((res) => res.json()),
+		queryFn: () => {
+			return fetch('/api/personer').then((response) => {
+				if (!response.ok) {
+					throw new Error(
+						`Feil ved henting av personer: ${response.status} ${response.statusText}`
+					);
+				}
+				return response.json();
+			});
+		},
 	});
-
-	if (isPending) return 'Loading...';
-
-	if (error) return 'An error has occurred: ' + error.message;
 
 	return (
 		<Theme theme="light">
@@ -35,10 +40,12 @@ function App() {
 					setHjelpemiddelsentralVerdi={setHjelpemiddelsentralVerdi}
 					personer={personer}
 				/>
+				{error && <Alert variant="error">{error.message}</Alert>}
 				<Tabell
 					sokeverdi={sokeverdi}
 					hjelpemiddelsentralVerdi={hjelpemiddelsentralVerdi}
 					personer={personer}
+					isPending={isPending}
 				/>
 			</VStack>
 		</Theme>
