@@ -92,8 +92,9 @@ const GodkjennEllerFjernGodkjenning = ({ person, del2Dato }: Props) => {
 					<ActionMenu.Trigger>
 						<Button
 							variant="tertiary-neutral"
-							icon={<MenuElipsisVerticalIcon title="handlinger" />}
+							icon={<MenuElipsisVerticalIcon title="Handlinger" />}
 							size="small"
+							aria-label="Handlinger"
 						/>
 					</ActionMenu.Trigger>
 					<ActionMenu.Content>

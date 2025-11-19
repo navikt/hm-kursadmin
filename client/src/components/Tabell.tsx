@@ -103,7 +103,10 @@ const Tabell = ({
 							Dato for del 2
 						</Table.ColumnHeader>
 						<Table.HeaderCell scope="col">Status del 2</Table.HeaderCell>
-						<Table.HeaderCell scope="col"></Table.HeaderCell>
+						<Table.HeaderCell
+							scope="col"
+							aria-label="Handlinger"
+						></Table.HeaderCell>
 					</Table.Row>
 				</Table.Header>
 				<Table.Body>
