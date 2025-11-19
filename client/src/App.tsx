@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { Alert, Heading, Theme, VStack } from '@navikt/ds-react';
 import Tabell from './components/Tabell';
-import Filtrering from './components/Filtrering';
+import Filtrering from './components/Filtrering/Filtrering';
 import { useQuery } from '@tanstack/react-query';
 import type { Person } from './types/person';
 
 function App() {
 	const [sokeverdi, setSokeverdi] = useState('');
 	const [hjelpemiddelsentralVerdi, setHjelpemiddelsentralVerdi] = useState('');
+	const [statusDel2Verdi, setStatusDel2Verdi] = useState('');
 
 	const {
 		isPending,
@@ -38,12 +39,15 @@ function App() {
 					setSokeverdi={setSokeverdi}
 					hjelpemiddelsentralVerdi={hjelpemiddelsentralVerdi}
 					setHjelpemiddelsentralVerdi={setHjelpemiddelsentralVerdi}
+					statusDel2Verdi={statusDel2Verdi}
+					setStatusDel2Verdi={setStatusDel2Verdi}
 					personer={personer}
 				/>
 				{error && <Alert variant="error">{error.message}</Alert>}
 				<Tabell
 					sokeverdi={sokeverdi}
 					hjelpemiddelsentralVerdi={hjelpemiddelsentralVerdi}
+					statusDel2Verdi={statusDel2Verdi}
 					personer={personer}
 					isPending={isPending}
 				/>

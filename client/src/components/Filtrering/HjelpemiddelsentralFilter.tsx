@@ -1,5 +1,5 @@
 import { Select } from '@navikt/ds-react';
-import type { Person } from '../types/person';
+import type { Person } from '../../types/person';
 
 interface Props {
 	hjelpemiddelsentralVerdi: string;
