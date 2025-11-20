@@ -47,7 +47,6 @@ function App() {
 	const generateErrors = () => {
 		const allErrors = [];
 
-		// React Query error (ikke lukkbar)
 		if (error) {
 			allErrors.push(
 				<Alert key="query-error" variant="error">
@@ -56,7 +55,6 @@ function App() {
 			);
 		}
 
-		// Alle andre feil (lukkbare)
 		errors.forEach((err) => {
 			allErrors.push(
 				<Alert
