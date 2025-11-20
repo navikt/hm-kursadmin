@@ -22,11 +22,11 @@ export const lagTidsstempel = () => {
 	});
 };
 
-export const lagHandlingstekst = (handling: {
-	type: 'GODKJENT_DEL2' | 'FJERNET_GODKJENNING';
-	personNavn: string;
-	kursDato: string;
-}) => {
+import type { Handling } from '../types/handling';
+
+export const lagHandlingstekst = (
+	handling: Pick<Handling, 'type' | 'personNavn' | 'kursDato'>
+) => {
 	const datoTekst = new Date(handling.kursDato).toLocaleDateString('nb-NO');
 
 	if (handling.type === 'GODKJENT_DEL2') {

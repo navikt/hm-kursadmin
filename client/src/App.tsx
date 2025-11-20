@@ -4,16 +4,9 @@ import Tabell from './components/Tabell';
 import Filtrering from './components/Filtrering/Filtrering';
 import { useQuery } from '@tanstack/react-query';
 import type { Person } from './types/person';
+import type { Handling } from './types/handling';
 import Handlingslog from './components/Handlingslog';
 import { lagTidsstempel } from './helpers/utils';
-
-interface Handling {
-	id: string;
-	type: 'GODKJENT_DEL2' | 'FJERNET_GODKJENNING';
-	personNavn: string;
-	kursDato: string;
-	tidspunkt: string;
-}
 
 function App() {
 	const [sokeverdi, setSokeverdi] = useState('');

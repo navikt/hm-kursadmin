@@ -1,15 +1,8 @@
 import { useRef } from 'react';
 import { Button, Modal, Process, BodyShort } from '@navikt/ds-react';
 import { ClockDashedIcon } from '@navikt/aksel-icons';
+import type { Handling } from '../types/handling';
 import { lagHandlingstekst } from '../helpers/utils';
-
-interface Handling {
-	id: string;
-	type: 'GODKJENT_DEL2' | 'FJERNET_GODKJENNING';
-	personNavn: string;
-	kursDato: string;
-	tidspunkt: string;
-}
 
 interface HandlingslogProps {
 	handlinger: Handling[];
