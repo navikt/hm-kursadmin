@@ -21,6 +21,7 @@ const HjelpemiddelsentralFilter = ({
 			label="Velg hjelpemiddelsentral"
 			value={hjelpemiddelsentralVerdi}
 			onChange={(e) => setHjelpemiddelsentralVerdi(e.target.value)}
+			autoComplete="off"
 		>
 			<option value="">- Velg hjelpemiddelsentral -</option>
 			{unikeHjelpemiddelsentraler.map((hjelpemiddelsentral) => (

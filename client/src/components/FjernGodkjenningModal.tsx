@@ -55,7 +55,7 @@ const FjernGodkjenningModal = ({
 			onClose={onClose}
 			header={{
 				heading: 'Er du sikker?',
-				size: 'small',
+				size: 'medium',
 				closeButton: false,
 			}}
 			width="small"

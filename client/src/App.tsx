@@ -73,30 +73,32 @@ function App() {
 
 	return (
 		<Theme theme="light">
-			<VStack margin="space-20" gap="space-16">
-				<Heading size="large" level="1">
-					Administreringsverktøy for ERS kurs del 2
-				</Heading>
-				<Filtrering
-					sokeverdi={sokeverdi}
-					setSokeverdi={setSokeverdi}
-					hjelpemiddelsentralVerdi={hjelpemiddelsentralVerdi}
-					setHjelpemiddelsentralVerdi={setHjelpemiddelsentralVerdi}
-					statusDel2Verdi={statusDel2Verdi}
-					setStatusDel2Verdi={setStatusDel2Verdi}
-					personer={personer}
-				/>
-				<VStack gap="space-8">{generateErrors()}</VStack>
-				<Tabell
-					sokeverdi={sokeverdi}
-					hjelpemiddelsentralVerdi={hjelpemiddelsentralVerdi}
-					statusDel2Verdi={statusDel2Verdi}
-					personer={personer}
-					isPending={isPending}
-					onError={addError}
-					onClearErrors={clearAllErrors}
-				/>
-			</VStack>
+			<main>
+				<VStack margin="space-20" gap="space-16">
+					<Heading size="large" level="1">
+						Administreringsverktøy for ERS kurs del 2
+					</Heading>
+					<Filtrering
+						sokeverdi={sokeverdi}
+						setSokeverdi={setSokeverdi}
+						hjelpemiddelsentralVerdi={hjelpemiddelsentralVerdi}
+						setHjelpemiddelsentralVerdi={setHjelpemiddelsentralVerdi}
+						statusDel2Verdi={statusDel2Verdi}
+						setStatusDel2Verdi={setStatusDel2Verdi}
+						personer={personer}
+					/>
+					<VStack gap="space-8">{generateErrors()}</VStack>
+					<Tabell
+						sokeverdi={sokeverdi}
+						hjelpemiddelsentralVerdi={hjelpemiddelsentralVerdi}
+						statusDel2Verdi={statusDel2Verdi}
+						personer={personer}
+						isPending={isPending}
+						onError={addError}
+						onClearErrors={clearAllErrors}
+					/>
+				</VStack>
+			</main>
 		</Theme>
 	);
 }

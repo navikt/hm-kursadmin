@@ -14,6 +14,7 @@ const Sok = ({ sokeverdi, setSokeverdi }: Props) => {
 				hideLabel={false}
 				htmlSize="30"
 				autoFocus
+				autoComplete="off"
 				value={sokeverdi}
 				onChange={(verdi) => setSokeverdi(verdi)}
 			/>

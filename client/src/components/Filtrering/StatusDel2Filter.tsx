@@ -11,6 +11,7 @@ const StatusDel2Filter = ({ statusDel2Verdi, setStatusDel2Verdi }: Props) => {
 			label="Velg status Del 2"
 			value={statusDel2Verdi}
 			onChange={(e) => setStatusDel2Verdi(e.target.value)}
+			autoComplete="off"
 		>
 			<option value="">- Velg status Del 2 -</option>
 			<option value="ikke-fullført">Ikke fullført</option>
