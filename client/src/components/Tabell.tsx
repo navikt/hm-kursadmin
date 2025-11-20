@@ -18,6 +18,11 @@ interface Props {
 	isPending?: boolean;
 	onError: (errorMessage: string) => void;
 	onClearErrors: () => void;
+	onLeggTilHandling: (data: {
+		type: 'GODKJENT_DEL2' | 'FJERNET_GODKJENNING';
+		personNavn: string;
+		kursDato: string;
+	}) => void;
 }
 
 const Tabell = ({
@@ -28,6 +33,7 @@ const Tabell = ({
 	isPending,
 	onError,
 	onClearErrors,
+	onLeggTilHandling,
 }: Props) => {
 	const [tabellside, setTabellside] = useState(1);
 	const [sort, setSort] = useState<ScopedSortState | undefined>();
@@ -148,6 +154,7 @@ const Tabell = ({
 											del2Dato={del2Dato}
 											onError={onError}
 											onClearErrors={onClearErrors}
+											onLeggTilHandling={onLeggTilHandling}
 										/>
 									</div>
 								</Table.DataCell>
