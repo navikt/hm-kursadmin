@@ -43,6 +43,14 @@ const FjernGodkjenningModal = ({
 			queryClient.invalidateQueries({ queryKey: ['personer'] });
 			onClearErrors();
 			onConfirm();
+
+			if (person.del2Dato) {
+				window.leggTilHandling?.({
+					type: 'FJERNET_GODKJENNING',
+					personNavn: person.navn,
+					kursDato: person.del2Dato,
+				});
+			}
 		},
 		onError: (error) => {
 			onError(`Kunne ikke fjerne godkjenning: ${error.message}`);

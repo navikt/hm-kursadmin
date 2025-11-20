@@ -52,10 +52,16 @@ const GodkjennEllerFjernGodkjenning = ({
 				return response.json();
 			});
 		},
-		onSuccess: () => {
+		onSuccess: (_, kursDato) => {
 			queryClient.invalidateQueries({ queryKey: ['personer'] });
 			setDatePickerOpen(false);
 			onClearErrors();
+
+			window.leggTilHandling?.({
+				type: 'GODKJENT_DEL2',
+				personNavn: person.navn,
+				kursDato: kursDato,
+			});
 		},
 		onError: (error) => {
 			onError(`Kunne ikke godkjenne del 2: ${error.message}`);
