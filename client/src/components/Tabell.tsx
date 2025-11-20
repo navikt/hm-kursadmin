@@ -141,13 +141,15 @@ const Tabell = ({
 								<Table.DataCell>
 									<Del2Tag del2Dato={del2Dato} />
 								</Table.DataCell>
-								<Table.DataCell className="flex-content-right">
-									<GodkjennEllerFjernGodkjenning
-										person={person}
-										del2Dato={del2Dato}
-										onError={onError}
-										onClearErrors={onClearErrors}
-									/>
+								<Table.DataCell>
+									<div className="flex-content-right">
+										<GodkjennEllerFjernGodkjenning
+											person={person}
+											del2Dato={del2Dato}
+											onError={onError}
+											onClearErrors={onClearErrors}
+										/>
+									</div>
 								</Table.DataCell>
 							</Table.Row>
 						);
