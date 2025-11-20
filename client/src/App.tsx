@@ -9,6 +9,7 @@ function App() {
 	const [sokeverdi, setSokeverdi] = useState('');
 	const [hjelpemiddelsentralVerdi, setHjelpemiddelsentralVerdi] = useState('');
 	const [statusDel2Verdi, setStatusDel2Verdi] = useState('');
+	const [godkjenningError, setGodkjenningError] = useState<string | null>(null);
 
 	const {
 		isPending,
@@ -28,6 +29,36 @@ function App() {
 		},
 	});
 
+	const handleGodkjenningError = (errorMessage: string) => {
+		setGodkjenningError(errorMessage);
+	};
+
+	const clearGodkjenningError = () => {
+		setGodkjenningError(null);
+	};
+
+	const generateErrors = () => {
+		const errors = [];
+
+		if (error) {
+			errors.push(
+				<Alert key="query-error" variant="error" closeButton>
+					{error.message}
+				</Alert>
+			);
+		}
+
+		if (godkjenningError) {
+			errors.push(
+				<Alert key="godkjenning-error" variant="error" closeButton>
+					{godkjenningError}
+				</Alert>
+			);
+		}
+
+		return errors;
+	};
+
 	return (
 		<Theme theme="light">
 			<VStack margin="space-20" gap="space-16">
@@ -43,13 +74,15 @@ function App() {
 					setStatusDel2Verdi={setStatusDel2Verdi}
 					personer={personer}
 				/>
-				{error && <Alert variant="error">{error.message}</Alert>}
+				<VStack gap="space-8">{generateErrors()}</VStack>
 				<Tabell
 					sokeverdi={sokeverdi}
 					hjelpemiddelsentralVerdi={hjelpemiddelsentralVerdi}
 					statusDel2Verdi={statusDel2Verdi}
 					personer={personer}
 					isPending={isPending}
+					onGodkjenningError={handleGodkjenningError}
+					onClearGodkjenningError={clearGodkjenningError}
 				/>
 			</VStack>
 		</Theme>
