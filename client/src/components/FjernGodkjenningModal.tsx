@@ -46,7 +46,6 @@ const FjernGodkjenningModal = ({
 		},
 		onError: (error) => {
 			onError(`Kunne ikke fjerne godkjenning: ${error.message}`);
-			onClose();
 		},
 	});
 
@@ -72,8 +71,8 @@ const FjernGodkjenningModal = ({
 					type="button"
 					variant="danger"
 					onClick={() => {
-						onClearErrors();
 						fjernDel2Mutation.mutate();
+						onClose();
 					}}
 					loading={fjernDel2Mutation.isPending}
 				>
