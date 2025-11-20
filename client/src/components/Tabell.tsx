@@ -137,7 +137,7 @@ const Tabell = ({
 								<Table.DataCell>
 									<Del2Tag del2Dato={del2Dato} />
 								</Table.DataCell>
-								<Table.DataCell className="text-align-right">
+								<Table.DataCell className="flex-content-right">
 									<GodkjennEllerFjernGodkjenning
 										person={person}
 										del2Dato={del2Dato}
