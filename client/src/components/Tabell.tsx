@@ -16,8 +16,8 @@ interface Props {
 	statusDel2Verdi: string;
 	personer: Person[];
 	isPending?: boolean;
-	onGodkjenningError: (errorMessage: string) => void;
-	onClearGodkjenningError: () => void;
+	onError: (errorMessage: string) => void;
+	onClearErrors: () => void;
 }
 
 const Tabell = ({
@@ -26,8 +26,8 @@ const Tabell = ({
 	statusDel2Verdi,
 	personer,
 	isPending,
-	onGodkjenningError,
-	onClearGodkjenningError,
+	onError,
+	onClearErrors,
 }: Props) => {
 	const [tabellside, setTabellside] = useState(1);
 	const [sort, setSort] = useState<ScopedSortState | undefined>();
@@ -145,8 +145,8 @@ const Tabell = ({
 									<GodkjennEllerFjernGodkjenning
 										person={person}
 										del2Dato={del2Dato}
-										onGodkjenningError={onGodkjenningError}
-										onClearGodkjenningError={onClearGodkjenningError}
+										onError={onError}
+										onClearErrors={onClearErrors}
 									/>
 								</Table.DataCell>
 							</Table.Row>

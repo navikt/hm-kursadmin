@@ -10,15 +10,15 @@ import { formaterTilISODato } from '../helpers/utils';
 interface Props {
 	person: Person;
 	del2Dato: string | null;
-	onGodkjenningError: (errorMessage: string) => void;
-	onClearGodkjenningError: () => void;
+	onError: (errorMessage: string) => void;
+	onClearErrors: () => void;
 }
 
 const GodkjennEllerFjernGodkjenning = ({
 	person,
 	del2Dato,
-	onGodkjenningError,
-	onClearGodkjenningError,
+	onError,
+	onClearErrors,
 }: Props) => {
 	const [modalOpen, setModalOpen] = useState(false);
 	const [datePickerOpen, setDatePickerOpen] = useState(false);
@@ -55,10 +55,10 @@ const GodkjennEllerFjernGodkjenning = ({
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ['personer'] });
 			setDatePickerOpen(false);
-			onClearGodkjenningError();
+			onClearErrors();
 		},
 		onError: (error) => {
-			onGodkjenningError(`Kunne ikke godkjenne del 2: ${error.message}`);
+			onError(`Kunne ikke godkjenne del 2: ${error.message}`);
 		},
 	});
 
@@ -94,8 +94,8 @@ const GodkjennEllerFjernGodkjenning = ({
 					open={modalOpen}
 					onClose={() => setModalOpen(false)}
 					onConfirm={() => setModalOpen(false)}
-					onGodkjenningError={onGodkjenningError}
-					onClearGodkjenningError={onClearGodkjenningError}
+					onError={onError}
+					onClearErrors={onClearErrors}
 				/>
 				<ActionMenu>
 					<ActionMenu.Trigger>

@@ -9,8 +9,9 @@ function App() {
 	const [sokeverdi, setSokeverdi] = useState('');
 	const [hjelpemiddelsentralVerdi, setHjelpemiddelsentralVerdi] = useState('');
 	const [statusDel2Verdi, setStatusDel2Verdi] = useState('');
-	const [godkjenningError, setGodkjenningError] = useState<string | null>(null);
-	const [showGodkjenningError, setShowGodkjenningError] = useState(true);
+	const [errors, setErrors] = useState<Array<{ id: string; message: string }>>(
+		[]
+	);
 
 	const {
 		isPending,
@@ -30,44 +31,46 @@ function App() {
 		},
 	});
 
-	const handleGodkjenningError = (errorMessage: string) => {
-		setGodkjenningError(errorMessage);
-		setShowGodkjenningError(true);
+	const addError = (errorMessage: string) => {
+		const errorId = Date.now().toString();
+		setErrors((prev) => [...prev, { id: errorId, message: errorMessage }]);
 	};
 
-	const clearGodkjenningError = () => {
-		setGodkjenningError(null);
+	const clearAllErrors = () => {
+		setErrors([]);
 	};
 
-	const hideGodkjenningError = () => {
-		setShowGodkjenningError(false);
+	const removeError = (errorId: string) => {
+		setErrors((prev) => prev.filter((error) => error.id !== errorId));
 	};
 
 	const generateErrors = () => {
-		const errors = [];
+		const allErrors = [];
 
+		// React Query error (ikke lukkbar)
 		if (error) {
-			errors.push(
-				<Alert key="query-error" variant="error" closeButton>
+			allErrors.push(
+				<Alert key="query-error" variant="error">
 					{error.message}
 				</Alert>
 			);
 		}
 
-		if (godkjenningError && showGodkjenningError) {
-			errors.push(
+		// Alle andre feil (lukkbare)
+		errors.forEach((err) => {
+			allErrors.push(
 				<Alert
-					key="godkjenning-error"
+					key={`error-${err.id}`}
 					variant="error"
 					closeButton
-					onClose={hideGodkjenningError}
+					onClose={() => removeError(err.id)}
 				>
-					{godkjenningError}
+					{err.message}
 				</Alert>
 			);
-		}
+		});
 
-		return errors;
+		return allErrors;
 	};
 
 	return (
@@ -92,8 +95,8 @@ function App() {
 					statusDel2Verdi={statusDel2Verdi}
 					personer={personer}
 					isPending={isPending}
-					onGodkjenningError={handleGodkjenningError}
-					onClearGodkjenningError={clearGodkjenningError}
+					onError={addError}
+					onClearErrors={clearAllErrors}
 				/>
 			</VStack>
 		</Theme>

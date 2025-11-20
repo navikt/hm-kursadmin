@@ -8,8 +8,8 @@ interface FjernGodkjenningModalProps {
 	open: boolean;
 	onClose: () => void;
 	onConfirm: () => void;
-	onGodkjenningError: (errorMessage: string) => void;
-	onClearGodkjenningError: () => void;
+	onError: (errorMessage: string) => void;
+	onClearErrors: () => void;
 }
 
 const FjernGodkjenningModal = ({
@@ -17,8 +17,8 @@ const FjernGodkjenningModal = ({
 	open,
 	onClose,
 	onConfirm,
-	onGodkjenningError,
-	onClearGodkjenningError,
+	onError,
+	onClearErrors,
 }: FjernGodkjenningModalProps) => {
 	const fjernDel2Mutation = useMutation({
 		mutationFn: () => {
@@ -41,11 +41,11 @@ const FjernGodkjenningModal = ({
 		},
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ['personer'] });
-			onClearGodkjenningError();
+			onClearErrors();
 			onConfirm();
 		},
 		onError: (error) => {
-			onGodkjenningError(`Kunne ikke fjerne godkjenning: ${error.message}`);
+			onError(`Kunne ikke fjerne godkjenning: ${error.message}`);
 			onClose();
 		},
 	});
@@ -72,7 +72,7 @@ const FjernGodkjenningModal = ({
 					type="button"
 					variant="danger"
 					onClick={() => {
-						onClearGodkjenningError();
+						onClearErrors();
 						fjernDel2Mutation.mutate();
 					}}
 					loading={fjernDel2Mutation.isPending}
