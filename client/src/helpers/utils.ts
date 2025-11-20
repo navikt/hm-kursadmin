@@ -12,7 +12,7 @@ export const formaterTilISODato = (date: Date) => {
 	return `${year}-${month}-${day}`;
 };
 
-export const lagTidsstempel = () => {
+export const lagTidsstempel = (): string => {
 	return new Date().toLocaleString('nb-NO', {
 		day: '2-digit',
 		month: 'short',
@@ -26,7 +26,7 @@ import type { Handling } from '../types/handling';
 
 export const lagHandlingstekst = (
 	handling: Pick<Handling, 'type' | 'personNavn' | 'kursDato'>
-) => {
+): string => {
 	const datoTekst = new Date(handling.kursDato).toLocaleDateString('nb-NO');
 
 	if (handling.type === 'GODKJENT_DEL2') {
