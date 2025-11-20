@@ -10,6 +10,7 @@ function App() {
 	const [hjelpemiddelsentralVerdi, setHjelpemiddelsentralVerdi] = useState('');
 	const [statusDel2Verdi, setStatusDel2Verdi] = useState('');
 	const [godkjenningError, setGodkjenningError] = useState<string | null>(null);
+	const [showGodkjenningError, setShowGodkjenningError] = useState(true);
 
 	const {
 		isPending,
@@ -31,10 +32,15 @@ function App() {
 
 	const handleGodkjenningError = (errorMessage: string) => {
 		setGodkjenningError(errorMessage);
+		setShowGodkjenningError(true);
 	};
 
 	const clearGodkjenningError = () => {
 		setGodkjenningError(null);
+	};
+
+	const hideGodkjenningError = () => {
+		setShowGodkjenningError(false);
 	};
 
 	const generateErrors = () => {
@@ -48,9 +54,14 @@ function App() {
 			);
 		}
 
-		if (godkjenningError) {
+		if (godkjenningError && showGodkjenningError) {
 			errors.push(
-				<Alert key="godkjenning-error" variant="error" closeButton>
+				<Alert
+					key="godkjenning-error"
+					variant="error"
+					closeButton
+					onClose={hideGodkjenningError}
+				>
 					{godkjenningError}
 				</Alert>
 			);
