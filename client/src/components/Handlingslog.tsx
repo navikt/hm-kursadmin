@@ -11,28 +11,37 @@ interface Handling {
 	tidspunkt: string;
 }
 
+const useHandlingslogg = () => {
+	const [handlinger, setHandlinger] = useState<Handling[]>([]);
+
+	const leggTil = React.useCallback(
+		(data: Omit<Handling, 'id' | 'tidspunkt'>) => {
+			const nyHandling: Handling = {
+				...data,
+				id: crypto.randomUUID(),
+				tidspunkt: lagTidsstempel(),
+			};
+			setHandlinger((prev) => [nyHandling, ...prev]);
+		},
+		[]
+	);
+
+	return { handlinger, leggTil };
+};
+
 declare global {
 	interface Window {
 		leggTilHandling?: (data: Omit<Handling, 'id' | 'tidspunkt'>) => void;
 	}
 }
 
-const handlinger: Handling[] = [];
-
 const Handlingslog = () => {
 	const ref = useRef<HTMLDialogElement>(null);
-	const [, forceUpdate] = useState({});
+	const { handlinger, leggTil } = useHandlingslogg();
 
 	React.useEffect(() => {
-		window.leggTilHandling = (data: Omit<Handling, 'id' | 'tidspunkt'>) => {
-			handlinger.unshift({
-				...data,
-				id: crypto.randomUUID(),
-				tidspunkt: lagTidsstempel(),
-			});
-			forceUpdate({});
-		};
-	}, [forceUpdate]);
+		window.leggTilHandling = leggTil;
+	}, [leggTil]);
 
 	return (
 		<>
