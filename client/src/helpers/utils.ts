@@ -1,3 +1,5 @@
+import type { Handling } from '../types/handling';
+
 export const formaterNorskDato = (dato: string) =>
 	new Date(dato).toLocaleString('no', {
 		day: 'numeric',
@@ -22,17 +24,17 @@ export const lagTidsstempel = (): string => {
 	});
 };
 
-import type { Handling } from '../types/handling';
-
 export const lagHandlingstekst = (
 	handling: Pick<Handling, 'type' | 'personNavn' | 'kursDato'>
 ): string => {
 	const datoTekst = new Date(handling.kursDato).toLocaleDateString('nb-NO');
 
-	if (handling.type === 'GODKJENT_DEL2') {
-		return `Godkjent del 2 for person: ${handling.personNavn} den ${datoTekst}`;
-	} else if (handling.type === 'FJERNET_GODKJENNING') {
-		return `Fjernet godkjenning for person: ${handling.personNavn} den ${datoTekst}`;
+	switch (handling.type) {
+		case 'GODKJENT_DEL2':
+			return `Godkjent del 2 for person: ${handling.personNavn} den ${datoTekst}`;
+		case 'FJERNET_GODKJENNING':
+			return `Fjernet godkjenning for person: ${handling.personNavn} den ${datoTekst}`;
+		default:
+			throw new Error(`Unknown handling type: ${handling.type}`);
 	}
-	return '';
 };
