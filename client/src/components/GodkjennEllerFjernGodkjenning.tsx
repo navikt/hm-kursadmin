@@ -12,6 +12,11 @@ interface Props {
 	del2Dato: string | null;
 	onError: (errorMessage: string) => void;
 	onClearErrors: () => void;
+	onLeggTilHandling: (data: {
+		type: 'GODKJENT_DEL2' | 'FJERNET_GODKJENNING';
+		personNavn: string;
+		kursDato: string;
+	}) => void;
 }
 
 const GodkjennEllerFjernGodkjenning = ({
@@ -19,6 +24,7 @@ const GodkjennEllerFjernGodkjenning = ({
 	del2Dato,
 	onError,
 	onClearErrors,
+	onLeggTilHandling,
 }: Props) => {
 	const [modalOpen, setModalOpen] = useState(false);
 	const [datePickerOpen, setDatePickerOpen] = useState(false);
@@ -57,7 +63,7 @@ const GodkjennEllerFjernGodkjenning = ({
 			setDatePickerOpen(false);
 			onClearErrors();
 
-			window.leggTilHandling?.({
+			onLeggTilHandling({
 				type: 'GODKJENT_DEL2',
 				personNavn: person.navn,
 				kursDato: kursDato,
@@ -102,6 +108,7 @@ const GodkjennEllerFjernGodkjenning = ({
 					onConfirm={() => setModalOpen(false)}
 					onError={onError}
 					onClearErrors={onClearErrors}
+					onLeggTilHandling={onLeggTilHandling}
 				/>
 				<ActionMenu>
 					<ActionMenu.Trigger>

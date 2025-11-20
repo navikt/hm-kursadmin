@@ -1,16 +1,38 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { Alert, Heading, HStack, Theme, VStack } from '@navikt/ds-react';
 import Tabell from './components/Tabell';
 import Filtrering from './components/Filtrering/Filtrering';
 import { useQuery } from '@tanstack/react-query';
 import type { Person } from './types/person';
 import Handlingslog from './components/Handlingslog';
+import { lagTidsstempel } from './helpers/utils';
+
+interface Handling {
+	id: string;
+	type: 'GODKJENT_DEL2' | 'FJERNET_GODKJENNING';
+	personNavn: string;
+	kursDato: string;
+	tidspunkt: string;
+}
 
 function App() {
 	const [sokeverdi, setSokeverdi] = useState('');
 	const [hjelpemiddelsentralVerdi, setHjelpemiddelsentralVerdi] = useState('');
 	const [statusDel2Verdi, setStatusDel2Verdi] = useState('');
 	const [errors, setErrors] = useState<Array<{ id: string; message: string }>>(
+		[]
+	);
+	const [handlinger, setHandlinger] = useState<Handling[]>([]);
+
+	const leggTilHandling = useCallback(
+		(data: Omit<Handling, 'id' | 'tidspunkt'>) => {
+			const nyHandling: Handling = {
+				...data,
+				id: crypto.randomUUID(),
+				tidspunkt: lagTidsstempel(),
+			};
+			setHandlinger((prev) => [nyHandling, ...prev]);
+		},
 		[]
 	);
 
@@ -89,7 +111,7 @@ function App() {
 							setStatusDel2Verdi={setStatusDel2Verdi}
 							personer={personer}
 						/>
-						<Handlingslog />
+						<Handlingslog handlinger={handlinger} />
 					</HStack>
 					<VStack gap="space-8">{generateErrors()}</VStack>
 					<Tabell
@@ -100,6 +122,7 @@ function App() {
 						isPending={isPending}
 						onError={addError}
 						onClearErrors={clearAllErrors}
+						onLeggTilHandling={leggTilHandling}
 					/>
 				</VStack>
 			</main>

@@ -10,6 +10,11 @@ interface FjernGodkjenningModalProps {
 	onConfirm: () => void;
 	onError: (errorMessage: string) => void;
 	onClearErrors: () => void;
+	onLeggTilHandling: (data: {
+		type: 'GODKJENT_DEL2' | 'FJERNET_GODKJENNING';
+		personNavn: string;
+		kursDato: string;
+	}) => void;
 }
 
 const FjernGodkjenningModal = ({
@@ -19,6 +24,7 @@ const FjernGodkjenningModal = ({
 	onConfirm,
 	onError,
 	onClearErrors,
+	onLeggTilHandling,
 }: FjernGodkjenningModalProps) => {
 	const fjernDel2Mutation = useMutation({
 		mutationFn: () => {
@@ -45,7 +51,7 @@ const FjernGodkjenningModal = ({
 			onConfirm();
 
 			if (person.del2Dato) {
-				window.leggTilHandling?.({
+				onLeggTilHandling({
 					type: 'FJERNET_GODKJENNING',
 					personNavn: person.navn,
 					kursDato: person.del2Dato,

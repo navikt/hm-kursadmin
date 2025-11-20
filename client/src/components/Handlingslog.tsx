@@ -1,7 +1,7 @@
-import React, { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { Button, Modal, Process, BodyShort } from '@navikt/ds-react';
 import { ClockDashedIcon } from '@navikt/aksel-icons';
-import { lagHandlingstekst, lagTidsstempel } from '../helpers/utils';
+import { lagHandlingstekst } from '../helpers/utils';
 
 interface Handling {
 	id: string;
@@ -11,37 +11,12 @@ interface Handling {
 	tidspunkt: string;
 }
 
-const useHandlingslogg = () => {
-	const [handlinger, setHandlinger] = useState<Handling[]>([]);
-
-	const leggTil = React.useCallback(
-		(data: Omit<Handling, 'id' | 'tidspunkt'>) => {
-			const nyHandling: Handling = {
-				...data,
-				id: crypto.randomUUID(),
-				tidspunkt: lagTidsstempel(),
-			};
-			setHandlinger((prev) => [nyHandling, ...prev]);
-		},
-		[]
-	);
-
-	return { handlinger, leggTil };
-};
-
-declare global {
-	interface Window {
-		leggTilHandling?: (data: Omit<Handling, 'id' | 'tidspunkt'>) => void;
-	}
+interface HandlingslogProps {
+	handlinger: Handling[];
 }
 
-const Handlingslog = () => {
+const Handlingslog = ({ handlinger }: HandlingslogProps) => {
 	const ref = useRef<HTMLDialogElement>(null);
-	const { handlinger, leggTil } = useHandlingslogg();
-
-	React.useEffect(() => {
-		window.leggTilHandling = leggTil;
-	}, [leggTil]);
 
 	return (
 		<>
