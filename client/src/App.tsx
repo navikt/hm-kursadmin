@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { Alert, Heading, Theme, VStack } from '@navikt/ds-react';
+import { Alert, Heading, HStack, Theme, VStack } from '@navikt/ds-react';
 import Tabell from './components/Tabell';
 import Filtrering from './components/Filtrering/Filtrering';
 import { useQuery } from '@tanstack/react-query';
 import type { Person } from './types/person';
+import Handlingslog from './components/Handlingslog';
 
 function App() {
 	const [sokeverdi, setSokeverdi] = useState('');
@@ -78,15 +79,18 @@ function App() {
 					<Heading size="large" level="1">
 						Administreringsverktøy for ERS kurs del 2
 					</Heading>
-					<Filtrering
-						sokeverdi={sokeverdi}
-						setSokeverdi={setSokeverdi}
-						hjelpemiddelsentralVerdi={hjelpemiddelsentralVerdi}
-						setHjelpemiddelsentralVerdi={setHjelpemiddelsentralVerdi}
-						statusDel2Verdi={statusDel2Verdi}
-						setStatusDel2Verdi={setStatusDel2Verdi}
-						personer={personer}
-					/>
+					<HStack justify="space-between" align="end" width="100%">
+						<Filtrering
+							sokeverdi={sokeverdi}
+							setSokeverdi={setSokeverdi}
+							hjelpemiddelsentralVerdi={hjelpemiddelsentralVerdi}
+							setHjelpemiddelsentralVerdi={setHjelpemiddelsentralVerdi}
+							statusDel2Verdi={statusDel2Verdi}
+							setStatusDel2Verdi={setStatusDel2Verdi}
+							personer={personer}
+						/>
+						<Handlingslog />
+					</HStack>
 					<VStack gap="space-8">{generateErrors()}</VStack>
 					<Tabell
 						sokeverdi={sokeverdi}
