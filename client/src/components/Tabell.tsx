@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Pagination, Table, VStack } from '@navikt/ds-react';
 import type { SortState } from '@navikt/ds-react';
 import { formaterNorskDato } from '../helpers/utils';
@@ -6,6 +6,7 @@ import Del2Tag from './Del2Tag';
 import GodkjennEllerFjernGodkjenning from './GodkjennEllerFjernGodkjenning';
 import type { Person } from '../types/person';
 import Epost from './Epost';
+import { useMobile } from '../helpers/useMobile';
 
 interface ScopedSortState extends SortState {
 	orderBy: keyof Person;
@@ -38,19 +39,8 @@ const Tabell = ({
 }: Props) => {
 	const [tabellside, setTabellside] = useState(1);
 	const [sort, setSort] = useState<ScopedSortState | undefined>();
-	const [isMobile, setIsMobile] = useState(false);
+	const isMobile = useMobile();
 	const raderPerSide = 8;
-
-	useEffect(() => {
-		const checkIsMobile = () => {
-			setIsMobile(window.innerWidth < 1130);
-		};
-
-		checkIsMobile();
-		window.addEventListener('resize', checkIsMobile);
-
-		return () => window.removeEventListener('resize', checkIsMobile);
-	}, []);
 
 	const handleSortering = (kolonnenavn: ScopedSortState['orderBy']) => {
 		setSort(
