@@ -7,9 +7,8 @@ import {
 	type ScopedSortState,
 } from '../../helpers/tabellUtils';
 import { useTabellFiltrering } from '../../helpers/tabellFiltrering';
-import MobilTabellRad from './MobilTabellRad';
-import DesktopTabellRad from './DesktopTabellRad';
 import TabellHeader from './TabellHeader';
+import TabellRad from './TabellRad';
 
 interface Props {
 	sokeverdi: string;
@@ -79,25 +78,16 @@ const Tabell = ({
 							</Table.DataCell>
 						</Table.Row>
 					)}
-					{paginertData.map((person) =>
-						isMobile ? (
-							<MobilTabellRad
-								key={person.id}
-								person={person}
-								onError={onError}
-								onClearErrors={onClearErrors}
-								onLeggTilHandling={onLeggTilHandling}
-							/>
-						) : (
-							<DesktopTabellRad
-								key={person.id}
-								person={person}
-								onError={onError}
-								onClearErrors={onClearErrors}
-								onLeggTilHandling={onLeggTilHandling}
-							/>
-						)
-					)}
+					{paginertData.map((person) => (
+						<TabellRad
+							key={person.id}
+							isMobile={isMobile}
+							person={person}
+							onError={onError}
+							onClearErrors={onClearErrors}
+							onLeggTilHandling={onLeggTilHandling}
+						/>
+					))}
 				</Table.Body>
 			</Table>
 			<Pagination
