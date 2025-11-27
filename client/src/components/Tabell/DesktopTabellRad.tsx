@@ -1,0 +1,57 @@
+import { Table } from '@navikt/ds-react';
+import { formaterNorskDato } from '../../helpers/utils';
+import Del2Tag from '../Del2Tag';
+import GodkjennEllerFjernGodkjenning from '../GodkjennEllerFjernGodkjenning';
+import type { Person } from '../../types/person';
+import Epost from '../Epost';
+
+interface Props {
+	person: Person;
+	onError: (errorMessage: string) => void;
+	onClearErrors: () => void;
+	onLeggTilHandling: (data: {
+		type: 'GODKJENT_DEL2' | 'FJERNET_GODKJENNING';
+		personNavn: string;
+		kursDato: string;
+	}) => void;
+}
+
+const DesktopTabellRad = ({
+	person,
+	onError,
+	onClearErrors,
+	onLeggTilHandling,
+}: Props) => {
+	const { id, navn, epost, arbeidssted, del1Dato, del2Dato } = person;
+
+	return (
+		<Table.Row key={id}>
+			<Table.HeaderCell scope="row">{navn}</Table.HeaderCell>
+			<Table.DataCell>
+				<Epost epost={epost} />
+			</Table.DataCell>
+			<Table.DataCell>{arbeidssted}</Table.DataCell>
+			<Table.DataCell>{person.hjelpemiddelsentral}</Table.DataCell>
+			<Table.DataCell>{formaterNorskDato(del1Dato)}</Table.DataCell>
+			<Table.DataCell>
+				{del2Dato ? formaterNorskDato(del2Dato) : '-'}
+			</Table.DataCell>
+			<Table.DataCell>
+				<Del2Tag del2Dato={del2Dato} />
+			</Table.DataCell>
+			<Table.DataCell>
+				<div className="flex-content-right">
+					<GodkjennEllerFjernGodkjenning
+						person={person}
+						del2Dato={del2Dato}
+						onError={onError}
+						onClearErrors={onClearErrors}
+						onLeggTilHandling={onLeggTilHandling}
+					/>
+				</div>
+			</Table.DataCell>
+		</Table.Row>
+	);
+};
+
+export default DesktopTabellRad;
