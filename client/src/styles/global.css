@@ -2,3 +2,22 @@
 	display: flex;
 	justify-content: end;
 }
+
+html,
+body,
+#root {
+	background-color: var(--ax-bg-default);
+	color: var(--ax-text-default);
+	transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+html,
+body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+#root {
+	min-height: 100vh;
+}

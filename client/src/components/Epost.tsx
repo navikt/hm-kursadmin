@@ -14,6 +14,7 @@ const Epost = ({ epost }: Props) => {
 					copyText={epost}
 					icon={<FilesIcon aria-hidden />}
 					size="xsmall"
+					aria-label="Kopier e-postadresse"
 				/>
 			</Tooltip>
 		</HStack>

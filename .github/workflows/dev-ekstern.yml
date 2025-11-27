@@ -9,7 +9,7 @@ on:
       - 'CODEOWNERS'
     branches:
       - main
-      - mobil
+      - darkmode
 
 env:
   IMAGE: ghcr.io/${{ github.repository }}:${{ github.sha }}
