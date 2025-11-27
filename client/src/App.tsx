@@ -1,7 +1,8 @@
 import { useState, useCallback } from 'react';
-import { Alert, Heading, HStack, Theme, VStack } from '@navikt/ds-react';
+import { Alert, Heading, HStack, VStack } from '@navikt/ds-react';
 import Tabell from './components/Tabell/Tabell';
 import Filtrering from './components/Filtrering/Filtrering';
+import ThemeSwitcher from './components/ThemeSwitcher';
 import { useQuery } from '@tanstack/react-query';
 import type { Person } from './types/person';
 import type { Handling } from './types/handling';
@@ -88,38 +89,39 @@ function App() {
 	};
 
 	return (
-		<Theme theme="light">
-			<main>
-				<VStack margin="space-20" gap="space-16">
+		<main>
+			<VStack margin="space-20" gap="space-16">
+				<HStack justify="space-between" align="center" width="100%">
 					<Heading size="large" level="1">
 						Administreringsverktøy for ERS kurs del 2
 					</Heading>
-					<HStack justify="space-between" align="end" width="100%">
-						<Filtrering
-							sokeverdi={sokeverdi}
-							setSokeverdi={setSokeverdi}
-							hjelpemiddelsentralVerdi={hjelpemiddelsentralVerdi}
-							setHjelpemiddelsentralVerdi={setHjelpemiddelsentralVerdi}
-							statusDel2Verdi={statusDel2Verdi}
-							setStatusDel2Verdi={setStatusDel2Verdi}
-							personer={personer}
-						/>
-						<Handlingslog handlinger={handlinger} />
-					</HStack>
-					<VStack gap="space-8">{generateErrors()}</VStack>
-					<Tabell
+					<ThemeSwitcher />
+				</HStack>
+				<HStack justify="space-between" align="end" width="100%">
+					<Filtrering
 						sokeverdi={sokeverdi}
+						setSokeverdi={setSokeverdi}
 						hjelpemiddelsentralVerdi={hjelpemiddelsentralVerdi}
+						setHjelpemiddelsentralVerdi={setHjelpemiddelsentralVerdi}
 						statusDel2Verdi={statusDel2Verdi}
+						setStatusDel2Verdi={setStatusDel2Verdi}
 						personer={personer}
-						isPending={isPending}
-						onError={addError}
-						onClearErrors={clearAllErrors}
-						onLeggTilHandling={leggTilHandling}
 					/>
-				</VStack>
-			</main>
-		</Theme>
+					<Handlingslog handlinger={handlinger} />
+				</HStack>
+				<VStack gap="space-8">{generateErrors()}</VStack>
+				<Tabell
+					sokeverdi={sokeverdi}
+					hjelpemiddelsentralVerdi={hjelpemiddelsentralVerdi}
+					statusDel2Verdi={statusDel2Verdi}
+					personer={personer}
+					isPending={isPending}
+					onError={addError}
+					onClearErrors={clearAllErrors}
+					onLeggTilHandling={leggTilHandling}
+				/>
+			</VStack>
+		</main>
 	);
 }
 
