@@ -1,4 +1,4 @@
-import { Button, Tooltip } from '@navikt/ds-react';
+import { BodyShort, Button, HStack, Tooltip } from '@navikt/ds-react';
 import { FilesIcon } from '@navikt/aksel-icons';
 import { useState } from 'react';
 
@@ -15,20 +15,23 @@ const KopierEpostadresse = ({ epost }: IProps) => {
 
 		setTimeout(() => {
 			setTooltipText('Kopier e-postadresse');
-		}, 2000);
+		}, 1000);
 	};
 
 	return (
-		<Tooltip content={tooltipText} describesChild>
-			<Button
-				variant="tertiary"
-				size="small"
-				onClick={handleKopier}
-				style={{ padding: 0 }}
-			>
-				<FilesIcon aria-hidden />
-			</Button>
-		</Tooltip>
+		<HStack>
+			<BodyShort>{epost}</BodyShort>
+			<Tooltip content={tooltipText} describesChild>
+				<Button
+					variant="tertiary"
+					size="small"
+					onClick={handleKopier}
+					style={{ padding: 0 }}
+				>
+					<FilesIcon aria-hidden />
+				</Button>
+			</Tooltip>
+		</HStack>
 	);
 };
 
