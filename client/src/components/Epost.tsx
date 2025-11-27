@@ -1,11 +1,11 @@
 import { BodyShort, HStack, Tooltip, CopyButton } from '@navikt/ds-react';
 import { FilesIcon } from '@navikt/aksel-icons';
 
-interface IProps {
+interface Props {
 	epost: string;
 }
 
-const Epost = ({ epost }: IProps) => {
+const Epost = ({ epost }: Props) => {
 	return (
 		<HStack gap="1" align="center">
 			<BodyShort>{epost}</BodyShort>

@@ -6,6 +6,7 @@ import type { Person } from '../types/person';
 import { useMutation } from '@tanstack/react-query';
 import { queryClient } from '../queryClient';
 import { formaterTilISODato } from '../helpers/utils';
+import { useMobile } from '../helpers/useMobile';
 
 interface Props {
 	person: Person;
@@ -28,6 +29,7 @@ const GodkjennEllerFjernGodkjenning = ({
 }: Props) => {
 	const [modalOpen, setModalOpen] = useState(false);
 	const [datePickerOpen, setDatePickerOpen] = useState(false);
+	const isMobile = useMobile();
 
 	const erDatoIFremtiden = (date: Date) => {
 		const today = new Date();
@@ -110,21 +112,31 @@ const GodkjennEllerFjernGodkjenning = ({
 					onClearErrors={onClearErrors}
 					onLeggTilHandling={onLeggTilHandling}
 				/>
-				<ActionMenu>
-					<ActionMenu.Trigger>
-						<Button
-							variant="tertiary-neutral"
-							icon={<MenuElipsisVerticalIcon title="Handlinger" />}
-							size="small"
-							aria-label="Handlinger"
-						/>
-					</ActionMenu.Trigger>
-					<ActionMenu.Content>
-						<ActionMenu.Item onSelect={() => setModalOpen(true)}>
-							Fjern godkjenning
-						</ActionMenu.Item>
-					</ActionMenu.Content>
-				</ActionMenu>
+				{isMobile ? (
+					<Button
+						variant="secondary-neutral"
+						size="small"
+						onClick={() => setModalOpen(true)}
+					>
+						Fjern godkjenning
+					</Button>
+				) : (
+					<ActionMenu>
+						<ActionMenu.Trigger>
+							<Button
+								variant="tertiary-neutral"
+								icon={<MenuElipsisVerticalIcon title="Handlinger" />}
+								size="small"
+								aria-label="Handlinger"
+							/>
+						</ActionMenu.Trigger>
+						<ActionMenu.Content>
+							<ActionMenu.Item onSelect={() => setModalOpen(true)}>
+								Fjern godkjenning
+							</ActionMenu.Item>
+						</ActionMenu.Content>
+					</ActionMenu>
+				)}
 			</>
 		);
 	}

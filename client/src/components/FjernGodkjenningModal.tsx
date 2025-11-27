@@ -3,7 +3,7 @@ import { useMutation } from '@tanstack/react-query';
 import { queryClient } from '../queryClient';
 import type { Person } from '../types/person';
 
-interface FjernGodkjenningModalProps {
+interface Props {
 	person: Person;
 	open: boolean;
 	onClose: () => void;
@@ -25,7 +25,7 @@ const FjernGodkjenningModal = ({
 	onError,
 	onClearErrors,
 	onLeggTilHandling,
-}: FjernGodkjenningModalProps) => {
+}: Props) => {
 	const fjernDel2Mutation = useMutation({
 		mutationFn: () => {
 			return fetch(`/api/personer/${person.id}/fjern-del2`, {

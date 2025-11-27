@@ -2,11 +2,11 @@ import { Button, Tooltip } from '@navikt/ds-react';
 import { FilesIcon } from '@navikt/aksel-icons';
 import { useState } from 'react';
 
-interface IProps {
+interface Props {
 	epost: string;
 }
 
-const KopierEpostadresse = ({ epost }: IProps) => {
+const KopierEpostadresse = ({ epost }: Props) => {
 	const [tooltipText, setTooltipText] = useState('Kopier e-postadresse');
 
 	const handleKopier = () => {

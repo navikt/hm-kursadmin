@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import { Alert, Heading, HStack, Theme, VStack } from '@navikt/ds-react';
-import Tabell from './components/Tabell';
+import Tabell from './components/Tabell/Tabell';
 import Filtrering from './components/Filtrering/Filtrering';
 import { useQuery } from '@tanstack/react-query';
 import type { Person } from './types/person';
