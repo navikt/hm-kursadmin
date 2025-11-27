@@ -92,7 +92,7 @@ const FjernGodkjenningModal = ({
 				>
 					Ja, jeg er sikker
 				</Button>
-				<Button type="button" variant="secondary" onClick={onClose}>
+				<Button type="button" variant="secondary-neutral" onClick={onClose}>
 					Avbryt
 				</Button>
 			</Modal.Footer>
