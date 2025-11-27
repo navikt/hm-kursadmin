@@ -5,7 +5,7 @@ import { formaterNorskDato } from '../helpers/utils';
 import Del2Tag from './Del2Tag';
 import GodkjennEllerFjernGodkjenning from './GodkjennEllerFjernGodkjenning';
 import type { Person } from '../types/person';
-import KopierEpostAdresse from './kopierEpostAdresse';
+import KopierEpostadresse from './kopierEpostAdresse';
 
 interface ScopedSortState extends SortState {
 	orderBy: keyof Person;
@@ -140,7 +140,7 @@ const Tabell = ({
 								<Table.HeaderCell scope="row">{navn}</Table.HeaderCell>
 								<Table.DataCell>
 									{epost}
-									<KopierEpostAdresse epost={epost} />
+									<KopierEpostadresse epost={epost} />
 								</Table.DataCell>
 								<Table.DataCell>{arbeidssted}</Table.DataCell>
 								<Table.DataCell>{person.hjelpemiddelsentral}</Table.DataCell>

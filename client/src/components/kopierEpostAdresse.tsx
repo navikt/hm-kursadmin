@@ -6,7 +6,7 @@ interface IProps {
 	epost: string;
 }
 
-const KopierEpostAdresse = ({ epost }: IProps) => {
+const KopierEpostadresse = ({ epost }: IProps) => {
 	const [tooltipText, setTooltipText] = useState('Kopier e-postadresse');
 
 	const handleKopier = () => {
@@ -32,4 +32,4 @@ const KopierEpostAdresse = ({ epost }: IProps) => {
 	);
 };
 
-export default KopierEpostAdresse;
+export default KopierEpostadresse;
