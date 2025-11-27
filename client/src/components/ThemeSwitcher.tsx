@@ -17,7 +17,12 @@ const ThemeSwitcher = () => {
 		>
 			<Button
 				variant="tertiary"
-				icon={<ThemeIcon aria-hidden />}
+				icon={<ThemeIcon />}
+				aria-label={
+					theme === ThemeType.DARK
+						? 'Endre til lyst tema'
+						: 'Endre til mørkt tema'
+				}
 				onClick={() => {
 					const valgtTema =
 						theme === ThemeType.DARK ? ThemeType.LIGHT : ThemeType.DARK;
