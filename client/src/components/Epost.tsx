@@ -6,16 +6,25 @@ interface IProps {
 	epost: string;
 }
 
-const KopierEpostadresse = ({ epost }: IProps) => {
+const Epost = ({ epost }: IProps) => {
 	const [tooltipText, setTooltipText] = useState('Kopier e-postadresse');
 
-	const handleKopier = () => {
-		navigator.clipboard.writeText(epost);
-		setTooltipText('Kopiert!');
-
-		setTimeout(() => {
-			setTooltipText('Kopier e-postadresse');
-		}, 1000);
+	const handleKopierEpost = () => {
+		navigator.clipboard
+			.writeText(epost)
+			.then(() => {
+				setTooltipText('Kopiert!');
+				setTimeout(() => {
+					setTooltipText('Kopier e-postadresse');
+				}, 1000);
+			})
+			.catch((error) => {
+				setTooltipText('Feil ved kopiering');
+				console.error('Kunne ikke kopiere e-postadresse:', error);
+				setTimeout(() => {
+					setTooltipText('Kopier e-postadresse');
+				}, 1000);
+			});
 	};
 
 	return (
@@ -25,7 +34,7 @@ const KopierEpostadresse = ({ epost }: IProps) => {
 				<Button
 					variant="tertiary"
 					size="small"
-					onClick={handleKopier}
+					onClick={handleKopierEpost}
 					style={{ padding: 0 }}
 				>
 					<FilesIcon aria-hidden />
@@ -35,4 +44,4 @@ const KopierEpostadresse = ({ epost }: IProps) => {
 	);
 };
 
-export default KopierEpostadresse;
+export default Epost;
