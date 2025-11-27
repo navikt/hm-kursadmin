@@ -27,10 +27,14 @@ const ThemeContext = createContext<ThemeContextType>({
 
 const ThemeProvider = ({ children }: PropsWithChildren) => {
 	const getInitialTheme = (): ThemeTypeValues => {
-		const savedTheme = localStorage.getItem(
-			LOCALSTORAGE_KEY_THEME
-		) as ThemeTypeValues | null;
-		if (savedTheme) return savedTheme;
+		const savedTheme = localStorage.getItem(LOCALSTORAGE_KEY_THEME);
+
+		if (
+			savedTheme &&
+			Object.values(ThemeType).includes(savedTheme as ThemeTypeValues)
+		) {
+			return savedTheme as ThemeTypeValues;
+		}
 
 		if (typeof window !== 'undefined' && window.matchMedia) {
 			return window.matchMedia('(prefers-color-scheme: dark)').matches
