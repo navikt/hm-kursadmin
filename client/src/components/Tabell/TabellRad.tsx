@@ -1,4 +1,4 @@
-import { Table } from '@navikt/ds-react';
+import { Table, VStack, HStack, BodyShort, Label } from '@navikt/ds-react';
 import { formaterNorskDato } from '../../helpers/utils';
 import Del2Tag from '../Del2Tag';
 import GodkjennEllerFjernGodkjenning from '../GodkjennEllerFjernGodkjenning';
@@ -31,30 +31,35 @@ const TabellRad = ({
 			<Table.ExpandableRow
 				key={id}
 				content={
-					<div style={{ padding: '1rem 0' }}>
-						<div style={{ marginBottom: '0.5rem' }}>
-							<strong>E-post:</strong> <Epost epost={epost} />
-						</div>
-						<div style={{ marginBottom: '0.5rem' }}>
-							<strong>Arbeidssted:</strong> {arbeidssted}
-						</div>
-						<div style={{ marginBottom: '0.5rem' }}>
-							<strong>Dato for del 1:</strong> {formaterNorskDato(del1Dato)}
-						</div>
-						<div style={{ marginBottom: '0.5rem' }}>
-							<strong>Dato for del 2:</strong>{' '}
-							{del2Dato ? formaterNorskDato(del2Dato) : '-'}
-						</div>
-						<div>
-							<GodkjennEllerFjernGodkjenning
-								person={person}
-								del2Dato={del2Dato}
-								onError={onError}
-								onClearErrors={onClearErrors}
-								onLeggTilHandling={onLeggTilHandling}
-							/>
-						</div>
-					</div>
+					<VStack gap="3" align="start">
+						<HStack gap="2" align="center">
+							<Label>E-post:</Label>
+							<BodyShort>
+								<Epost epost={epost} />
+							</BodyShort>
+						</HStack>
+						<HStack gap="2" align="center">
+							<Label>Arbeidssted:</Label>
+							<BodyShort>{arbeidssted}</BodyShort>
+						</HStack>
+						<HStack gap="2" align="center">
+							<Label>Dato for del 1:</Label>
+							<BodyShort>{formaterNorskDato(del1Dato)}</BodyShort>
+						</HStack>
+						<HStack gap="2" align="center">
+							<Label>Dato for del 2:</Label>
+							<BodyShort>
+								{del2Dato ? formaterNorskDato(del2Dato) : '-'}
+							</BodyShort>
+						</HStack>
+						<GodkjennEllerFjernGodkjenning
+							person={person}
+							del2Dato={del2Dato}
+							onError={onError}
+							onClearErrors={onClearErrors}
+							onLeggTilHandling={onLeggTilHandling}
+						/>
+					</VStack>
 				}
 			>
 				<Table.HeaderCell scope="row">{navn}</Table.HeaderCell>
