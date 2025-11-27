@@ -4,11 +4,11 @@ import { ClockDashedIcon } from '@navikt/aksel-icons';
 import type { Handling } from '../types/handling';
 import { lagHandlingstekst } from '../helpers/utils';
 
-interface HandlingslogProps {
+interface Props {
 	handlinger: Handling[];
 }
 
-const Handlingslog = ({ handlinger }: HandlingslogProps) => {
+const Handlingslog = ({ handlinger }: Props) => {
 	const ref = useRef<HTMLDialogElement>(null);
 
 	return (
