@@ -18,12 +18,12 @@ const HjelpemiddelsentralFilter = ({
 
 	return (
 		<Select
-			label="Velg hjelpemiddelsentral"
+			label="Velg hjelpemiddelsentral (HMS)"
 			value={hjelpemiddelsentralVerdi}
 			onChange={(e) => setHjelpemiddelsentralVerdi(e.target.value)}
 			autoComplete="off"
 		>
-			<option value="">- Velg hjelpemiddelsentral -</option>
+			<option value="">- Velg HMS -</option>
 			{unikeHjelpemiddelsentraler.map((hjelpemiddelsentral) => (
 				<option key={hjelpemiddelsentral} value={hjelpemiddelsentral}>
 					{hjelpemiddelsentral}

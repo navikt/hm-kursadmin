@@ -120,7 +120,7 @@ const Tabell = ({
 								<Table.HeaderCell scope="col">Arbeidssted</Table.HeaderCell>
 							</>
 						)}
-						<Table.HeaderCell scope="col">Hjelpemiddelsentral</Table.HeaderCell>
+						<Table.HeaderCell scope="col">HMS</Table.HeaderCell>
 						{!isMobile && (
 							<>
 								<Table.ColumnHeader scope="col" sortKey="del1Dato" sortable>
