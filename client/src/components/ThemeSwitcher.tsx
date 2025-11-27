@@ -1,7 +1,7 @@
 import { ThemeIcon } from '@navikt/aksel-icons';
 import { Button, Tooltip } from '@navikt/ds-react';
 
-import { LOCALSTORAGE_KEY_THEME, ThemeType } from '../contexts/ThemeContext';
+import { ThemeType } from '../contexts/ThemeContext';
 import { useThemeContext } from '../hooks/useThemeContext';
 
 const ThemeSwitcher = () => {
@@ -22,7 +22,6 @@ const ThemeSwitcher = () => {
 					const valgtTema =
 						theme === ThemeType.DARK ? ThemeType.LIGHT : ThemeType.DARK;
 					setTheme(valgtTema);
-					localStorage.setItem(LOCALSTORAGE_KEY_THEME, valgtTema);
 				}}
 			/>
 		</Tooltip>

@@ -26,10 +26,26 @@ const ThemeContext = createContext<ThemeContextType>({
 });
 
 const ThemeProvider = ({ children }: PropsWithChildren) => {
-	const localStorageTheme = localStorage.getItem(
-		LOCALSTORAGE_KEY_THEME
-	) as ThemeTypeValues | null;
-	const [theme, setTheme] = useState(localStorageTheme || ThemeType.LIGHT);
+	const getInitialTheme = (): ThemeTypeValues => {
+		const savedTheme = localStorage.getItem(
+			LOCALSTORAGE_KEY_THEME
+		) as ThemeTypeValues | null;
+		if (savedTheme) return savedTheme;
+
+		if (typeof window !== 'undefined' && window.matchMedia) {
+			return window.matchMedia('(prefers-color-scheme: dark)').matches
+				? ThemeType.DARK
+				: ThemeType.LIGHT;
+		}
+		return ThemeType.LIGHT;
+	};
+
+	const [theme, setThemeState] = useState<ThemeTypeValues>(getInitialTheme);
+
+	const setTheme = (newTheme: ThemeTypeValues) => {
+		setThemeState(newTheme);
+		localStorage.setItem(LOCALSTORAGE_KEY_THEME, newTheme);
+	};
 
 	useEffect(() => {
 		const root = window.document.documentElement;
