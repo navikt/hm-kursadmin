@@ -1,4 +1,5 @@
-import { HStack } from '@navikt/ds-react';
+import { HStack, VStack } from '@navikt/ds-react';
+import { useState, useEffect } from 'react';
 import Sok from './Sok';
 import HjelpemiddelsentralFilter from './HjelpemiddelsentralFilter';
 import type { Person } from '../../types/person';
@@ -23,8 +24,23 @@ const Filtrering = ({
 	setStatusDel2Verdi,
 	personer,
 }: Props) => {
+	const [isMobile, setIsMobile] = useState(false);
+
+	useEffect(() => {
+		const checkIsMobile = () => {
+			setIsMobile(window.innerWidth < 1130);
+		};
+
+		checkIsMobile();
+		window.addEventListener('resize', checkIsMobile);
+
+		return () => window.removeEventListener('resize', checkIsMobile);
+	}, []);
+
+	const StackComponent = isMobile ? VStack : HStack;
+
 	return (
-		<HStack gap={'4'}>
+		<StackComponent gap={'4'}>
 			<Sok sokeverdi={sokeverdi} setSokeverdi={setSokeverdi} />
 			<HjelpemiddelsentralFilter
 				hjelpemiddelsentralVerdi={hjelpemiddelsentralVerdi}
@@ -35,7 +51,7 @@ const Filtrering = ({
 				statusDel2Verdi={statusDel2Verdi}
 				setStatusDel2Verdi={setStatusDel2Verdi}
 			/>
-		</HStack>
+		</StackComponent>
 	);
 };
 

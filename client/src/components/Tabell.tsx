@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Pagination, Table, VStack } from '@navikt/ds-react';
 import type { SortState } from '@navikt/ds-react';
 import { formaterNorskDato } from '../helpers/utils';
@@ -38,7 +38,19 @@ const Tabell = ({
 }: Props) => {
 	const [tabellside, setTabellside] = useState(1);
 	const [sort, setSort] = useState<ScopedSortState | undefined>();
+	const [isMobile, setIsMobile] = useState(false);
 	const raderPerSide = 8;
+
+	useEffect(() => {
+		const checkIsMobile = () => {
+			setIsMobile(window.innerWidth < 1130);
+		};
+
+		checkIsMobile();
+		window.addEventListener('resize', checkIsMobile);
+
+		return () => window.removeEventListener('resize', checkIsMobile);
+	}, []);
 
 	const handleSortering = (kolonnenavn: ScopedSortState['orderBy']) => {
 		setSort(
@@ -108,33 +120,88 @@ const Tabell = ({
 			>
 				<Table.Header>
 					<Table.Row>
+						{isMobile && <Table.HeaderCell scope="col"></Table.HeaderCell>}
 						<Table.ColumnHeader sortKey="navn" sortable>
 							Navn
 						</Table.ColumnHeader>
-						<Table.HeaderCell scope="col">E-post</Table.HeaderCell>
-						<Table.HeaderCell scope="col">Arbeidssted</Table.HeaderCell>
+						{!isMobile && (
+							<>
+								<Table.HeaderCell scope="col">E-post</Table.HeaderCell>
+								<Table.HeaderCell scope="col">Arbeidssted</Table.HeaderCell>
+							</>
+						)}
 						<Table.HeaderCell scope="col">Hjelpemiddelsentral</Table.HeaderCell>
-						<Table.ColumnHeader scope="col" sortKey="del1Dato" sortable>
-							Dato for del 1
-						</Table.ColumnHeader>
-						<Table.ColumnHeader scope="col" sortKey="del2Dato" sortable>
-							Dato for del 2
-						</Table.ColumnHeader>
+						{!isMobile && (
+							<>
+								<Table.ColumnHeader scope="col" sortKey="del1Dato" sortable>
+									Dato for del 1
+								</Table.ColumnHeader>
+								<Table.ColumnHeader scope="col" sortKey="del2Dato" sortable>
+									Dato for del 2
+								</Table.ColumnHeader>
+							</>
+						)}
 						<Table.HeaderCell scope="col">Status del 2</Table.HeaderCell>
-						<Table.HeaderCell
-							scope="col"
-							aria-label="Handlinger"
-						></Table.HeaderCell>
+						{!isMobile && (
+							<Table.HeaderCell
+								scope="col"
+								aria-label="Handlinger"
+							></Table.HeaderCell>
+						)}
 					</Table.Row>
 				</Table.Header>
 				<Table.Body>
 					{isPending && (
 						<Table.Row>
-							<Table.DataCell colSpan={9}>Laster personer...</Table.DataCell>
+							<Table.DataCell colSpan={isMobile ? 4 : 9}>
+								Laster personer...
+							</Table.DataCell>
 						</Table.Row>
 					)}
 					{sortData.map((person) => {
 						const { id, navn, epost, arbeidssted, del1Dato, del2Dato } = person;
+
+						if (isMobile) {
+							return (
+								<Table.ExpandableRow
+									key={id}
+									content={
+										<div style={{ padding: '1rem 0' }}>
+											<div style={{ marginBottom: '0.5rem' }}>
+												<strong>E-post:</strong> <Epost epost={epost} />
+											</div>
+											<div style={{ marginBottom: '0.5rem' }}>
+												<strong>Arbeidssted:</strong> {arbeidssted}
+											</div>
+											<div style={{ marginBottom: '0.5rem' }}>
+												<strong>Dato for del 1:</strong>{' '}
+												{formaterNorskDato(del1Dato)}
+											</div>
+											<div style={{ marginBottom: '0.5rem' }}>
+												<strong>Dato for del 2:</strong>{' '}
+												{del2Dato ? formaterNorskDato(del2Dato) : '-'}
+											</div>
+											<div>
+												<GodkjennEllerFjernGodkjenning
+													person={person}
+													del2Dato={del2Dato}
+													onError={onError}
+													onClearErrors={onClearErrors}
+													onLeggTilHandling={onLeggTilHandling}
+												/>
+											</div>
+										</div>
+									}
+								>
+									<Table.HeaderCell scope="row">{navn}</Table.HeaderCell>
+									<Table.DataCell>{person.hjelpemiddelsentral}</Table.DataCell>
+									<Table.DataCell>
+										<Del2Tag del2Dato={del2Dato} />
+									</Table.DataCell>
+								</Table.ExpandableRow>
+							);
+						}
+
 						return (
 							<Table.Row key={id}>
 								<Table.HeaderCell scope="row">{navn}</Table.HeaderCell>
