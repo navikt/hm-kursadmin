@@ -1,12 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Pagination, Table, VStack } from '@navikt/ds-react';
 import type { Person } from '../../types/person';
 import { useMobile } from '../../helpers/useMobile';
 import {
-	useTabellSortering,
+	tabellSortering,
 	type ScopedSortState,
 } from '../../helpers/tabellUtils';
-import { useTabellFiltrering } from '../../helpers/tabellFiltrering';
+import { tabellFiltrering } from '../../helpers/tabellFiltrering';
 import TabellHeader from './TabellHeader';
 import TabellRad from './TabellRad';
 
@@ -40,8 +40,8 @@ const Tabell = ({
 	const isMobile = useMobile();
 	const raderPerSide = 8;
 
-	const { handleSortering, sortData } = useTabellSortering();
-	const { filtrerPersoner } = useTabellFiltrering();
+	const { handleSortering, sortData } = tabellSortering();
+	const { filtrerPersoner } = tabellFiltrering();
 
 	const filtrerteData = filtrerPersoner(
 		personer,
@@ -60,6 +60,10 @@ const Tabell = ({
 		setSort(handleSortering(sort, kolonnenavn));
 	};
 
+	useEffect(() => {
+		setTabellside(1);
+	}, [sokeverdi, hjelpemiddelsentralVerdi, statusDel2Verdi]);
+
 	return (
 		<VStack gap="space-16">
 			<Table
@@ -73,7 +77,7 @@ const Tabell = ({
 				<Table.Body>
 					{isPending && (
 						<Table.Row>
-							<Table.DataCell colSpan={isMobile ? 4 : 9}>
+							<Table.DataCell colSpan={isMobile ? 4 : 8}>
 								Laster personer...
 							</Table.DataCell>
 						</Table.Row>

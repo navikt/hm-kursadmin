@@ -1,6 +1,6 @@
 import type { Person } from '../types/person';
 
-export const useTabellFiltrering = () => {
+export const tabellFiltrering = () => {
 	const filtrerPersoner = (
 		personer: Person[],
 		sokeverdi: string,
