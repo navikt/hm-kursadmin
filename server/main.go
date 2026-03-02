@@ -4,7 +4,7 @@ import (
 	"os"
 
 	"github.com/navikt/hotbff"
-	// "github.com/navikt/hotbff/proxy"
+	"github.com/navikt/hotbff/proxy"
 	"github.com/navikt/hotbff/texas"
 )
 
@@ -23,7 +23,11 @@ func main() {
 	opts := &hotbff.Options{
 		BasePath: "/hjelpemidler/kursadmin/",
 		RootDir:  "dist",
-		IDP: idp,
+		Proxy: proxy.Map{
+			"/api/": &proxy.Options{
+				Target:      os.Getenv("HM_GODKJENNINGSKURS_URL"),
+				StripPrefix: false,
+			}},
 		EnvKeys: []string{
 			"SOKNAD_URL",
 		},
