@@ -9,6 +9,8 @@ import type { Handling } from './types/handling';
 import Handlingslog from './components/Handlingslog';
 import { lagTidsstempel } from './helpers/utils';
 
+export const BASE_URL = '/hjelpemidler/kursadmin/api';
+
 function App() {
 	const [sokeverdi, setSokeverdi] = useState('');
 	const [hjelpemiddelsentralVerdi, setHjelpemiddelsentralVerdi] = useState('');
@@ -37,7 +39,7 @@ function App() {
 	} = useQuery<Person[]>({
 		queryKey: ['personer'],
 		queryFn: () => {
-			return fetch('/api/personer').then((response) => {
+			return fetch(`${BASE_URL}/personer`).then((response) => {
 				if (!response.ok) {
 					throw new Error(
 						`Feil ved henting av personer: ${response.status} ${response.statusText}`

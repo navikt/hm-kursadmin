@@ -7,6 +7,7 @@ import { useMutation } from '@tanstack/react-query';
 import { queryClient } from '../queryClient';
 import { formaterTilISODato } from '../helpers/utils';
 import { useMobile } from '../helpers/useMobile';
+import { BASE_URL } from '../App';
 
 interface Props {
 	person: Person;
@@ -39,7 +40,7 @@ const GodkjennEllerFjernGodkjenning = ({
 
 	const godkjennDel2Mutation = useMutation({
 		mutationFn: (kursDato: string) => {
-			return fetch(`/api/personer/${person.id}/godkjenn-del2`, {
+			return fetch(`${BASE_URL}/personer/${person.id}/godkjenn-del2`, {
 				method: 'PATCH',
 				headers: {
 					'Content-Type': 'application/json',
