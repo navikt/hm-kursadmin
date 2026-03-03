@@ -14,7 +14,7 @@ COPY server ./
 RUN go build .
 
 # runtime
-FROM gcr.io/distroless/static-debian12 AS runtime
+FROM gcr.io/distroless/static-debian12:debug AS runtime
 WORKDIR /app
 
 ENV TZ="Europe/Oslo"
