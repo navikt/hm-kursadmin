@@ -35,4 +35,4 @@ spec:
     - name: GIT_COMMIT
       value: {{ commit }}
     - name: HM_GODKJENNINGSKURS_URL
-      value: https://hm-godkjenningskurs.teamdigihot.svc.cluster.local
+      value: http://hm-godkjenningskurs.teamdigihot.svc.cluster.local
