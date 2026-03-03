@@ -36,3 +36,5 @@ spec:
       value: {{ commit }}
     - name: HM_GODKJENNINGSKURS_URL
       value: http://hm-godkjenningskurs.teamdigihot.svc.cluster.local
+    - name: DEBUG_LOG
+      value: 'true'
