@@ -21,20 +21,20 @@ spec:
   ingresses:
     - https://hjelpemidler.intern.dev.nav.no/hjelpemidler/kursadmin
   liveness:
-    path: /hjelpemidler/kursadmin/internal/isAlive
+    path: /isalive
     initialDelay: 5
   readiness:
-    path: /hjelpemidler/kursadmin/internal/isReady
+    path: /isready
     initialDelay: 5
   prometheus:
-    enabled: true
-    path: /hjelpemidler/kursadmin/internal/metrics
+    enabled: false
+    path: /metrics
   env:
     - name: USE_MSW
       value: 'false'
     - name: GIT_COMMIT
       value: {{ commit }}
     - name: HM_GODKJENNINGSKURS_URL
-      value: https://hm-godkjenningskurs.intern.nav.no
+      value: http://hm-godkjenningskurs.teamdigihot.svc.cluster.local
     - name: DEBUG_LOG
       value: 'true'
