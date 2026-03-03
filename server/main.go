@@ -27,6 +27,8 @@ func main() {
 			"/api/": &proxy.Options{
 				Target:      os.Getenv("HM_GODKJENNINGSKURS_URL"),
 				StripPrefix: false,
+				IDP:         texas.EntraID,
+				IDPTarget:   os.Getenv("HM_GODKJENNINGSKURS_SCOPE"),
 			}},
 		EnvKeys: []string{
 			"SOKNAD_URL",

@@ -16,6 +16,9 @@ spec:
     outbound:
       rules:
         - application: hm-godkjenningskurs
+  azure:
+    application:
+      enabled: true
   vault:
     enabled: false
   ingresses:
@@ -36,5 +39,7 @@ spec:
       value: {{ commit }}
     - name: HM_GODKJENNINGSKURS_URL
       value: http://hm-godkjenningskurs.teamdigihot.svc.cluster.local
+    - name: HM_GODKJENNINGSKURS_SCOPE
+      value: api://dev-gcp.teamdigihot.hm-godkjenningskurs/.default
     - name: DEBUG_LOG
       value: 'true'
