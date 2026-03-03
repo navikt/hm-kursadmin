@@ -29,7 +29,7 @@ const FjernGodkjenningModal = ({
 }: Props) => {
 	const fjernDel2Mutation = useMutation({
 		mutationFn: () => {
-			return fetch(`/${BASE_URL}/personer/${person.id}/fjern-del2`, {
+			return fetch(`${BASE_URL}/personer/${person.id}/fjern-del2`, {
 				method: 'PATCH',
 			}).then((response) => {
 				if (!response.ok) {
