@@ -30,6 +30,7 @@ func main() {
 				IDP:         texas.EntraID,
 				IDPTarget:   os.Getenv("HM_GODKJENNINGSKURS_SCOPE"),
 			}},
+		IDP: idp,
 		EnvKeys: []string{
 			"SOKNAD_URL",
 		},
