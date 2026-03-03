@@ -35,6 +35,6 @@ spec:
     - name: GIT_COMMIT
       value: {{ commit }}
     - name: HM_GODKJENNINGSKURS_URL
-      value: http://hm-godkjenningskurs.teamdigihot.svc.cluster.local
+      value: https://hm-godkjenningskurs.intern.nav.no
     - name: DEBUG_LOG
       value: 'true'
