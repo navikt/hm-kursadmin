@@ -45,7 +45,7 @@ function App() {
 						`Feil ved henting av personer: ${response.status} ${response.statusText}`
 					);
 				}
-				return response.json();
+				return response.json().then((data) => data.personer);
 			});
 		},
 	});

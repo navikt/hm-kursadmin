@@ -20,7 +20,7 @@ const updateDel2Status = (id: string, del2Dato: string | null) => {
 
 const personerHandler = [
 	http.get(`${BASE_URL}/personer`, () => {
-		return HttpResponse.json(mockPersoner);
+		return HttpResponse.json({ personer: mockPersoner });
 	}),
 	http.patch(`${BASE_URL}/personer/:id/godkjenn-del2`, async (req) => {
 		const { id } = req.params;
