@@ -4,6 +4,7 @@ import (
 	"os"
 
 	"github.com/navikt/hotbff"
+	"github.com/navikt/hotbff/decorator"
 	// "github.com/navikt/hotbff/proxy"
 	"github.com/navikt/hotbff/texas"
 )
@@ -23,6 +24,9 @@ func main() {
 	opts := &hotbff.Options{
 		BasePath: "/hjelpemidler/kursadmin/",
 		RootDir:  "dist",
+		DecoratorOpts: &decorator.Options{
+			Context: "samarbeidspartner",
+		},
 		IDP: idp,
 		EnvKeys: []string{
 			"SOKNAD_URL",
