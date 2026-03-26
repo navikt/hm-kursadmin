@@ -10,7 +10,7 @@ on:
     branches:
       - main
       - backend
-      - npm-til-pnpm
+      - dekorator
 
 env:
   IMAGE: ghcr.io/${{ github.repository }}:${{ github.sha }}
