@@ -1,0 +1,53 @@
+apiVersion: 'nais.io/v1alpha1'
+kind: 'Application'
+metadata:
+  name: hm-kursadmin
+  namespace: teamdigihot
+  labels:
+    team: teamdigihot
+spec:
+  image: {{ image }}
+  port: 5000
+  replicas:
+    min: 1
+    max: 1
+    cpuThresholdPercentage: 90
+  accessPolicy:
+    outbound:
+      rules:
+        - application: hm-godkjenningskurs
+  azure:
+    application:
+      enabled: true
+      allowAllUsers: true
+      claims:
+        extra:
+          - 'NAVident'
+        groups:
+          - id: '1aa0caef-04cc-4446-8ed3-bbb78d59681c' # TODO: bytte ut med ny gruppe
+    sidecar:
+      enabled: true
+  vault:
+    enabled: false
+  ingresses:
+    - https://hjelpemidler.intern.dev.nav.no/hjelpemidler/kursadmin
+  liveness:
+    path: /isalive
+    initialDelay: 5
+  readiness:
+    path: /isready
+    initialDelay: 5
+  prometheus:
+    enabled: false
+    path: /metrics
+  env:
+    - name: USE_MSW
+      value: 'false'
+    - name: GIT_COMMIT
+      value: {{ commit }}
+    - name: HM_GODKJENNINGSKURS_URL
+      value: http://hm-godkjenningskurs.teamdigihot.svc.cluster.local
+    - name: HM_GODKJENNINGSKURS_SCOPE
+      value: api://dev-gcp.teamdigihot.hm-godkjenningskurs/.default
+    - name: DEBUG_LOG
+      value: 'true'
