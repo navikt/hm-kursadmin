@@ -14,7 +14,7 @@ const HjelpemiddelsentralFilter = ({
 }: Props) => {
 	const unikeHjelpemiddelsentraler = Array.from(
 		new Set(personer.map((person) => person.hjelpemiddelsentral))
-	).sort();
+	).sort((a, b) => a.localeCompare(b));
 
 	return (
 		<Select

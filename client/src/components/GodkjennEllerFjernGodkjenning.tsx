@@ -14,11 +14,6 @@ interface Props {
 	del2Dato: string | null;
 	onError: (errorMessage: string) => void;
 	onClearErrors: () => void;
-	onLeggTilHandling: (data: {
-		type: 'GODKJENT_DEL2' | 'FJERNET_GODKJENNING';
-		personNavn: string;
-		kursDato: string;
-	}) => void;
 }
 
 const GodkjennEllerFjernGodkjenning = ({
@@ -26,7 +21,6 @@ const GodkjennEllerFjernGodkjenning = ({
 	del2Dato,
 	onError,
 	onClearErrors,
-	onLeggTilHandling,
 }: Props) => {
 	const [modalOpen, setModalOpen] = useState(false);
 	const [datePickerOpen, setDatePickerOpen] = useState(false);
@@ -61,47 +55,17 @@ const GodkjennEllerFjernGodkjenning = ({
 				return response.json();
 			});
 		},
-		onSuccess: (_, kursDato) => {
+		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ['personer'] });
 			setDatePickerOpen(false);
 			onClearErrors();
-
-			onLeggTilHandling({
-				type: 'GODKJENT_DEL2',
-				personNavn: person.navn,
-				kursDato: kursDato,
-			});
 		},
 		onError: (error) => {
 			onError(`Kunne ikke godkjenne del 2: ${error.message}`);
 		},
 	});
 
-	if (!del2Dato) {
-		return (
-			<DatePicker
-				onSelect={(date) => {
-					if (date) {
-						const kursDato = formaterTilISODato(date);
-						godkjennDel2Mutation.mutate(kursDato);
-					}
-				}}
-				mode="single"
-				onClose={() => setDatePickerOpen(false)}
-				open={datePickerOpen}
-				disabled={[erDatoIFremtiden]}
-			>
-				<Button
-					size="small"
-					variant="primary-neutral"
-					onClick={() => setDatePickerOpen(!datePickerOpen)}
-					loading={godkjennDel2Mutation.isPending}
-				>
-					{datePickerOpen ? 'Avbryt' : 'Godkjenn del 2'}
-				</Button>
-			</DatePicker>
-		);
-	} else {
+	if (del2Dato) {
 		return (
 			<>
 				<FjernGodkjenningModal
@@ -111,7 +75,6 @@ const GodkjennEllerFjernGodkjenning = ({
 					onConfirm={() => setModalOpen(false)}
 					onError={onError}
 					onClearErrors={onClearErrors}
-					onLeggTilHandling={onLeggTilHandling}
 				/>
 				{isMobile ? (
 					<Button
@@ -141,5 +104,29 @@ const GodkjennEllerFjernGodkjenning = ({
 			</>
 		);
 	}
+
+	return (
+		<DatePicker
+			onSelect={(date) => {
+				if (date) {
+					const kursDato = formaterTilISODato(date);
+					godkjennDel2Mutation.mutate(kursDato);
+				}
+			}}
+			mode="single"
+			onClose={() => setDatePickerOpen(false)}
+			open={datePickerOpen}
+			disabled={[erDatoIFremtiden]}
+		>
+			<Button
+				size="small"
+				variant="primary-neutral"
+				onClick={() => setDatePickerOpen(!datePickerOpen)}
+				loading={godkjennDel2Mutation.isPending}
+			>
+				{datePickerOpen ? 'Avbryt' : 'Godkjenn del 2'}
+			</Button>
+		</DatePicker>
+	);
 };
 export default GodkjennEllerFjernGodkjenning;

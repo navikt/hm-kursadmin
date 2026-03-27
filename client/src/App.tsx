@@ -1,13 +1,10 @@
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 import { Alert, Heading, HStack, VStack } from '@navikt/ds-react';
 import Tabell from './components/Tabell/Tabell';
 import Filtrering from './components/Filtrering/Filtrering';
 import ThemeSwitcher from './components/ThemeSwitcher';
 import { useQuery } from '@tanstack/react-query';
 import type { Person } from './types/person';
-import type { Handling } from './types/handling';
-import Handlingslog from './components/Handlingslog';
-import { lagTidsstempel } from './helpers/utils';
 
 export const BASE_URL = '/hjelpemidler/kursadmin/api';
 
@@ -16,19 +13,6 @@ function App() {
 	const [hjelpemiddelsentralVerdi, setHjelpemiddelsentralVerdi] = useState('');
 	const [statusDel2Verdi, setStatusDel2Verdi] = useState('');
 	const [errors, setErrors] = useState<Array<{ id: string; message: string }>>(
-		[]
-	);
-	const [handlinger, setHandlinger] = useState<Handling[]>([]);
-
-	const leggTilHandling = useCallback(
-		(data: Omit<Handling, 'id' | 'tidspunkt'>) => {
-			const nyHandling: Handling = {
-				...data,
-				id: crypto.randomUUID(),
-				tidspunkt: lagTidsstempel(),
-			};
-			setHandlinger((prev) => [nyHandling, ...prev]);
-		},
 		[]
 	);
 
@@ -99,18 +83,15 @@ function App() {
 					</Heading>
 					<ThemeSwitcher />
 				</HStack>
-				<HStack justify="space-between" align="end" width="100%">
-					<Filtrering
-						sokeverdi={sokeverdi}
-						setSokeverdi={setSokeverdi}
-						hjelpemiddelsentralVerdi={hjelpemiddelsentralVerdi}
-						setHjelpemiddelsentralVerdi={setHjelpemiddelsentralVerdi}
-						statusDel2Verdi={statusDel2Verdi}
-						setStatusDel2Verdi={setStatusDel2Verdi}
-						personer={personer}
-					/>
-					<Handlingslog handlinger={handlinger} />
-				</HStack>
+				<Filtrering
+					sokeverdi={sokeverdi}
+					setSokeverdi={setSokeverdi}
+					hjelpemiddelsentralVerdi={hjelpemiddelsentralVerdi}
+					setHjelpemiddelsentralVerdi={setHjelpemiddelsentralVerdi}
+					statusDel2Verdi={statusDel2Verdi}
+					setStatusDel2Verdi={setStatusDel2Verdi}
+					personer={personer}
+				/>
 				<VStack gap="space-8">{generateErrors()}</VStack>
 				<Tabell
 					sokeverdi={sokeverdi}
@@ -120,7 +101,6 @@ function App() {
 					isPending={isPending}
 					onError={addError}
 					onClearErrors={clearAllErrors}
-					onLeggTilHandling={leggTilHandling}
 				/>
 			</VStack>
 		</main>
