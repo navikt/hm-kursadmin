@@ -64,31 +64,7 @@ const GodkjennEllerFjernGodkjenning = ({
 		},
 	});
 
-	if (!del2Dato) {
-		return (
-			<DatePicker
-				onSelect={(date) => {
-					if (date) {
-						const kursDato = formaterTilISODato(date);
-						godkjennDel2Mutation.mutate(kursDato);
-					}
-				}}
-				mode="single"
-				onClose={() => setDatePickerOpen(false)}
-				open={datePickerOpen}
-				disabled={[erDatoIFremtiden]}
-			>
-				<Button
-					size="small"
-					variant="primary-neutral"
-					onClick={() => setDatePickerOpen(!datePickerOpen)}
-					loading={godkjennDel2Mutation.isPending}
-				>
-					{datePickerOpen ? 'Avbryt' : 'Godkjenn del 2'}
-				</Button>
-			</DatePicker>
-		);
-	} else {
+	if (del2Dato) {
 		return (
 			<>
 				<FjernGodkjenningModal
@@ -127,5 +103,29 @@ const GodkjennEllerFjernGodkjenning = ({
 			</>
 		);
 	}
+
+	return (
+		<DatePicker
+			onSelect={(date) => {
+				if (date) {
+					const kursDato = formaterTilISODato(date);
+					godkjennDel2Mutation.mutate(kursDato);
+				}
+			}}
+			mode="single"
+			onClose={() => setDatePickerOpen(false)}
+			open={datePickerOpen}
+			disabled={[erDatoIFremtiden]}
+		>
+			<Button
+				size="small"
+				variant="primary-neutral"
+				onClick={() => setDatePickerOpen(!datePickerOpen)}
+				loading={godkjennDel2Mutation.isPending}
+			>
+				{datePickerOpen ? 'Avbryt' : 'Godkjenn del 2'}
+			</Button>
+		</DatePicker>
+	);
 };
 export default GodkjennEllerFjernGodkjenning;
