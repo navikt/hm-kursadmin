@@ -10,11 +10,6 @@ interface Props {
 	person: Person;
 	onError: (errorMessage: string) => void;
 	onClearErrors: () => void;
-	onLeggTilHandling: (data: {
-		type: 'GODKJENT_DEL2' | 'FJERNET_GODKJENNING';
-		personNavn: string;
-		kursDato: string;
-	}) => void;
 }
 
 const TabellRad = ({
@@ -22,7 +17,6 @@ const TabellRad = ({
 	person,
 	onError,
 	onClearErrors,
-	onLeggTilHandling,
 }: Props) => {
 	const { id, navn, epost, arbeidssted, del1Dato, del2Dato } = person;
 
@@ -57,7 +51,6 @@ const TabellRad = ({
 							del2Dato={del2Dato}
 							onError={onError}
 							onClearErrors={onClearErrors}
-							onLeggTilHandling={onLeggTilHandling}
 						/>
 					</VStack>
 				}
@@ -93,7 +86,6 @@ const TabellRad = ({
 						del2Dato={del2Dato}
 						onError={onError}
 						onClearErrors={onClearErrors}
-						onLeggTilHandling={onLeggTilHandling}
 					/>
 				</div>
 			</Table.DataCell>

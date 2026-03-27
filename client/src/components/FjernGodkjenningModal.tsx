@@ -10,11 +10,6 @@ interface Props {
 	onConfirm: () => void;
 	onError: (errorMessage: string) => void;
 	onClearErrors: () => void;
-	onLeggTilHandling: (data: {
-		type: 'GODKJENT_DEL2' | 'FJERNET_GODKJENNING';
-		personNavn: string;
-		kursDato: string;
-	}) => void;
 }
 
 const FjernGodkjenningModal = ({
@@ -24,7 +19,6 @@ const FjernGodkjenningModal = ({
 	onConfirm,
 	onError,
 	onClearErrors,
-	onLeggTilHandling,
 }: Props) => {
 	const fjernDel2Mutation = useMutation({
 		mutationFn: () => {
@@ -49,14 +43,6 @@ const FjernGodkjenningModal = ({
 			queryClient.invalidateQueries({ queryKey: ['personer'] });
 			onClearErrors();
 			onConfirm();
-
-			if (person.del2Dato) {
-				onLeggTilHandling({
-					type: 'FJERNET_GODKJENNING',
-					personNavn: person.navn,
-					kursDato: person.del2Dato,
-				});
-			}
 		},
 		onError: (error) => {
 			onError(`Kunne ikke fjerne godkjenning: ${error.message}`);
