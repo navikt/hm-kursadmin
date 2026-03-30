@@ -1,10 +1,13 @@
 import { useState } from 'react';
-import { Alert, Heading, HStack, VStack } from '@navikt/ds-react';
+import { Alert, VStack } from '@navikt/ds-react';
 import Tabell from './components/Tabell/Tabell';
 import Filtrering from './components/Filtrering/Filtrering';
+import VelgKurs from './components/VelgKurs';
 import ThemeSwitcher from './components/ThemeSwitcher';
 import { useQuery } from '@tanstack/react-query';
 import type { Person } from './types/person';
+import type { Kurs } from './types/kurs';
+import { mockKursliste } from './mocks/data/mockKurs';
 
 export const BASE_URL = '/hjelpemidler/kursadmin/api';
 
@@ -12,8 +15,11 @@ function App() {
 	const [sokeverdi, setSokeverdi] = useState('');
 	const [hjelpemiddelsentralVerdi, setHjelpemiddelsentralVerdi] = useState('');
 	const [statusDel2Verdi, setStatusDel2Verdi] = useState('');
+	const [valgtkurs, setValgtkurs] = useState<Kurs | null>(
+		() => mockKursliste.find((kurs) => kurs.id === 5) || null,
+	);
 	const [errors, setErrors] = useState<Array<{ id: string; message: string }>>(
-		[]
+		[],
 	);
 
 	const {
@@ -26,7 +32,7 @@ function App() {
 			return fetch(`${BASE_URL}/personer`).then((response) => {
 				if (!response.ok) {
 					throw new Error(
-						`Feil ved henting av personer: ${response.status} ${response.statusText}`
+						`Feil ved henting av personer: ${response.status} ${response.statusText}`,
 					);
 				}
 				return response.json().then((data) => data.personer);
@@ -54,7 +60,7 @@ function App() {
 			allErrors.push(
 				<Alert key="query-error" variant="error">
 					{error.message}
-				</Alert>
+				</Alert>,
 			);
 		}
 
@@ -67,7 +73,7 @@ function App() {
 					onClose={() => removeError(err.id)}
 				>
 					{err.message}
-				</Alert>
+				</Alert>,
 			);
 		});
 
@@ -76,13 +82,14 @@ function App() {
 
 	return (
 		<main>
+			<div
+				style={{ position: 'fixed', top: '1rem', right: '1rem', zIndex: 1000 }}
+			>
+				<ThemeSwitcher />
+			</div>
 			<VStack margin="space-20" gap="space-16">
-				<HStack justify="space-between" align="center" width="100%">
-					<Heading size="large" level="1">
-						Administreringsverktøy for ERS kurs del 2
-					</Heading>
-					<ThemeSwitcher />
-				</HStack>
+				<VelgKurs valgtkurs={valgtkurs} setValgtkurs={setValgtkurs} />
+
 				<Filtrering
 					sokeverdi={sokeverdi}
 					setSokeverdi={setSokeverdi}
