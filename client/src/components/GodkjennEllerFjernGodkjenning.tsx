@@ -52,7 +52,7 @@ const GodkjennEllerFjernGodkjenning = ({
 							);
 						});
 				}
-				return response.json();
+				// Oppdatering ok
 			});
 		},
 		onSuccess: () => {

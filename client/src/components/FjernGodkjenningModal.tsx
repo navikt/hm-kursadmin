@@ -37,7 +37,7 @@ const FjernGodkjenningModal = ({
 							);
 						});
 				}
-				return response.json();
+				// Oppdatering ok
 			});
 		},
 		onSuccess: () => {
