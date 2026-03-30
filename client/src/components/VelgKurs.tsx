@@ -3,8 +3,8 @@ import type { Kurs } from '../types/kurs';
 import { mockKursliste } from '../mocks/data/mockKurs';
 
 interface Props {
-	valgtkurs: Kurs | null;
-	setValgtkurs: (kurs: Kurs | null) => void;
+	valgtkurs: Kurs;
+	setValgtkurs: (kurs: Kurs) => void;
 }
 
 function VelgKurs({ valgtkurs, setValgtkurs }: Props) {
@@ -12,12 +12,14 @@ function VelgKurs({ valgtkurs, setValgtkurs }: Props) {
 		<VStack gap="space-12" align="start">
 			<Select
 				label="Velg godkjenningskurs"
-				value={valgtkurs?.id ?? ''}
+				value={valgtkurs.id}
 				onChange={(e) => {
 					const selectedKurs = mockKursliste.find(
 						(kurs) => kurs.id === Number(e.target.value),
 					);
-					setValgtkurs(selectedKurs || null);
+					if (selectedKurs) {
+						setValgtkurs(selectedKurs);
+					}
 				}}
 			>
 				{mockKursliste.map((kurs) => (
@@ -27,7 +29,7 @@ function VelgKurs({ valgtkurs, setValgtkurs }: Props) {
 				))}
 			</Select>
 			<Heading size="large" level="1">
-				Godkjenningskurs: {valgtkurs ? valgtkurs.title : ''}
+				Godkjenningskurs: {valgtkurs.title}
 			</Heading>
 		</VStack>
 	);

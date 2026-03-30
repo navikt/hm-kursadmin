@@ -15,9 +15,13 @@ function App() {
 	const [sokeverdi, setSokeverdi] = useState('');
 	const [hjelpemiddelsentralVerdi, setHjelpemiddelsentralVerdi] = useState('');
 	const [statusDel2Verdi, setStatusDel2Verdi] = useState('');
-	const [valgtkurs, setValgtkurs] = useState<Kurs | null>(
-		() => mockKursliste.find((kurs) => kurs.id === 5) || null,
-	);
+	const [valgtkurs, setValgtkurs] = useState<Kurs>(() => {
+		if (mockKursliste.length === 0) {
+			throw new Error('Ingen kurs tilgjengelig');
+		}
+		const defaultKurs = mockKursliste.find((kurs) => kurs.id === 5);
+		return defaultKurs || mockKursliste[0];
+	});
 	const [errors, setErrors] = useState<Array<{ id: string; message: string }>>(
 		[],
 	);
@@ -98,6 +102,7 @@ function App() {
 					statusDel2Verdi={statusDel2Verdi}
 					setStatusDel2Verdi={setStatusDel2Verdi}
 					personer={personer}
+					valgtkurs={valgtkurs}
 				/>
 				<VStack gap="space-8">{generateErrors()}</VStack>
 				<Tabell
@@ -108,6 +113,7 @@ function App() {
 					isPending={isPending}
 					onError={addError}
 					onClearErrors={clearAllErrors}
+					valgtkurs={valgtkurs}
 				/>
 			</VStack>
 		</main>
