@@ -10,6 +10,9 @@ interface Props {
 function VelgKurs({ valgtkurs, setValgtkurs }: Props) {
 	return (
 		<VStack gap="space-12" align="start">
+			<Heading size="large" level="1">
+				Godkjenningskurs: {valgtkurs.title}
+			</Heading>
 			<Select
 				label="Velg godkjenningskurs"
 				value={valgtkurs.id}
@@ -28,9 +31,6 @@ function VelgKurs({ valgtkurs, setValgtkurs }: Props) {
 					</option>
 				))}
 			</Select>
-			<Heading size="large" level="1">
-				Godkjenningskurs: {valgtkurs.title}
-			</Heading>
 		</VStack>
 	);
 }
