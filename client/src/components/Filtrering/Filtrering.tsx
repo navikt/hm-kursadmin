@@ -3,8 +3,10 @@ import { XMarkIcon } from '@navikt/aksel-icons';
 import Sok from './Sok';
 import HjelpemiddelsentralFilter from './HjelpemiddelsentralFilter';
 import type { Person } from '../../types/person';
+import type { Kurs } from '../../types/kurs';
 import StatusDel2Filter from './StatusDel2Filter';
 import { useMobile } from '../../helpers/useMobile';
+import { erErsKurs } from '../../helpers/utils';
 
 interface Props {
 	sokeverdi: string;
@@ -14,6 +16,7 @@ interface Props {
 	statusDel2Verdi: string;
 	setStatusDel2Verdi: (verdi: string) => void;
 	personer: Person[];
+	valgtkurs: Kurs;
 }
 
 const Filtrering = ({
@@ -24,10 +27,13 @@ const Filtrering = ({
 	statusDel2Verdi,
 	setStatusDel2Verdi,
 	personer,
+	valgtkurs,
 }: Props) => {
 	const isMobile = useMobile();
 	const StackComponent = isMobile ? VStack : HStack;
 	const alignValue = isMobile ? 'start' : 'end';
+
+	const erElektriskRullestol = erErsKurs(valgtkurs);
 
 	const handleReset = () => {
 		setSokeverdi('');
@@ -48,10 +54,12 @@ const Filtrering = ({
 				setHjelpemiddelsentralVerdi={setHjelpemiddelsentralVerdi}
 				personer={personer}
 			/>
-			<StatusDel2Filter
-				statusDel2Verdi={statusDel2Verdi}
-				setStatusDel2Verdi={setStatusDel2Verdi}
-			/>
+			{erElektriskRullestol && (
+				<StatusDel2Filter
+					statusDel2Verdi={statusDel2Verdi}
+					setStatusDel2Verdi={setStatusDel2Verdi}
+				/>
+			)}
 			{harAktiveFiltre && (
 				<Button
 					variant="tertiary"

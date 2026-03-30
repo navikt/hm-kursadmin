@@ -2,9 +2,11 @@ import { Table } from '@navikt/ds-react';
 
 interface Props {
 	isMobile: boolean;
+	erElektriskRullestol: boolean;
 }
 
-const TabellHeader = ({ isMobile }: Props) => {
+const TabellHeader = ({ isMobile, erElektriskRullestol }: Props) => {
+	// Mobil / små skjermer
 	if (isMobile) {
 		return (
 			<Table.Header>
@@ -14,12 +16,34 @@ const TabellHeader = ({ isMobile }: Props) => {
 						Navn
 					</Table.ColumnHeader>
 					<Table.HeaderCell scope="col">HMS</Table.HeaderCell>
-					<Table.HeaderCell scope="col">Status del 2</Table.HeaderCell>
+					{erElektriskRullestol && (
+						<Table.HeaderCell scope="col">Status del 2</Table.HeaderCell>
+					)}
 				</Table.Row>
 			</Table.Header>
 		);
 	}
 
+	// Godkjenningskurs uten del 2
+	if (!erElektriskRullestol) {
+		return (
+			<Table.Header>
+				<Table.Row>
+					<Table.ColumnHeader sortKey="navn" sortable>
+						Navn
+					</Table.ColumnHeader>
+					<Table.HeaderCell scope="col">E-post</Table.HeaderCell>
+					<Table.HeaderCell scope="col">Arbeidssted</Table.HeaderCell>
+					<Table.HeaderCell scope="col">HMS</Table.HeaderCell>
+					<Table.ColumnHeader scope="col" sortKey="del1Dato" sortable>
+						Dato gjennomført
+					</Table.ColumnHeader>
+				</Table.Row>
+			</Table.Header>
+		);
+	}
+
+	// Elektrisk rullestol (med del 2)
 	return (
 		<Table.Header>
 			<Table.Row>

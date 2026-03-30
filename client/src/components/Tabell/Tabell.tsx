@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Pagination, Table, VStack } from '@navikt/ds-react';
 import type { Person } from '../../types/person';
+import type { Kurs } from '../../types/kurs';
 import { useMobile } from '../../helpers/useMobile';
+import { erErsKurs } from '../../helpers/utils';
 import {
 	tabellSortering,
 	type ScopedSortState,
@@ -18,6 +20,7 @@ interface Props {
 	isPending?: boolean;
 	onError: (errorMessage: string) => void;
 	onClearErrors: () => void;
+	valgtkurs: Kurs;
 }
 
 const Tabell = ({
@@ -28,6 +31,7 @@ const Tabell = ({
 	isPending,
 	onError,
 	onClearErrors,
+	valgtkurs,
 }: Props) => {
 	const [tabellside, setTabellside] = useState(1);
 	const [sort, setSort] = useState<ScopedSortState | undefined>();
@@ -36,6 +40,8 @@ const Tabell = ({
 
 	const { handleSortering, sortData } = tabellSortering();
 	const { filtrerPersoner } = tabellFiltrering();
+
+	const erElektriskRullestol = erErsKurs(valgtkurs);
 
 	const filtrerteData = filtrerPersoner(
 		personer,
@@ -67,11 +73,11 @@ const Tabell = ({
 					handleSort(sorteringsnøkkel as ScopedSortState['orderBy'])
 				}
 			>
-				<TabellHeader isMobile={isMobile} />
+				<TabellHeader isMobile={isMobile} erElektriskRullestol={erElektriskRullestol} />
 				<Table.Body>
 					{isPending && (
 						<Table.Row>
-							<Table.DataCell colSpan={isMobile ? 4 : 8}>
+							<Table.DataCell colSpan={isMobile ? 4 : (erElektriskRullestol ? 8 : 5)}>
 								Laster personer...
 							</Table.DataCell>
 						</Table.Row>
@@ -83,14 +89,16 @@ const Tabell = ({
 							person={person}
 							onError={onError}
 							onClearErrors={onClearErrors}
+							erElektriskRullestol={erElektriskRullestol}
 						/>
 					))}
 				</Table.Body>
 			</Table>
 			<Pagination
+				// TODO håndter tom liste med personer. Vis "ingen personer funnet" i tabellen og skjul pagineringen
 				page={tabellside}
 				onPageChange={setTabellside}
-				count={Math.ceil(filtrerteData.length / raderPerSide)}
+				count={Math.max(Math.ceil(filtrerteData.length / raderPerSide), 1)}
 				size="small"
 			/>
 		</VStack>
