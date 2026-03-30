@@ -1,4 +1,4 @@
-import type { Handling } from '../types/handling';
+import type { Kurs } from '../types/kurs';
 
 export const formaterNorskDato = (dato: string) =>
 	new Date(dato).toLocaleString('no', {
@@ -14,27 +14,6 @@ export const formaterTilISODato = (date: Date) => {
 	return `${year}-${month}-${day}`;
 };
 
-export const lagTidsstempel = (): string => {
-	return new Date().toLocaleString('nb-NO', {
-		day: '2-digit',
-		month: 'short',
-		year: 'numeric',
-		hour: '2-digit',
-		minute: '2-digit',
-	});
-};
-
-export const lagHandlingstekst = (
-	handling: Pick<Handling, 'type' | 'personNavn' | 'kursDato'>
-): string => {
-	const datoTekst = new Date(handling.kursDato).toLocaleDateString('nb-NO');
-
-	switch (handling.type) {
-		case 'GODKJENT_DEL2':
-			return `Godkjent del 2 for person: ${handling.personNavn} den ${datoTekst}`;
-		case 'FJERNET_GODKJENNING':
-			return `Fjernet godkjenning for person: ${handling.personNavn} den ${datoTekst}`;
-		default:
-			throw new Error(`Unknown handling type: ${handling.type}`);
-	}
+export const erErsKurs = (kurs: Kurs): boolean => {
+	return kurs.id === 5;
 };

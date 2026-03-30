@@ -20,11 +20,11 @@ spec:
     application:
       enabled: true
       allowAllUsers: true
-      claims:
+      claims: 
         extra:
-          - 'NAVident'
+          - "NAVident"
         groups:
-          - id: '1aa0caef-04cc-4446-8ed3-bbb78d59681c' # TODO: bytte ut med ny gruppe
+          - id: "1aa0caef-04cc-4446-8ed3-bbb78d59681c" # TODO: bytte ut med ny gruppe
     sidecar:
       enabled: true
   vault:

@@ -2,6 +2,7 @@ import { BodyLong, Button, Modal } from '@navikt/ds-react';
 import { useMutation } from '@tanstack/react-query';
 import { queryClient } from '../queryClient';
 import type { Person } from '../types/person';
+import { BASE_URL } from '../App';
 
 interface Props {
 	person: Person;
@@ -10,11 +11,6 @@ interface Props {
 	onConfirm: () => void;
 	onError: (errorMessage: string) => void;
 	onClearErrors: () => void;
-	onLeggTilHandling: (data: {
-		type: 'GODKJENT_DEL2' | 'FJERNET_GODKJENNING';
-		personNavn: string;
-		kursDato: string;
-	}) => void;
 }
 
 const FjernGodkjenningModal = ({
@@ -24,11 +20,10 @@ const FjernGodkjenningModal = ({
 	onConfirm,
 	onError,
 	onClearErrors,
-	onLeggTilHandling,
 }: Props) => {
 	const fjernDel2Mutation = useMutation({
 		mutationFn: () => {
-			return fetch(`/api/personer/${person.id}/fjern-del2`, {
+			return fetch(`${BASE_URL}/personer/${person.id}/fjern-del2`, {
 				method: 'PATCH',
 			}).then((response) => {
 				if (!response.ok) {
@@ -42,21 +37,13 @@ const FjernGodkjenningModal = ({
 							);
 						});
 				}
-				return response.json();
+				// Oppdatering ok
 			});
 		},
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ['personer'] });
 			onClearErrors();
 			onConfirm();
-
-			if (person.del2Dato) {
-				onLeggTilHandling({
-					type: 'FJERNET_GODKJENNING',
-					personNavn: person.navn,
-					kursDato: person.del2Dato,
-				});
-			}
 		},
 		onError: (error) => {
 			onError(`Kunne ikke fjerne godkjenning: ${error.message}`);

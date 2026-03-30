@@ -10,11 +10,7 @@ interface Props {
 	person: Person;
 	onError: (errorMessage: string) => void;
 	onClearErrors: () => void;
-	onLeggTilHandling: (data: {
-		type: 'GODKJENT_DEL2' | 'FJERNET_GODKJENNING';
-		personNavn: string;
-		kursDato: string;
-	}) => void;
+	erElektriskRullestol: boolean;
 }
 
 const TabellRad = ({
@@ -22,10 +18,11 @@ const TabellRad = ({
 	person,
 	onError,
 	onClearErrors,
-	onLeggTilHandling,
+	erElektriskRullestol,
 }: Props) => {
 	const { id, navn, epost, arbeidssted, del1Dato, del2Dato } = person;
 
+	// Mobil / små skjermer
 	if (isMobile) {
 		return (
 			<Table.ExpandableRow
@@ -43,34 +40,55 @@ const TabellRad = ({
 							<BodyShort>{arbeidssted}</BodyShort>
 						</HStack>
 						<HStack gap="2" align="center">
-							<Label>Dato for del 1:</Label>
+							<Label>{erElektriskRullestol ? 'Dato for del 1:' : 'Dato gjennomført:'}</Label>
 							<BodyShort>{formaterNorskDato(del1Dato)}</BodyShort>
 						</HStack>
-						<HStack gap="2" align="center">
-							<Label>Dato for del 2:</Label>
-							<BodyShort>
-								{del2Dato ? formaterNorskDato(del2Dato) : '-'}
-							</BodyShort>
-						</HStack>
-						<GodkjennEllerFjernGodkjenning
-							person={person}
-							del2Dato={del2Dato}
-							onError={onError}
-							onClearErrors={onClearErrors}
-							onLeggTilHandling={onLeggTilHandling}
-						/>
+						{erElektriskRullestol && (
+							<>
+								<HStack gap="2" align="center">
+									<Label>Dato for del 2:</Label>
+									<BodyShort>
+										{del2Dato ? formaterNorskDato(del2Dato) : '-'}
+									</BodyShort>
+								</HStack>
+								<GodkjennEllerFjernGodkjenning
+									person={person}
+									del2Dato={del2Dato}
+									onError={onError}
+									onClearErrors={onClearErrors}
+								/>
+							</>
+						)}
 					</VStack>
 				}
 			>
 				<Table.HeaderCell scope="row">{navn}</Table.HeaderCell>
 				<Table.DataCell>{person.hjelpemiddelsentral}</Table.DataCell>
-				<Table.DataCell>
-					<Del2Tag del2Dato={del2Dato} />
-				</Table.DataCell>
+				{erElektriskRullestol && (
+					<Table.DataCell>
+						<Del2Tag del2Dato={del2Dato} />
+					</Table.DataCell>
+				)}
 			</Table.ExpandableRow>
 		);
 	}
 
+	// Godkjenningskurs uten del 2
+	if (!erElektriskRullestol) {
+		return (
+			<Table.Row key={id}>
+				<Table.HeaderCell scope="row">{navn}</Table.HeaderCell>
+				<Table.DataCell>
+					<Epost epost={epost} />
+				</Table.DataCell>
+				<Table.DataCell>{arbeidssted}</Table.DataCell>
+				<Table.DataCell>{person.hjelpemiddelsentral}</Table.DataCell>
+				<Table.DataCell>{formaterNorskDato(del1Dato)}</Table.DataCell>
+			</Table.Row>
+		);
+	}
+
+	// Elektrisk rullestol (med del 2)
 	return (
 		<Table.Row key={id}>
 			<Table.HeaderCell scope="row">{navn}</Table.HeaderCell>
@@ -93,7 +111,6 @@ const TabellRad = ({
 						del2Dato={del2Dato}
 						onError={onError}
 						onClearErrors={onClearErrors}
-						onLeggTilHandling={onLeggTilHandling}
 					/>
 				</div>
 			</Table.DataCell>
