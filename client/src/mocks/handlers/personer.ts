@@ -15,7 +15,8 @@ const updateDel2Status = (id: string, del2Dato: string | null) => {
 	}
 
 	mockPersoner[personIndex].del2Dato = del2Dato;
-	return HttpResponse.json(mockPersoner[personIndex]);
+	// return HttpResponse.json(mockPersoner[personIndex]);
+	return HttpResponse.text('OK', { status: 200 });
 };
 
 const personerHandler = [
