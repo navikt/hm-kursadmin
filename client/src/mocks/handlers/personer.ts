@@ -1,17 +1,17 @@
 import { HttpResponse, http } from 'msw';
-import { mockPersoner } from '../data/mockPersoner';
+import { type MockPerson, mockPersoner } from '../data/mockPersoner';
 import { BASE_URL } from '../../App';
 import type { Person } from '../../types/person';
 
 const updateDel2Status = (id: string, del2Dato: string | null) => {
 	const personIndex = mockPersoner.findIndex(
-		(person) => person.id === Number(id)
+		(person) => person.id === Number(id),
 	);
 
 	if (personIndex === -1) {
 		return HttpResponse.json(
 			{ message: 'Person ikke funnet' },
-			{ status: 404 }
+			{ status: 404 },
 		);
 	}
 
@@ -20,22 +20,33 @@ const updateDel2Status = (id: string, del2Dato: string | null) => {
 	return HttpResponse.text('OK', { status: 200 });
 };
 
+const kursConfig: Record<
+	string,
+	{ del1: keyof MockPerson; del2?: keyof MockPerson }
+> = {
+	'2': { del1: 'personløfterDato' },
+	'3': { del1: 'elektriskSengDato' },
+	'5': { del1: 'ersDel1Dato', del2: 'ersDel2Dato' },
+};
+
 const personerHandler = [
 	http.get(`${BASE_URL}/personer/:kursid`, (req) => {
 		const { kursid } = req.params;
-		if (kursid == '2') {
-			const personer = mockPersoner.filter((person) => person.personløfterDato !== null);
-			return HttpResponse.json({ personer: personer.map((person) => ({ ...person, del1Dato: person.personløfterDato, del2Dato: null } as Person)) });
-		}
-		if (kursid == '3') {
-			const personer = mockPersoner.filter((person) => person.elektriskSengDato !== null);
-			return HttpResponse.json({ personer: personer.map((person) => ({ ...person, del1Dato: person.elektriskSengDato, del2Dato: null } as Person)) });
-		}
-		if (kursid == '5') {
-			const personer = mockPersoner.filter((person) => person.ersDel1Dato !== null);
-			return HttpResponse.json({ personer: personer.map((person) => ({ ...person, del1Dato: person.ersDel1Dato, del2Dato: person.ersDel2Dato } as Person)) });
-		}
-		return HttpResponse.json([]);
+		const config = kursConfig[kursid as string];
+		if (!config) return HttpResponse.json([]);
+
+		const personer = mockPersoner
+			.filter((person) => person[config.del1] !== null)
+			.map(
+				(person) =>
+					({
+						...person,
+						del1Dato: person[config.del1],
+						del2Dato: config.del2 ? person[config.del2] : null,
+					}) as Person,
+			);
+
+		return HttpResponse.json({ personer });
 	}),
 	http.patch(`${BASE_URL}/personer/:id/godkjenn-del2`, async (req) => {
 		const { id } = req.params;
