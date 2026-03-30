@@ -1,6 +1,5 @@
 import { Heading, Select, VStack } from '@navikt/ds-react';
-import type { Kurs } from '../types/kurs';
-import { mockKursliste } from '../mocks/data/mockKurs';
+import { finnKurs, kursliste, type Kurs } from '../types/kurs';
 
 interface Props {
 	valgtkurs: Kurs;
@@ -17,15 +16,13 @@ function VelgKurs({ valgtkurs, setValgtkurs }: Props) {
 				label="Velg godkjenningskurs"
 				value={valgtkurs.id}
 				onChange={(e) => {
-					const selectedKurs = mockKursliste.find(
-						(kurs) => kurs.id === Number(e.target.value),
-					);
+					const selectedKurs = finnKurs(Number(e.target.value));
 					if (selectedKurs) {
 						setValgtkurs(selectedKurs);
 					}
 				}}
 			>
-				{mockKursliste.map((kurs) => (
+				{kursliste.map((kurs) => (
 					<option key={kurs.id} value={kurs.id}>
 						{kurs.title}
 					</option>

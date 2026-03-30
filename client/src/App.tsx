@@ -6,8 +6,7 @@ import VelgKurs from './components/VelgKurs';
 import ThemeSwitcher from './components/ThemeSwitcher';
 import { useQuery } from '@tanstack/react-query';
 import type { Person } from './types/person';
-import type { Kurs } from './types/kurs';
-import { mockKursliste } from './mocks/data/mockKurs';
+import { kursliste, type Kurs } from './types/kurs';
 
 export const BASE_URL = '/hjelpemidler/kursadmin/api';
 
@@ -15,13 +14,7 @@ function App() {
 	const [sokeverdi, setSokeverdi] = useState('');
 	const [hjelpemiddelsentralVerdi, setHjelpemiddelsentralVerdi] = useState('');
 	const [statusDel2Verdi, setStatusDel2Verdi] = useState('');
-	const [valgtkurs, setValgtkurs] = useState<Kurs>(() => {
-		if (mockKursliste.length === 0) {
-			throw new Error('Ingen kurs tilgjengelig');
-		}
-		const defaultKurs = mockKursliste.find((kurs) => kurs.id === 5);
-		return defaultKurs || mockKursliste[0];
-	});
+	const [valgtkurs, setValgtkurs] = useState<Kurs>(kursliste[0]);
 	const [errors, setErrors] = useState<Array<{ id: string; message: string }>>(
 		[],
 	);
@@ -31,15 +24,18 @@ function App() {
 		error,
 		data: personer = [],
 	} = useQuery<Person[]>({
-		queryKey: ['personer'],
+		queryKey: ['personer', valgtkurs.id],
 		queryFn: () => {
-			return fetch(`${BASE_URL}/personer`).then((response) => {
+			return fetch(`${BASE_URL}/personer/${valgtkurs.id}`).then((response) => {
 				if (!response.ok) {
 					throw new Error(
 						`Feil ved henting av personer: ${response.status} ${response.statusText}`,
 					);
 				}
-				return response.json().then((data) => data.personer);
+				return response.json().then((data) => {
+					console.log('Hentet personer:', data);
+					return data.personer
+				});
 			});
 		},
 	});

@@ -95,9 +95,10 @@ const Tabell = ({
 				</Table.Body>
 			</Table>
 			<Pagination
+				// TODO håndter tom liste med personer. Vis "ingen personer funnet" i tabellen og skjul pagineringen
 				page={tabellside}
 				onPageChange={setTabellside}
-				count={Math.ceil(filtrerteData.length / raderPerSide)}
+				count={Math.max(Math.ceil(filtrerteData.length / raderPerSide), 1)}
 				size="small"
 			/>
 		</VStack>
