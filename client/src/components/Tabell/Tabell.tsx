@@ -47,13 +47,13 @@ const Tabell = ({
 		personer,
 		sokeverdi,
 		hjelpemiddelsentralVerdi,
-		statusDel2Verdi
+		statusDel2Verdi,
 	);
 
 	const sorterteData = sortData(filtrerteData, sort);
 	const paginertData = sorterteData.slice(
 		(tabellside - 1) * raderPerSide,
-		tabellside * raderPerSide
+		tabellside * raderPerSide,
 	);
 
 	const handleSort = (kolonnenavn: ScopedSortState['orderBy']) => {
@@ -62,7 +62,7 @@ const Tabell = ({
 
 	useEffect(() => {
 		setTabellside(1);
-	}, [sokeverdi, hjelpemiddelsentralVerdi, statusDel2Verdi]);
+	}, [sokeverdi, hjelpemiddelsentralVerdi, statusDel2Verdi, valgtkurs]);
 
 	return (
 		<VStack gap="space-16">
@@ -73,12 +73,26 @@ const Tabell = ({
 					handleSort(sorteringsnøkkel as ScopedSortState['orderBy'])
 				}
 			>
-				<TabellHeader isMobile={isMobile} erElektriskRullestol={erElektriskRullestol} />
+				<TabellHeader
+					isMobile={isMobile}
+					erElektriskRullestol={erElektriskRullestol}
+				/>
 				<Table.Body>
 					{isPending && (
 						<Table.Row>
-							<Table.DataCell colSpan={isMobile ? 4 : (erElektriskRullestol ? 8 : 5)}>
+							<Table.DataCell
+								colSpan={isMobile ? 4 : erElektriskRullestol ? 8 : 5}
+							>
 								Laster personer...
+							</Table.DataCell>
+						</Table.Row>
+					)}
+					{!isPending && filtrerteData.length === 0 && (
+						<Table.Row>
+							<Table.DataCell
+								colSpan={isMobile ? 4 : erElektriskRullestol ? 8 : 5}
+							>
+								Ingen personer funnet
 							</Table.DataCell>
 						</Table.Row>
 					)}
@@ -94,13 +108,14 @@ const Tabell = ({
 					))}
 				</Table.Body>
 			</Table>
-			<Pagination
-				// TODO håndter tom liste med personer. Vis "ingen personer funnet" i tabellen og skjul pagineringen
-				page={tabellside}
-				onPageChange={setTabellside}
-				count={Math.max(Math.ceil(filtrerteData.length / raderPerSide), 1)}
-				size="small"
-			/>
+			{filtrerteData.length > 0 && (
+				<Pagination
+					page={tabellside}
+					onPageChange={setTabellside}
+					count={Math.max(Math.ceil(filtrerteData.length / raderPerSide), 1)}
+					size="small"
+				/>
+			)}
 		</VStack>
 	);
 };
