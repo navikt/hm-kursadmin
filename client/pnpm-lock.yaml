@@ -9,13 +9,13 @@ importers:
   .:
     dependencies:
       '@navikt/aksel-icons':
-        specifier: ^7.34.0
+        specifier: ^7.40.0
         version: 7.40.0
       '@navikt/ds-css':
-        specifier: ^7.33.2
+        specifier: ^7.40.0
         version: 7.40.0
       '@navikt/ds-react':
-        specifier: ^7.33.2
+        specifier: ^7.40.0
         version: 7.40.0(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@tanstack/react-query':
         specifier: ^5.90.10

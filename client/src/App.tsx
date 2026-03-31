@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Alert, VStack } from '@navikt/ds-react';
+import { LocalAlert, VStack } from '@navikt/ds-react';
 import Tabell from './components/Tabell/Tabell';
 import Filtrering from './components/Filtrering/Filtrering';
 import VelgKurs from './components/VelgKurs';
@@ -34,7 +34,7 @@ function App() {
 				}
 				return response.json().then((data) => {
 					console.log('Hentet personer:', data);
-					return data.personer
+					return data.personer;
 				});
 			});
 		},
@@ -58,22 +58,27 @@ function App() {
 
 		if (error) {
 			allErrors.push(
-				<Alert key="query-error" variant="error">
-					{error.message}
-				</Alert>,
+				<LocalAlert key="query-error" status="error">
+					<LocalAlert.Header>
+						<LocalAlert.Title>Feil</LocalAlert.Title>
+						<LocalAlert.CloseButton
+							onClick={() => removeError('query-error')}
+						/>
+					</LocalAlert.Header>
+					<LocalAlert.Content>{error.message}</LocalAlert.Content>
+				</LocalAlert>,
 			);
 		}
 
-		errors.forEach((err) => {
+		errors.forEach((error) => {
 			allErrors.push(
-				<Alert
-					key={`error-${err.id}`}
-					variant="error"
-					closeButton
-					onClose={() => removeError(err.id)}
-				>
-					{err.message}
-				</Alert>,
+				<LocalAlert key={`error-${error.id}`} status="error">
+					<LocalAlert.Header>
+						<LocalAlert.Title>Feil</LocalAlert.Title>
+						<LocalAlert.CloseButton onClick={() => removeError(error.id)} />
+					</LocalAlert.Header>
+					<LocalAlert.Content>{error.message}</LocalAlert.Content>
+				</LocalAlert>,
 			);
 		});
 
