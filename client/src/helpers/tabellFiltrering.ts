@@ -5,7 +5,7 @@ export const tabellFiltrering = () => {
 		personer: Person[],
 		sokeverdi: string,
 		hjelpemiddelsentralVerdi: string,
-		statusDel2Verdi: string
+		statusDel2Verdi: string,
 	): Person[] => {
 		return personer.filter((person) => {
 			const matcherSok =
