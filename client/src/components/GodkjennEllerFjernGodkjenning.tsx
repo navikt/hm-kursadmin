@@ -5,9 +5,8 @@ import FjernGodkjenningModal from './FjernGodkjenningModal';
 import type { Person } from '../types/person';
 import { useMutation } from '@tanstack/react-query';
 import { queryClient } from '../queryClient';
-import { formaterTilISODato } from '../helpers/utils';
+import { formaterTilISODato, BASE_URL, beskrivFeil } from '../helpers/utils';
 import { useMobile } from '../helpers/useMobile';
-import { BASE_URL } from '../App';
 
 interface Props {
 	person: Person;
@@ -33,27 +32,22 @@ const GodkjennEllerFjernGodkjenning = ({
 	};
 
 	const godkjennDel2Mutation = useMutation({
-		mutationFn: (kursDato: string) => {
-			return fetch(`${BASE_URL}/personer/${person.id}/godkjenn-del2`, {
-				method: 'PATCH',
-				headers: {
-					'Content-Type': 'application/json',
+		mutationFn: async (kursDato: string) => {
+			const response = await fetch(
+				`${BASE_URL}/personer/${person.id}/godkjenn-del2`,
+				{
+					method: 'PATCH',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ kursDato }),
 				},
-				body: JSON.stringify({ kursDato }),
-			}).then((response) => {
-				if (!response.ok) {
-					return response
-						.json()
-						.catch(() => ({ message: 'Ukjent feil' }))
-						.then((errorData) => {
-							throw new Error(
-								errorData.message ||
-									`HTTP ${response.status}: ${response.statusText}`
-							);
-						});
-				}
-				// Oppdatering ok
-			});
+			);
+			if (!response.ok) {
+				const errorData = await response.json().catch(() => null);
+				throw new Error(
+					errorData?.message ||
+						beskrivFeil(response.status, 'Kunne ikke godkjenne del 2'),
+				);
+			}
 		},
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ['personer'] });
@@ -61,7 +55,7 @@ const GodkjennEllerFjernGodkjenning = ({
 			onClearErrors();
 		},
 		onError: (error) => {
-			onError(`Kunne ikke godkjenne del 2: ${error.message}`);
+			onError(error.message);
 		},
 	});
 

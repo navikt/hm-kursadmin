@@ -1,5 +1,25 @@
 import type { Kurs } from '../types/kurs';
 
+export const BASE_URL = '/hjelpemidler/kursadmin/api';
+
+export function beskrivFeil(status: number, feilmelding: string): string {
+	switch (status) {
+		case 401:
+		case 403:
+			return 'Sesjonen din har utløpt. Last inn siden på nytt for å logge inn igjen.';
+		case 502:
+		case 503:
+		case 504:
+			return `${feilmelding}. Tjenesten er midlertidig utilgjengelig – prøv igjen om litt.`;
+		case 404:
+			return `${feilmelding}. Dataene ble ikke funnet.`;
+		case 500:
+			return `${feilmelding}. En intern serverfeil oppstod – prøv igjen senere.`;
+		default:
+			return `${feilmelding} (feilkode ${status}). Prøv igjen senere.`;
+	}
+}
+
 export const formaterNorskDato = (dato: string) =>
 	new Date(dato).toLocaleString('no', {
 		day: 'numeric',

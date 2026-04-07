@@ -7,8 +7,7 @@ import ThemeSwitcher from './components/ThemeSwitcher';
 import { useQuery } from '@tanstack/react-query';
 import type { Person } from './types/person';
 import { kursliste, type Kurs } from './types/kurs';
-
-export const BASE_URL = '/hjelpemidler/kursadmin/api';
+import { BASE_URL, beskrivFeil } from './helpers/utils';
 
 function App() {
 	const [sokeverdi, setSokeverdi] = useState('');
@@ -25,18 +24,15 @@ function App() {
 		data: personer = [],
 	} = useQuery<Person[]>({
 		queryKey: ['personer', valgtkurs.id],
-		queryFn: () => {
-			return fetch(`${BASE_URL}/personer/${valgtkurs.id}`).then((response) => {
-				if (!response.ok) {
-					throw new Error(
-						`Feil ved henting av personer: ${response.status} ${response.statusText}`,
-					);
-				}
-				return response.json().then((data) => {
-					console.log('Hentet personer:', data);
-					return data.personer;
-				});
-			});
+		queryFn: async () => {
+			const response = await fetch(`${BASE_URL}/personer/${valgtkurs.id}`);
+			if (!response.ok) {
+				throw new Error(
+					beskrivFeil(response.status, 'Kunne ikke hente personer'),
+				);
+			}
+			const data = await response.json();
+			return data.personer;
 		},
 	});
 
@@ -53,37 +49,10 @@ function App() {
 		setErrors((prev) => prev.filter((error) => error.id !== errorId));
 	};
 
-	const generateErrors = () => {
-		const allErrors = [];
-
-		if (error) {
-			allErrors.push(
-				<LocalAlert key="query-error" status="error">
-					<LocalAlert.Header>
-						<LocalAlert.Title>Feil</LocalAlert.Title>
-						<LocalAlert.CloseButton
-							onClick={() => removeError('query-error')}
-						/>
-					</LocalAlert.Header>
-					<LocalAlert.Content>{error.message}</LocalAlert.Content>
-				</LocalAlert>,
-			);
-		}
-
-		errors.forEach((error) => {
-			allErrors.push(
-				<LocalAlert key={`error-${error.id}`} status="error">
-					<LocalAlert.Header>
-						<LocalAlert.Title>Feil</LocalAlert.Title>
-						<LocalAlert.CloseButton onClick={() => removeError(error.id)} />
-					</LocalAlert.Header>
-					<LocalAlert.Content>{error.message}</LocalAlert.Content>
-				</LocalAlert>,
-			);
-		});
-
-		return allErrors;
-	};
+	const allErrors = [
+		...(error ? [{ id: 'query-error', message: error.message }] : []),
+		...errors,
+	];
 
 	return (
 		<main>
@@ -105,7 +74,17 @@ function App() {
 					personer={personer}
 					valgtkurs={valgtkurs}
 				/>
-				<VStack gap="space-8">{generateErrors()}</VStack>
+				<VStack gap="space-8">
+					{allErrors.map((err) => (
+						<LocalAlert key={err.id} status="error">
+							<LocalAlert.Header>
+								<LocalAlert.Title>Feil</LocalAlert.Title>
+								<LocalAlert.CloseButton onClick={() => removeError(err.id)} />
+							</LocalAlert.Header>
+							<LocalAlert.Content>{err.message}</LocalAlert.Content>
+						</LocalAlert>
+					))}
+				</VStack>
 				<Tabell
 					sokeverdi={sokeverdi}
 					hjelpemiddelsentralVerdi={hjelpemiddelsentralVerdi}

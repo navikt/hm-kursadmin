@@ -2,7 +2,7 @@ import { BodyLong, Button, Modal } from '@navikt/ds-react';
 import { useMutation } from '@tanstack/react-query';
 import { queryClient } from '../queryClient';
 import type { Person } from '../types/person';
-import { BASE_URL } from '../App';
+import { BASE_URL, beskrivFeil } from '../helpers/utils';
 
 interface Props {
 	person: Person;
@@ -22,23 +22,20 @@ const FjernGodkjenningModal = ({
 	onClearErrors,
 }: Props) => {
 	const fjernDel2Mutation = useMutation({
-		mutationFn: () => {
-			return fetch(`${BASE_URL}/personer/${person.id}/fjern-del2`, {
-				method: 'PATCH',
-			}).then((response) => {
-				if (!response.ok) {
-					return response
-						.json()
-						.catch(() => ({ message: 'Ukjent feil' }))
-						.then((errorData) => {
-							throw new Error(
-								errorData.message ||
-									`HTTP ${response.status}: ${response.statusText}`
-							);
-						});
-				}
-				// Oppdatering ok
-			});
+		mutationFn: async () => {
+			const response = await fetch(
+				`${BASE_URL}/personer/${person.id}/fjern-del2`,
+				{
+					method: 'PATCH',
+				},
+			);
+			if (!response.ok) {
+				const errorData = await response.json().catch(() => null);
+				throw new Error(
+					errorData?.message ||
+						beskrivFeil(response.status, 'Kunne ikke fjerne godkjenning'),
+				);
+			}
 		},
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ['personer'] });
@@ -46,7 +43,7 @@ const FjernGodkjenningModal = ({
 			onConfirm();
 		},
 		onError: (error) => {
-			onError(`Kunne ikke fjerne godkjenning: ${error.message}`);
+			onError(error.message);
 		},
 	});
 

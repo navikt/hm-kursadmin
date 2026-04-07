@@ -1,6 +1,6 @@
 import { HttpResponse, http } from 'msw';
 import { type MockPerson, mockPersoner } from '../data/mockPersoner';
-import { BASE_URL } from '../../App';
+import { BASE_URL } from '../../helpers/utils';
 import type { Person } from '../../types/person';
 
 const updateDel2Status = (id: string, del2Dato: string | null) => {
@@ -30,8 +30,8 @@ const kursConfig: Record<
 };
 
 const personerHandler = [
-	http.get(`${BASE_URL}/personer/:kursid`, (req) => {
-		const { kursid } = req.params;
+	http.get(`${BASE_URL}/personer/:kursid`, ({ params }) => {
+		const { kursid } = params;
 		const config = kursConfig[kursid as string];
 		if (!config) return HttpResponse.json([]);
 
