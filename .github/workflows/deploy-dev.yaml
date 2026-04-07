@@ -41,7 +41,7 @@ jobs:
         run: cd client && pnpm install --frozen-lockfile
 
       - name: Run unit tests
-        run: cd client && pnpm test:run
+        run: cd client && pnpm test
 
   deploy:
     name: Build and deploy
