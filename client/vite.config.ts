@@ -48,4 +48,7 @@ function htmlPlugin({ development }: { development?: boolean }): Plugin {
 export default defineConfig((env) => ({
 	base: '/hjelpemidler/kursadmin/',
 	plugins: [react(), htmlPlugin({ development: env.mode === 'development' })],
+	test: {
+		include: ['tests/unit/**/*.test.ts'],
+	},
 }));
