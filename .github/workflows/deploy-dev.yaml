@@ -9,6 +9,7 @@ on:
       - 'CODEOWNERS'
     branches:
       - main
+      - playwright-tester
 
 env:
   IMAGE: ghcr.io/${{ github.repository }}:${{ github.sha }}
