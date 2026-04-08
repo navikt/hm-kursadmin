@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { InternalHeader, LocalAlert, VStack } from '@navikt/ds-react';
+import { HStack, InternalHeader, LocalAlert, VStack } from '@navikt/ds-react';
 import Tabell from './components/Tabell/Tabell';
 import Filtrering from './components/Filtrering/Filtrering';
 import KursChips from './components/KursChips';
@@ -61,18 +61,19 @@ function App() {
 					Godkjenningskurs - fullførte kurs
 				</InternalHeader.Title>
 			</InternalHeader>
-			<div
-				style={{
-					position: 'absolute',
-					top: '4rem',
-					right: '1rem',
-					zIndex: 1000,
-				}}
-			>
-				<ThemeSwitcher />
-			</div>
+
 			<VStack margin="space-20" gap="space-16">
-				<KursChips valgtkurs={valgtkurs} setValgtkurs={setValgtkurs} />
+				<HStack
+					align="start"
+					justify="space-between"
+					wrap={false}
+					gap="space-4"
+				>
+					<KursChips valgtkurs={valgtkurs} setValgtkurs={setValgtkurs} />
+					<div style={{ flexShrink: 0 }}>
+						<ThemeSwitcher />
+					</div>
+				</HStack>
 				<Filtrering
 					sokeverdi={sokeverdi}
 					setSokeverdi={setSokeverdi}
