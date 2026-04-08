@@ -68,6 +68,7 @@ const Tabell = ({
 		<VStack gap="space-16">
 			<Table
 				size="medium"
+				zebraStripes
 				sort={sort}
 				onSortChange={(sorteringsnøkkel) =>
 					handleSort(sorteringsnøkkel as ScopedSortState['orderBy'])
