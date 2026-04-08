@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Pagination, Table, VStack } from '@navikt/ds-react';
 import type { Person } from '../../types/person';
 import type { Kurs } from '../../types/kurs';
-import { useMobile } from '../../helpers/useMobile';
+import { useMobile } from '../../helpers/useResponsive';
 import { erErsKurs } from '../../helpers/utils';
 import {
 	tabellSortering,

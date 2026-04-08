@@ -1,11 +1,10 @@
-import { HStack, VStack, Button } from '@navikt/ds-react';
+import { HStack, Button } from '@navikt/ds-react';
 import { XMarkIcon } from '@navikt/aksel-icons';
 import Sok from './Sok';
 import HjelpemiddelsentralFilter from './HjelpemiddelsentralFilter';
 import type { Person } from '../../types/person';
 import type { Kurs } from '../../types/kurs';
 import StatusDel2Filter from './StatusDel2Filter';
-import { useMobile } from '../../helpers/useMobile';
 import { erErsKurs } from '../../helpers/utils';
 
 interface Props {
@@ -29,10 +28,6 @@ const Filtrering = ({
 	personer,
 	valgtkurs,
 }: Props) => {
-	const isMobile = useMobile();
-	const StackComponent = isMobile ? VStack : HStack;
-	const alignValue = isMobile ? 'start' : 'end';
-
 	const erElektriskRullestol = erErsKurs(valgtkurs);
 
 	const handleReset = () => {
@@ -47,7 +42,7 @@ const Filtrering = ({
 		statusDel2Verdi !== '';
 
 	return (
-		<StackComponent gap={'4'} align={alignValue}>
+		<HStack gap={'4'} align="end">
 			<Sok sokeverdi={sokeverdi} setSokeverdi={setSokeverdi} />
 			<HjelpemiddelsentralFilter
 				hjelpemiddelsentralVerdi={hjelpemiddelsentralVerdi}
@@ -63,13 +58,14 @@ const Filtrering = ({
 			{harAktiveFiltre && (
 				<Button
 					variant="tertiary"
+					size="small"
 					icon={<XMarkIcon aria-hidden />}
 					onClick={handleReset}
 				>
 					Nullstill filtre
 				</Button>
 			)}
-		</StackComponent>
+		</HStack>
 	);
 };
 

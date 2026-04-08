@@ -13,17 +13,19 @@ const HjelpemiddelsentralFilter = ({
 	personer,
 }: Props) => {
 	const unikeHjelpemiddelsentraler = Array.from(
-		new Set(personer.map((person) => person.hjelpemiddelsentral))
+		new Set(personer.map((person) => person.hjelpemiddelsentral)),
 	).sort((a, b) => a.localeCompare(b));
 
 	return (
 		<Select
-			label="Velg hjelpemiddelsentral (HMS)"
+			label="Velg hjelpemiddelsentral"
+			hideLabel
 			value={hjelpemiddelsentralVerdi}
 			onChange={(e) => setHjelpemiddelsentralVerdi(e.target.value)}
 			autoComplete="off"
+			size="small"
 		>
-			<option value="">- Velg HMS -</option>
+			<option value="">- Velg hjelpemiddelsentral (HMS) -</option>
 			{unikeHjelpemiddelsentraler.map((hjelpemiddelsentral) => (
 				<option key={hjelpemiddelsentral} value={hjelpemiddelsentral}>
 					{hjelpemiddelsentral}

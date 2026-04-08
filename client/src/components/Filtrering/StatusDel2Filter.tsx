@@ -8,12 +8,14 @@ interface Props {
 const StatusDel2Filter = ({ statusDel2Verdi, setStatusDel2Verdi }: Props) => {
 	return (
 		<Select
-			label="Velg status Del 2"
+			label="Velg status for Del 2"
+			hideLabel
 			value={statusDel2Verdi}
 			onChange={(e) => setStatusDel2Verdi(e.target.value)}
 			autoComplete="off"
+			size="small"
 		>
-			<option value="">- Velg status Del 2 -</option>
+			<option value="">- Velg status del 2 -</option>
 			<option value="ikke-fullført">Ikke fullført</option>
 			<option value="fullført">Fullført</option>
 		</Select>
