@@ -10,15 +10,15 @@ test('har korrekt tittel', async ({ page }) => {
 	});
 });
 
-test('viser elektrisk rullestol som standard kurs', async ({ page }) => {
+test('Viser header', async ({ page }) => {
 	await test.step('Gå til hovedside', async () => {
 		await page.goto('/');
 	});
 
-	await test.step('Verifiser at elektrisk rullestol vises', async () => {
+	await test.step('Viser header for siden', async () => {
 		await expect(
 			page.getByRole('heading', {
-				name: /Godkjenningskurs: Elektrisk rullestol/i,
+				name: /Godkjenningskurs - fullførte kurs/i,
 			}),
 		).toBeVisible();
 	});
