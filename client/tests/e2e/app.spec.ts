@@ -6,7 +6,7 @@ test('har korrekt tittel', async ({ page }) => {
 	});
 
 	await test.step('Verifiser tittel', async () => {
-		await expect(page).toHaveTitle(/hm-kursadmin/);
+		await expect(page).toHaveTitle(/Godkjenningskurs - fullførte kurs/);
 	});
 });
 

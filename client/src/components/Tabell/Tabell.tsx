@@ -36,7 +36,7 @@ const Tabell = ({
 	const [tabellside, setTabellside] = useState(1);
 	const [sort, setSort] = useState<ScopedSortState | undefined>();
 	const isMobile = useMobile();
-	const raderPerSide = 8;
+	const raderPerSide = 10;
 
 	const { handleSortering, sortData } = tabellSortering();
 	const { filtrerPersoner } = tabellFiltrering();
