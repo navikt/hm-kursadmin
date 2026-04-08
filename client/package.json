@@ -8,9 +8,10 @@
 		"build": "tsc -b && vite build",
 		"lint": "eslint .",
 		"preview": "vite preview",
-		"test": "vitest --run",
-		"test:ui": "vitest --ui",
-		"test:watch": "vitest",
+		"test": "vitest --run && playwright test",
+		"vitest": "vitest --run",
+		"vitest:ui": "vitest --ui",
+		"vitest:watch": "vitest",
 		"pw": "playwright test",
 		"pw:ui": "playwright test --ui"
 	},
