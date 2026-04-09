@@ -40,7 +40,9 @@ const TabellRad = ({
 							<BodyShort>{arbeidssted}</BodyShort>
 						</HStack>
 						<HStack gap="2" align="center">
-							<Label>{erElektriskRullestol ? 'Dato for del 1:' : 'Dato gjennomført:'}</Label>
+							<Label>
+								{erElektriskRullestol ? 'Dato for del 1:' : 'Dato gjennomført:'}
+							</Label>
 							<BodyShort>{formaterNorskDato(del1Dato)}</BodyShort>
 						</HStack>
 						{erElektriskRullestol && (
@@ -63,7 +65,9 @@ const TabellRad = ({
 				}
 			>
 				<Table.HeaderCell scope="row">{navn}</Table.HeaderCell>
-				<Table.DataCell>{person.hjelpemiddelsentral}</Table.DataCell>
+				{!erElektriskRullestol && (
+					<Table.DataCell>{formaterNorskDato(del1Dato)}</Table.DataCell>
+				)}
 				{erElektriskRullestol && (
 					<Table.DataCell>
 						<Del2Tag del2Dato={del2Dato} />
@@ -82,7 +86,6 @@ const TabellRad = ({
 					<Epost epost={epost} />
 				</Table.DataCell>
 				<Table.DataCell>{arbeidssted}</Table.DataCell>
-				<Table.DataCell>{person.hjelpemiddelsentral}</Table.DataCell>
 				<Table.DataCell>{formaterNorskDato(del1Dato)}</Table.DataCell>
 			</Table.Row>
 		);
@@ -96,7 +99,6 @@ const TabellRad = ({
 				<Epost epost={epost} />
 			</Table.DataCell>
 			<Table.DataCell>{arbeidssted}</Table.DataCell>
-			<Table.DataCell>{person.hjelpemiddelsentral}</Table.DataCell>
 			<Table.DataCell>{formaterNorskDato(del1Dato)}</Table.DataCell>
 			<Table.DataCell>
 				{del2Dato ? formaterNorskDato(del2Dato) : '-'}

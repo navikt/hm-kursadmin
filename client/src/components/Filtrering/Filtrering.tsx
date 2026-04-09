@@ -1,7 +1,6 @@
 import { HStack, Button } from '@navikt/ds-react';
 import { XMarkIcon } from '@navikt/aksel-icons';
 import Sok from './Sok';
-import HjelpemiddelsentralFilter from './HjelpemiddelsentralFilter';
 import type { Person } from '../../types/person';
 import type { Kurs } from '../../types/kurs';
 import StatusDel2Filter from './StatusDel2Filter';
@@ -25,7 +24,7 @@ const Filtrering = ({
 	setHjelpemiddelsentralVerdi,
 	statusDel2Verdi,
 	setStatusDel2Verdi,
-	personer,
+
 	valgtkurs,
 }: Props) => {
 	const erElektriskRullestol = erErsKurs(valgtkurs);
@@ -44,11 +43,11 @@ const Filtrering = ({
 	return (
 		<HStack gap={'4'} align="end">
 			<Sok sokeverdi={sokeverdi} setSokeverdi={setSokeverdi} />
-			<HjelpemiddelsentralFilter
+			{/* <HjelpemiddelsentralFilter
 				hjelpemiddelsentralVerdi={hjelpemiddelsentralVerdi}
 				setHjelpemiddelsentralVerdi={setHjelpemiddelsentralVerdi}
 				personer={personer}
-			/>
+			/> */}
 			{erElektriskRullestol && (
 				<StatusDel2Filter
 					statusDel2Verdi={statusDel2Verdi}

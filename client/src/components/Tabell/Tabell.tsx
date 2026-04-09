@@ -82,7 +82,7 @@ const Tabell = ({
 					{isPending && (
 						<Table.Row>
 							<Table.DataCell
-								colSpan={isMobile ? 4 : erElektriskRullestol ? 8 : 5}
+								colSpan={isMobile ? 4 : erElektriskRullestol ? 7 : 5}
 							>
 								Laster personer...
 							</Table.DataCell>
@@ -91,7 +91,7 @@ const Tabell = ({
 					{!isPending && filtrerteData.length === 0 && (
 						<Table.Row>
 							<Table.DataCell
-								colSpan={isMobile ? 4 : erElektriskRullestol ? 8 : 5}
+								colSpan={isMobile ? 4 : erElektriskRullestol ? 7 : 5}
 							>
 								Ingen personer funnet
 							</Table.DataCell>
