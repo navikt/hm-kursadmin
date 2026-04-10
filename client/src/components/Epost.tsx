@@ -5,9 +5,19 @@ interface Props {
 }
 
 const Epost = ({ epost }: Props) => {
+	const parts = epost.split(/([@.])/).map((part, index) => {
+		const shouldBreak = part === '@' || part === '.';
+		return (
+			<span key={index}>
+				{part}
+				{shouldBreak && <wbr />}
+			</span>
+		);
+	});
+
 	return (
-		<HStack gap="1" align="center">
-			<BodyShort>{epost}</BodyShort>
+		<HStack gap="1" align="center" className="epost-lengde">
+			<BodyShort>{parts}</BodyShort>
 			{/* <Tooltip content="Kopier e-postadresse">
 				<CopyButton
 					copyText={epost}

@@ -17,7 +17,7 @@ const useBreakpoint = (breakpoint: number): boolean => {
 	return isBelow;
 };
 
-export const useMobile = (breakpoint: number = 1130): boolean => {
+export const useMobile = (breakpoint: number = 900): boolean => {
 	return useBreakpoint(breakpoint);
 };
 

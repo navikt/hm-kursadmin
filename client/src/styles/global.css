@@ -3,6 +3,10 @@
 	justify-content: end;
 }
 
+.epost-lengde {
+	max-width: 370px;
+}
+
 html,
 body,
 #root {
