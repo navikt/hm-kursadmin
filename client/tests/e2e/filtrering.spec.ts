@@ -15,21 +15,6 @@ test('kan søke på navn', async ({ page }) => {
 	});
 });
 
-test('kan filtrere på hjelpemiddelsentral', async ({ page }) => {
-	await test.step('Gå til hovedside', async () => {
-		await page.goto('/');
-	});
-
-	await test.step('Velg hjelpemiddelsentral', async () => {
-		const hmsFilter = page.getByLabel(/velg hjelpemiddelsentral/i);
-		await hmsFilter.selectOption({ index: 1 });
-	});
-
-	await test.step('Verifiser at tabell vises med filtrering', async () => {
-		await expect(page.getByRole('table')).toBeVisible();
-	});
-});
-
 test('kan filtrere på status del 2 (ERS kurs)', async ({ page }) => {
 	await test.step('Gå til hovedside', async () => {
 		await page.goto('/');

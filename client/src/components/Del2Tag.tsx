@@ -6,9 +6,17 @@ interface Props {
 
 const Del2Tag = ({ del2Dato }: Props) => {
 	if (del2Dato) {
-		return <Tag variant="success">Fullført</Tag>;
+		return (
+			<Tag variant="success" size="small">
+				Fullført
+			</Tag>
+		);
 	} else {
-		return <Tag variant="neutral">Ikke fullført</Tag>;
+		return (
+			<Tag variant="neutral" size="small">
+				Ikke fullført
+			</Tag>
+		);
 	}
 };
 

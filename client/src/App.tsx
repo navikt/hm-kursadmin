@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { LocalAlert, VStack } from '@navikt/ds-react';
+import { HStack, InternalHeader, LocalAlert, VStack } from '@navikt/ds-react';
 import Tabell from './components/Tabell/Tabell';
 import Filtrering from './components/Filtrering/Filtrering';
-import VelgKurs from './components/VelgKurs';
+import KursChips from './components/KursChips';
 import ThemeSwitcher from './components/ThemeSwitcher';
 import { useQuery } from '@tanstack/react-query';
 import type { Person } from './types/person';
@@ -56,14 +56,24 @@ function App() {
 
 	return (
 		<main>
-			<div
-				style={{ position: 'fixed', top: '1rem', right: '1rem', zIndex: 1000 }}
-			>
-				<ThemeSwitcher />
-			</div>
-			<VStack margin="space-20" gap="space-16">
-				<VelgKurs valgtkurs={valgtkurs} setValgtkurs={setValgtkurs} />
+			<InternalHeader>
+				<InternalHeader.Title as="h1">
+					Godkjenningskurs - fullførte kurs
+				</InternalHeader.Title>
+			</InternalHeader>
 
+			<VStack margin="space-20" gap="space-16">
+				<HStack
+					align="start"
+					justify="space-between"
+					wrap={false}
+					gap="space-4"
+				>
+					<KursChips valgtkurs={valgtkurs} setValgtkurs={setValgtkurs} />
+					<div style={{ flexShrink: 0 }}>
+						<ThemeSwitcher />
+					</div>
+				</HStack>
 				<Filtrering
 					sokeverdi={sokeverdi}
 					setSokeverdi={setSokeverdi}

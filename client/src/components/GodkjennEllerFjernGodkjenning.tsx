@@ -6,7 +6,7 @@ import type { Person } from '../types/person';
 import { useMutation } from '@tanstack/react-query';
 import { queryClient } from '../queryClient';
 import { formaterTilISODato, BASE_URL, beskrivFeil } from '../helpers/utils';
-import { useMobile } from '../helpers/useMobile';
+import { useMobile } from '../helpers/useResponsive';
 
 interface Props {
 	person: Person;

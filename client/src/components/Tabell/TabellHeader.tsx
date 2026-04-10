@@ -15,7 +15,9 @@ const TabellHeader = ({ isMobile, erElektriskRullestol }: Props) => {
 					<Table.ColumnHeader sortKey="navn" sortable>
 						Navn
 					</Table.ColumnHeader>
-					<Table.HeaderCell scope="col">HMS</Table.HeaderCell>
+					{!erElektriskRullestol && (
+						<Table.HeaderCell scope="col">Dato gjennomført</Table.HeaderCell>
+					)}
 					{erElektriskRullestol && (
 						<Table.HeaderCell scope="col">Status del 2</Table.HeaderCell>
 					)}
@@ -34,7 +36,6 @@ const TabellHeader = ({ isMobile, erElektriskRullestol }: Props) => {
 					</Table.ColumnHeader>
 					<Table.HeaderCell scope="col">E-post</Table.HeaderCell>
 					<Table.HeaderCell scope="col">Arbeidssted</Table.HeaderCell>
-					<Table.HeaderCell scope="col">HMS</Table.HeaderCell>
 					<Table.ColumnHeader scope="col" sortKey="del1Dato" sortable>
 						Dato gjennomført
 					</Table.ColumnHeader>
@@ -52,7 +53,6 @@ const TabellHeader = ({ isMobile, erElektriskRullestol }: Props) => {
 				</Table.ColumnHeader>
 				<Table.HeaderCell scope="col">E-post</Table.HeaderCell>
 				<Table.HeaderCell scope="col">Arbeidssted</Table.HeaderCell>
-				<Table.HeaderCell scope="col">HMS</Table.HeaderCell>
 				<Table.ColumnHeader scope="col" sortKey="del1Dato" sortable>
 					Dato for del 1
 				</Table.ColumnHeader>

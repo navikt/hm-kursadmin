@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Pagination, Table, VStack } from '@navikt/ds-react';
 import type { Person } from '../../types/person';
 import type { Kurs } from '../../types/kurs';
-import { useMobile } from '../../helpers/useMobile';
+import { useMobile } from '../../helpers/useResponsive';
 import { erErsKurs } from '../../helpers/utils';
 import {
 	tabellSortering,
@@ -36,7 +36,7 @@ const Tabell = ({
 	const [tabellside, setTabellside] = useState(1);
 	const [sort, setSort] = useState<ScopedSortState | undefined>();
 	const isMobile = useMobile();
-	const raderPerSide = 8;
+	const raderPerSide = 10;
 
 	const { handleSortering, sortData } = tabellSortering();
 	const { filtrerPersoner } = tabellFiltrering();
@@ -67,7 +67,8 @@ const Tabell = ({
 	return (
 		<VStack gap="space-16">
 			<Table
-				size="medium"
+				size="small"
+				zebraStripes
 				sort={sort}
 				onSortChange={(sorteringsnøkkel) =>
 					handleSort(sorteringsnøkkel as ScopedSortState['orderBy'])
@@ -81,7 +82,7 @@ const Tabell = ({
 					{isPending && (
 						<Table.Row>
 							<Table.DataCell
-								colSpan={isMobile ? 4 : erElektriskRullestol ? 8 : 5}
+								colSpan={isMobile ? 4 : erElektriskRullestol ? 7 : 5}
 							>
 								Laster personer...
 							</Table.DataCell>
@@ -90,7 +91,7 @@ const Tabell = ({
 					{!isPending && filtrerteData.length === 0 && (
 						<Table.Row>
 							<Table.DataCell
-								colSpan={isMobile ? 4 : erElektriskRullestol ? 8 : 5}
+								colSpan={isMobile ? 4 : erElektriskRullestol ? 7 : 5}
 							>
 								Ingen personer funnet
 							</Table.DataCell>

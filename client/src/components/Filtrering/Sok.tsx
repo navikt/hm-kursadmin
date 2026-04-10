@@ -1,4 +1,5 @@
 import { Search } from '@navikt/ds-react';
+import { useTablet } from '../../helpers/useResponsive';
 
 interface Props {
 	sokeverdi: string;
@@ -6,16 +7,25 @@ interface Props {
 }
 
 const Sok = ({ sokeverdi, setSokeverdi }: Props) => {
+	const isMobile = useTablet();
+	let sokBredde = 45;
+
+	if (isMobile) {
+		sokBredde = 30;
+	}
+
 	return (
 		<form role="search" onSubmit={(e) => e.preventDefault()}>
 			<Search
 				label="Søk på navn eller e-post"
-				variant="secondary"
+				variant="primary"
 				hideLabel={false}
 				autoFocus
 				autoComplete="off"
+				htmlSize={sokBredde}
 				value={sokeverdi}
 				onChange={(verdi) => setSokeverdi(verdi)}
+				size="small"
 			/>
 		</form>
 	);

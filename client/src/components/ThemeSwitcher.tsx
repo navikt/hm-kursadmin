@@ -17,6 +17,7 @@ const ThemeSwitcher = () => {
 		>
 			<Button
 				variant="tertiary"
+				size="small"
 				icon={<ThemeIcon aria-label="Tema ikon" />}
 				aria-label={
 					theme === ThemeType.DARK

@@ -1,5 +1,4 @@
-import { BodyShort, HStack, Tooltip, CopyButton } from '@navikt/ds-react';
-import { FilesIcon } from '@navikt/aksel-icons';
+import { BodyShort, HStack } from '@navikt/ds-react';
 
 interface Props {
 	epost: string;
@@ -9,14 +8,14 @@ const Epost = ({ epost }: Props) => {
 	return (
 		<HStack gap="1" align="center">
 			<BodyShort>{epost}</BodyShort>
-			<Tooltip content="Kopier e-postadresse">
+			{/* <Tooltip content="Kopier e-postadresse">
 				<CopyButton
 					copyText={epost}
 					icon={<FilesIcon aria-hidden />}
 					size="xsmall"
 					aria-label="Kopier e-postadresse"
 				/>
-			</Tooltip>
+			</Tooltip> */}
 		</HStack>
 	);
 };

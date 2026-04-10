@@ -9,7 +9,7 @@ on:
       - 'CODEOWNERS'
     branches:
       - main
-      - playwright-tester
+      - justeringer
 
 env:
   IMAGE: ghcr.io/${{ github.repository }}:${{ github.sha }}
@@ -43,7 +43,7 @@ jobs:
         run: cd client && pnpm install --frozen-lockfile
 
       - name: Run unit tests
-        run: cd client && pnpm test
+        run: cd client && pnpm vitest
 
   e2e-tests:
     name: Run E2E tests
