@@ -22,6 +22,11 @@ interface Props {
 	valgtkurs: Kurs;
 }
 
+const RADER_PER_SIDE = 10;
+const ANTALL_KOLONNER_STANDARD = 5;
+const ANTALL_KOLONNER_ERS = 7;
+const ANTALL_KOLONNER_MOBIL = 4;
+
 const Tabell = ({
 	sokeverdi,
 	statusDel2Verdi,
@@ -34,7 +39,6 @@ const Tabell = ({
 	const [tabellside, setTabellside] = useState(1);
 	const [sort, setSort] = useState<ScopedSortState | undefined>();
 	const isMobile = useMobile();
-	const raderPerSide = 10;
 
 	const { handleSortering, sortData } = tabellSortering();
 	const { filtrerPersoner } = tabellFiltrering();
@@ -45,8 +49,8 @@ const Tabell = ({
 
 	const sorterteData = sortData(filtrerteData, sort);
 	const paginertData = sorterteData.slice(
-		(tabellside - 1) * raderPerSide,
-		tabellside * raderPerSide,
+		(tabellside - 1) * RADER_PER_SIDE,
+		tabellside * RADER_PER_SIDE,
 	);
 
 	const handleSort = (kolonnenavn: ScopedSortState['orderBy']) => {
@@ -75,7 +79,13 @@ const Tabell = ({
 					{isPending && (
 						<Table.Row>
 							<Table.DataCell
-								colSpan={isMobile ? 4 : erElektriskRullestol ? 7 : 5}
+								colSpan={
+									isMobile
+										? ANTALL_KOLONNER_MOBIL
+										: erElektriskRullestol
+											? ANTALL_KOLONNER_ERS
+											: ANTALL_KOLONNER_STANDARD
+								}
 							>
 								Laster personer...
 							</Table.DataCell>
@@ -84,7 +94,13 @@ const Tabell = ({
 					{!isPending && filtrerteData.length === 0 && (
 						<Table.Row>
 							<Table.DataCell
-								colSpan={isMobile ? 4 : erElektriskRullestol ? 7 : 5}
+								colSpan={
+									isMobile
+										? ANTALL_KOLONNER_MOBIL
+										: erElektriskRullestol
+											? ANTALL_KOLONNER_ERS
+											: ANTALL_KOLONNER_STANDARD
+								}
 							>
 								Ingen personer funnet
 							</Table.DataCell>
@@ -106,7 +122,7 @@ const Tabell = ({
 				<Pagination
 					page={tabellside}
 					onPageChange={setTabellside}
-					count={Math.max(Math.ceil(filtrerteData.length / raderPerSide), 1)}
+					count={Math.max(Math.ceil(filtrerteData.length / RADER_PER_SIDE), 1)}
 					size="small"
 				/>
 			)}
