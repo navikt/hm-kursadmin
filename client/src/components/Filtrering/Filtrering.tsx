@@ -9,8 +9,6 @@ import { erErsKurs } from '../../helpers/utils';
 interface Props {
 	sokeverdi: string;
 	setSokeverdi: (verdi: string) => void;
-	hjelpemiddelsentralVerdi: string;
-	setHjelpemiddelsentralVerdi: (verdi: string) => void;
 	statusDel2Verdi: string;
 	setStatusDel2Verdi: (verdi: string) => void;
 	personer: Person[];
@@ -20,8 +18,6 @@ interface Props {
 const Filtrering = ({
 	sokeverdi,
 	setSokeverdi,
-	hjelpemiddelsentralVerdi,
-	setHjelpemiddelsentralVerdi,
 	statusDel2Verdi,
 	setStatusDel2Verdi,
 
@@ -31,23 +27,14 @@ const Filtrering = ({
 
 	const handleReset = () => {
 		setSokeverdi('');
-		setHjelpemiddelsentralVerdi('');
 		setStatusDel2Verdi('');
 	};
 
-	const harAktiveFiltre =
-		sokeverdi !== '' ||
-		hjelpemiddelsentralVerdi !== '' ||
-		statusDel2Verdi !== '';
+	const harAktiveFiltre = sokeverdi !== '' || statusDel2Verdi !== '';
 
 	return (
 		<HStack gap={'4'} align="end">
 			<Sok sokeverdi={sokeverdi} setSokeverdi={setSokeverdi} />
-			{/* <HjelpemiddelsentralFilter
-				hjelpemiddelsentralVerdi={hjelpemiddelsentralVerdi}
-				setHjelpemiddelsentralVerdi={setHjelpemiddelsentralVerdi}
-				personer={personer}
-			/> */}
 			{erElektriskRullestol && (
 				<StatusDel2Filter
 					statusDel2Verdi={statusDel2Verdi}

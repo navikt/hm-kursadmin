@@ -11,7 +11,6 @@ import { BASE_URL, beskrivFeil } from './helpers/utils';
 
 function App() {
 	const [sokeverdi, setSokeverdi] = useState('');
-	const [hjelpemiddelsentralVerdi, setHjelpemiddelsentralVerdi] = useState('');
 	const [statusDel2Verdi, setStatusDel2Verdi] = useState('');
 	const [valgtkurs, setValgtkurs] = useState<Kurs>(kursliste[0]);
 	const [errors, setErrors] = useState<Array<{ id: string; message: string }>>(
@@ -77,8 +76,6 @@ function App() {
 				<Filtrering
 					sokeverdi={sokeverdi}
 					setSokeverdi={setSokeverdi}
-					hjelpemiddelsentralVerdi={hjelpemiddelsentralVerdi}
-					setHjelpemiddelsentralVerdi={setHjelpemiddelsentralVerdi}
 					statusDel2Verdi={statusDel2Verdi}
 					setStatusDel2Verdi={setStatusDel2Verdi}
 					personer={personer}
@@ -97,7 +94,6 @@ function App() {
 				</VStack>
 				<Tabell
 					sokeverdi={sokeverdi}
-					hjelpemiddelsentralVerdi={hjelpemiddelsentralVerdi}
 					statusDel2Verdi={statusDel2Verdi}
 					personer={personer}
 					isPending={isPending}

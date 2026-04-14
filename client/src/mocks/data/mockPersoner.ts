@@ -3,13 +3,11 @@ export interface MockPerson {
 	navn: string;
 	epost: string;
 	arbeidssted: string;
-	hjelpemiddelsentral: string;
 	ersDel1Dato: string | null;
 	ersDel2Dato: string | null;
 	personløfterDato: string | null;
 	elektriskSengDato: string | null;
 }
-
 
 export const mockPersoner: MockPerson[] = [
 	{
@@ -17,7 +15,6 @@ export const mockPersoner: MockPerson[] = [
 		navn: 'Testberg, Siri',
 		epost: 'siri.testberg@testdata.no',
 		arbeidssted: 'Diakonhjemmet Sykehus',
-		hjelpemiddelsentral: 'Oslo',
 		ersDel1Dato: '2025-03-09T08:55:39.012Z',
 		ersDel2Dato: null,
 		personløfterDato: '2025-04-15T10:00:00.000Z',
@@ -28,7 +25,6 @@ export const mockPersoner: MockPerson[] = [
 		navn: 'Mockdal, Berit',
 		epost: 'berit.mockdal@testdata.no',
 		arbeidssted: 'Rikshospitalet',
-		hjelpemiddelsentral: 'Oslo',
 		ersDel1Dato: '2025-01-11T16:52:47.345Z',
 		ersDel2Dato: '2025-03-05T12:00:00.000Z',
 		personløfterDato: null,
@@ -39,7 +35,6 @@ export const mockPersoner: MockPerson[] = [
 		navn: 'Mockmyr, Astrid',
 		epost: 'astrid.mockmyr@example.no',
 		arbeidssted: 'Molde Sjukehus',
-		hjelpemiddelsentral: 'Møre og Romsdal',
 		ersDel1Dato: '2024-12-20T11:48:29.345Z',
 		ersDel2Dato: null,
 		personløfterDato: null,
@@ -50,7 +45,6 @@ export const mockPersoner: MockPerson[] = [
 		navn: 'Testmo, Gunnhild',
 		epost: 'gunnhild.testmo@example.no',
 		arbeidssted: 'Fredrikstad Blødersenter',
-		hjelpemiddelsentral: 'Øst-Viken',
 		ersDel1Dato: '2024-11-12T11:14:55.234Z',
 		ersDel2Dato: null,
 		personløfterDato: '2024-12-20T09:00:00.000Z',
@@ -61,7 +55,6 @@ export const mockPersoner: MockPerson[] = [
 		navn: 'Testmann, Erlend',
 		epost: 'erlend.testmann@fake.no',
 		arbeidssted: 'Stavanger Universitetssjukehus',
-		hjelpemiddelsentral: 'Rogaland',
 		ersDel1Dato: '2024-11-08T09:15:44.891Z',
 		ersDel2Dato: '2025-01-18T14:00:00.000Z',
 		personløfterDato: null,
@@ -72,7 +65,6 @@ export const mockPersoner: MockPerson[] = [
 		navn: 'Dummyrud, Geir',
 		epost: 'geir.dummyrud@mock.no',
 		arbeidssted: 'Haugesund Sykehus',
-		hjelpemiddelsentral: 'Rogaland',
 		ersDel1Dato: '2024-10-22T16:42:18.234Z',
 		ersDel2Dato: '2024-12-05T11:20:00.000Z',
 		personløfterDato: null,
@@ -83,7 +75,6 @@ export const mockPersoner: MockPerson[] = [
 		navn: 'Fakevik, Tone',
 		epost: 'tone.fakevik@example.no',
 		arbeidssted: 'Bodø Sjukehus',
-		hjelpemiddelsentral: 'Nordland',
 		ersDel1Dato: '2024-09-27T14:19:58.789Z',
 		ersDel2Dato: null,
 		personløfterDato: '2024-11-15T10:00:00.000Z',
@@ -94,7 +85,6 @@ export const mockPersoner: MockPerson[] = [
 		navn: 'Mockesen, Truls',
 		epost: 'truls.mockesen@fake.no',
 		arbeidssted: 'Ergoterapeuten Bergen',
-		hjelpemiddelsentral: 'Vestland',
 		ersDel1Dato: '2024-09-03T14:35:21.456Z',
 		ersDel2Dato: null,
 		personløfterDato: null,
@@ -105,7 +95,6 @@ export const mockPersoner: MockPerson[] = [
 		navn: 'Simulerstad, Rune',
 		epost: 'rune.simulerstad@mock.no',
 		arbeidssted: 'Lillehammer Rehabiliteringssenter',
-		hjelpemiddelsentral: 'Innlandet (Gjøvik)',
 		ersDel1Dato: '2024-08-05T15:33:17.678Z',
 		ersDel2Dato: '2024-10-12T10:15:00.000Z',
 		personløfterDato: null,
@@ -116,7 +105,6 @@ export const mockPersoner: MockPerson[] = [
 		navn: 'Testli, Knut',
 		epost: 'knut.testli@mock.no',
 		arbeidssted: 'Tønsberg Rehabiliteringsklinikk',
-		hjelpemiddelsentral: 'Vestfold og Telemark',
 		ersDel1Dato: '2024-07-30T10:25:14.123Z',
 		ersDel2Dato: '2024-09-22T15:30:00.000Z',
 		personløfterDato: '2024-08-20T09:00:00.000Z',
@@ -127,7 +115,6 @@ export const mockPersoner: MockPerson[] = [
 		navn: 'Testowski, Bjørn',
 		epost: 'bjorn.testowski@example.no',
 		arbeidssted: 'Bærum Hjelpemiddelsentral',
-		hjelpemiddelsentral: 'Vest-Viken',
 		ersDel1Dato: '2024-07-17T11:13:26.116Z',
 		ersDel2Dato: '2024-09-10T13:15:00.000Z',
 		personløfterDato: null,
@@ -138,7 +125,6 @@ export const mockPersoner: MockPerson[] = [
 		navn: 'Dummyholt, Magnus',
 		epost: 'magnus.dummyholt@fake.no',
 		arbeidssted: 'Ålesund Sjukehus',
-		hjelpemiddelsentral: 'Møre og Romsdal',
 		ersDel1Dato: '2024-06-18T12:41:23.456Z',
 		ersDel2Dato: '2024-08-30T13:45:00.000Z',
 		personløfterDato: '2024-07-25T10:00:00.000Z',
@@ -149,7 +135,6 @@ export const mockPersoner: MockPerson[] = [
 		navn: 'Dummysen, Per',
 		epost: 'per.dummysen@fake.no',
 		arbeidssted: 'St. Olavs Hospital',
-		hjelpemiddelsentral: 'Trøndelag',
 		ersDel1Dato: '2024-06-04T20:57:29.159Z',
 		ersDel2Dato: '2024-08-22T14:00:00.000Z',
 		personløfterDato: null,
@@ -160,7 +145,6 @@ export const mockPersoner: MockPerson[] = [
 		navn: 'Simulatorsen, Lise',
 		epost: 'lise.simulatorsen@testdata.no',
 		arbeidssted: 'NAV Hjelpemiddelsentral Oslo',
-		hjelpemiddelsentral: 'Oslo',
 		ersDel1Dato: '2024-05-12T08:22:45.123Z',
 		ersDel2Dato: '2024-07-20T16:45:00.000Z',
 		personløfterDato: '2024-06-15T10:00:00.000Z',
@@ -171,7 +155,6 @@ export const mockPersoner: MockPerson[] = [
 		navn: 'Testesen, Kari',
 		epost: 'kari.testesen@example.no',
 		arbeidssted: 'Sunnaas Sykehus',
-		hjelpemiddelsentral: 'Oslo',
 		ersDel1Dato: '2024-04-28T19:12:14.358Z',
 		ersDel2Dato: '2024-06-15T10:30:00.000Z',
 		personløfterDato: null,
@@ -182,7 +165,6 @@ export const mockPersoner: MockPerson[] = [
 		navn: 'Simulberg, Frode',
 		epost: 'frode.simulberg@fake.no',
 		arbeidssted: 'Haraldsplass Diakonale Sykehus',
-		hjelpemiddelsentral: 'Vestland',
 		ersDel1Dato: '2024-04-15T09:33:21.789Z',
 		ersDel2Dato: '2024-06-28T14:20:00.000Z',
 		personløfterDato: '2024-05-20T10:00:00.000Z',
@@ -193,7 +175,6 @@ export const mockPersoner: MockPerson[] = [
 		navn: 'Testrud, Ingeborg',
 		epost: 'ingeborg.testrud@example.no',
 		arbeidssted: 'Trondheim Ergoterapi Klinikk',
-		hjelpemiddelsentral: 'Trøndelag',
 		ersDel1Dato: '2024-03-15T10:18:33.789Z',
 		ersDel2Dato: '2024-05-28T09:30:00.000Z',
 		personløfterDato: null,
@@ -204,7 +185,6 @@ export const mockPersoner: MockPerson[] = [
 		navn: 'Fakerud, Anne',
 		epost: 'anne.fakerud@mock.no',
 		arbeidssted: 'Kristiansand Fysioterapi AS',
-		hjelpemiddelsentral: 'Agder',
 		ersDel1Dato: '2024-03-10T14:25:33.456Z',
 		ersDel2Dato: '2024-05-18T11:45:00.000Z',
 		personløfterDato: '2024-04-15T10:00:00.000Z',
@@ -215,7 +195,6 @@ export const mockPersoner: MockPerson[] = [
 		navn: 'Fakestad, Marit',
 		epost: 'marit.fakestad@testdata.no',
 		arbeidssted: 'Universitetssykehuset Nord-Norge',
-		hjelpemiddelsentral: 'Troms og Finnmark',
 		ersDel1Dato: '2024-02-14T13:27:52.567Z',
 		ersDel2Dato: null,
 		personløfterDato: '2024-04-01T09:00:00.000Z',
@@ -226,7 +205,6 @@ export const mockPersoner: MockPerson[] = [
 		navn: 'Mockmann, Ola',
 		epost: 'ola.mockmann@testdata.no',
 		arbeidssted: 'Haukeland Universitetssjukehus',
-		hjelpemiddelsentral: 'Vestland',
 		ersDel1Dato: '2024-01-29T09:51:19.833Z',
 		ersDel2Dato: null,
 		personløfterDato: '2024-03-10T10:00:00.000Z',

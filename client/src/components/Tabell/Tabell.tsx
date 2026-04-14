@@ -14,7 +14,6 @@ import TabellRad from './TabellRad';
 
 interface Props {
 	sokeverdi: string;
-	hjelpemiddelsentralVerdi: string;
 	statusDel2Verdi: string;
 	personer: Person[];
 	isPending?: boolean;
@@ -25,7 +24,6 @@ interface Props {
 
 const Tabell = ({
 	sokeverdi,
-	hjelpemiddelsentralVerdi,
 	statusDel2Verdi,
 	personer,
 	isPending,
@@ -43,12 +41,7 @@ const Tabell = ({
 
 	const erElektriskRullestol = erErsKurs(valgtkurs);
 
-	const filtrerteData = filtrerPersoner(
-		personer,
-		sokeverdi,
-		hjelpemiddelsentralVerdi,
-		statusDel2Verdi,
-	);
+	const filtrerteData = filtrerPersoner(personer, sokeverdi, statusDel2Verdi);
 
 	const sorterteData = sortData(filtrerteData, sort);
 	const paginertData = sorterteData.slice(
@@ -62,7 +55,7 @@ const Tabell = ({
 
 	useEffect(() => {
 		setTabellside(1);
-	}, [sokeverdi, hjelpemiddelsentralVerdi, statusDel2Verdi, valgtkurs]);
+	}, [sokeverdi, statusDel2Verdi, valgtkurs]);
 
 	return (
 		<VStack gap="space-16">
