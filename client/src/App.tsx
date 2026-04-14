@@ -78,7 +78,6 @@ function App() {
 					setSokeverdi={setSokeverdi}
 					statusDel2Verdi={statusDel2Verdi}
 					setStatusDel2Verdi={setStatusDel2Verdi}
-					personer={personer}
 					valgtkurs={valgtkurs}
 				/>
 				<VStack gap="space-8">
