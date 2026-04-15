@@ -11,6 +11,7 @@ import {
 import { tabellFiltrering } from '../../helpers/tabellFiltrering';
 import TabellHeader from './TabellHeader';
 import TabellRad from './TabellRad';
+import type { KursadminBruker } from '../../types/kursadminbruker';
 
 interface Props {
 	sokeverdi: string;
@@ -20,6 +21,7 @@ interface Props {
 	onError: (errorMessage: string) => void;
 	onClearErrors: () => void;
 	valgtkurs: Kurs;
+	bruker: KursadminBruker
 }
 
 const RADER_PER_SIDE = 10;
@@ -35,6 +37,7 @@ const Tabell = ({
 	onError,
 	onClearErrors,
 	valgtkurs,
+	bruker,
 }: Props) => {
 	const [tabellside, setTabellside] = useState(1);
 	const [sort, setSort] = useState<ScopedSortState | undefined>();
@@ -114,6 +117,7 @@ const Tabell = ({
 							onError={onError}
 							onClearErrors={onClearErrors}
 							erElektriskRullestol={erElektriskRullestol}
+							bruker={bruker}
 						/>
 					))}
 				</Table.Body>

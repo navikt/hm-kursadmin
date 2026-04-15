@@ -2,7 +2,8 @@ import { Table, VStack, HStack, BodyShort, Label } from '@navikt/ds-react';
 import { formaterNorskDato } from '../../helpers/utils';
 import Del2Tag from '../Del2Tag';
 import GodkjennEllerFjernGodkjenning from '../GodkjennEllerFjernGodkjenning';
-import type { Person } from '../../types/person';
+import { kanRedigere, type KursadminBruker } from '../../types/kursadminbruker';
+import type { Person} from '../../types/person';
 import Epost from '../Epost';
 
 interface Props {
@@ -11,6 +12,7 @@ interface Props {
 	onError: (errorMessage: string) => void;
 	onClearErrors: () => void;
 	erElektriskRullestol: boolean;
+	bruker: KursadminBruker
 }
 
 const TabellRad = ({
@@ -19,9 +21,9 @@ const TabellRad = ({
 	onError,
 	onClearErrors,
 	erElektriskRullestol,
+	bruker,
 }: Props) => {
 	const { id, navn, epost, arbeidssted, del1Dato, del2Dato } = person;
-
 	// Mobil / små skjermer
 	if (isMobile) {
 		return (
@@ -53,12 +55,15 @@ const TabellRad = ({
 										{del2Dato ? formaterNorskDato(del2Dato) : '-'}
 									</BodyShort>
 								</HStack>
-								<GodkjennEllerFjernGodkjenning
-									person={person}
-									del2Dato={del2Dato}
-									onError={onError}
-									onClearErrors={onClearErrors}
-								/>
+								{kanRedigere(bruker) && (
+									<GodkjennEllerFjernGodkjenning
+										person={person}
+										del2Dato={del2Dato}
+										onError={onError}
+										onClearErrors={onClearErrors}
+								/>)}  
+
+								
 							</>
 						)}
 					</VStack>
@@ -108,12 +113,13 @@ const TabellRad = ({
 			</Table.DataCell>
 			<Table.DataCell>
 				<div className="flex-content-right">
-					<GodkjennEllerFjernGodkjenning
-						person={person}
-						del2Dato={del2Dato}
-						onError={onError}
-						onClearErrors={onClearErrors}
-					/>
+					{kanRedigere(bruker) && (
+						<GodkjennEllerFjernGodkjenning
+							person={person}
+							del2Dato={del2Dato}
+							onError={onError}
+							onClearErrors={onClearErrors}
+					/>)}  
 				</div>
 			</Table.DataCell>
 		</Table.Row>

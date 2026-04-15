@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { HStack, InternalHeader, LocalAlert, VStack } from '@navikt/ds-react';
+import { BodyLong, HStack, InternalHeader, Loader, LocalAlert, VStack } from '@navikt/ds-react';
 import Tabell from './components/Tabell/Tabell';
 import Filtrering from './components/Filtrering/Filtrering';
 import KursChips from './components/KursChips';
@@ -8,6 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 import type { Person } from './types/person';
 import { kursliste, type Kurs } from './types/kurs';
 import { BASE_URL, beskrivFeil } from './helpers/utils';
+import type { KursadminBruker } from './types/kursadminbruker';
 
 function App() {
 	const [sokeverdi, setSokeverdi] = useState('');
@@ -18,8 +19,8 @@ function App() {
 	);
 
 	const {
-		isPending,
-		error,
+		isPending: isPendingPersoner,
+		error: errorPersoner,
 		data: personer = [],
 	} = useQuery<Person[]>({
 		queryKey: ['personer', valgtkurs.id],
@@ -33,6 +34,26 @@ function App() {
 			const data = await response.json();
 			return data.personer;
 		},
+
+	});
+
+	const {
+		isPending: isPendingBruker,
+		error: errorBruker,
+		data: bruker,
+	} = useQuery<KursadminBruker>({
+		queryKey: ['meg'],
+		queryFn: async () => {
+			const response = await fetch(`${BASE_URL}/meg`);
+			if (!response.ok) {
+				throw new Error(
+					beskrivFeil(response.status, 'Kunne ikke hente Kursadminbruker'),
+				);
+			}
+			const data = await response.json();
+			return data;
+		},
+
 	});
 
 	const addError = (errorMessage: string) => {
@@ -49,9 +70,18 @@ function App() {
 	};
 
 	const allErrors = [
-		...(error ? [{ id: 'query-error', message: error.message }] : []),
+		...(errorPersoner ? [{ id: 'query-error', message: errorPersoner.message }] : []),
 		...errors,
 	];
+
+	if (isPendingBruker) {
+		return <Loader />
+	}
+
+	if (errorBruker) {
+		console.log("Feil - Klarte ikke henter Roller: ", errorBruker);
+		return <BodyLong>Klarte ikke hente roller.</BodyLong>
+	}
 
 	return (
 		<main>
@@ -95,10 +125,11 @@ function App() {
 					sokeverdi={sokeverdi}
 					statusDel2Verdi={statusDel2Verdi}
 					personer={personer}
-					isPending={isPending}
+					isPending={isPendingPersoner}
 					onError={addError}
 					onClearErrors={clearAllErrors}
 					valgtkurs={valgtkurs}
+					bruker={bruker}
 				/>
 			</VStack>
 		</main>
