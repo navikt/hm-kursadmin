@@ -24,8 +24,8 @@ const kursConfig: Record<
 	string,
 	{ del1: keyof MockPerson; del2?: keyof MockPerson }
 > = {
-	'2': { del1: 'personløfterDato' },
-	'3': { del1: 'elektriskSengDato' },
+	'7': { del1: 'personløfterDato' },
+	'8': { del1: 'elektriskSengDato' },
 	'5': { del1: 'ersDel1Dato', del2: 'ersDel2Dato' },
 };
 
