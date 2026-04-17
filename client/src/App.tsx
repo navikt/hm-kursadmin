@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { BodyLong, HStack, InternalHeader, Loader, LocalAlert, VStack } from '@navikt/ds-react';
+import { BodyShort, HStack, InternalHeader, Loader, LocalAlert, VStack } from '@navikt/ds-react';
 import Tabell from './components/Tabell/Tabell';
 import Filtrering from './components/Filtrering/Filtrering';
 import KursChips from './components/KursChips';
@@ -42,7 +42,7 @@ function App() {
 		error: errorBruker,
 		data: bruker,
 	} = useQuery<KursadminBruker>({
-		queryKey: ['meg'],
+		queryKey: ['meg'], retry : false,
 		queryFn: async () => {
 			const response = await fetch(`${BASE_URL}/meg`);
 			if (!response.ok) {
@@ -70,18 +70,28 @@ function App() {
 	};
 
 	const allErrors = [
-		...(errorPersoner ? [{ id: 'query-error', message: errorPersoner.message }] : []),
+		...(errorPersoner ? [{ id: 'query-personer-error', message: errorPersoner.message }] : []),
+		...(errorBruker ? [{ id: 'query-meg-error', message: errorBruker.message }] : []),
 		...errors,
 	];
 
 	if (isPendingBruker) {
-		return <Loader />
+		return <main>
+			<InternalHeader>
+				<InternalHeader.Title as="h1">
+					Godkjenningskurs - fullførte kurs
+				</InternalHeader.Title>
+			</InternalHeader>
+				<VStack gap="space-16" align="center" padding={"space-32"}>
+					<Loader size="3xlarge" title="Laster..."/> 
+					<BodyShort>Laster...</BodyShort>
+			</VStack>
+			
+		</main>
 	}
 
-	if (errorBruker) {
-		console.log("Feil - Klarte ikke henter Roller: ", errorBruker);
-		return <BodyLong>Klarte ikke hente roller.</BodyLong>
-	}
+
+
 
 	return (
 		<main>

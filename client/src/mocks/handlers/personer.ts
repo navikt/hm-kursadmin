@@ -34,7 +34,6 @@ const personerHandler = [
 		const { kursid } = params;
 		const config = kursConfig[kursid as string];
 		if (!config) return HttpResponse.json([]);
-
 		const personer = mockPersoner
 			.filter((person) => person[config.del1] !== null)
 			.map(
@@ -45,7 +44,6 @@ const personerHandler = [
 						del2Dato: config.del2 ? person[config.del2] : null,
 					}) as Person,
 			);
-
 		return HttpResponse.json({ personer });
 	}),
 	http.patch(`${BASE_URL}/personer/:id/godkjenn-del2`, async (req) => {

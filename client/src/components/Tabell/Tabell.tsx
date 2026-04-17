@@ -21,7 +21,7 @@ interface Props {
 	onError: (errorMessage: string) => void;
 	onClearErrors: () => void;
 	valgtkurs: Kurs;
-	bruker: KursadminBruker
+	bruker: KursadminBruker | undefined
 }
 
 const RADER_PER_SIDE = 10;

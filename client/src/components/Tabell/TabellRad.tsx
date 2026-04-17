@@ -12,7 +12,7 @@ interface Props {
 	onError: (errorMessage: string) => void;
 	onClearErrors: () => void;
 	erElektriskRullestol: boolean;
-	bruker: KursadminBruker
+	bruker: KursadminBruker | undefined
 }
 
 const TabellRad = ({

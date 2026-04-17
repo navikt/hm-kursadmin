@@ -9,10 +9,10 @@ export interface KursadminBruker {
   roller: KursadminRolle[];
 }
 
-export function kanRedigere(bruker: KursadminBruker): boolean {
-  return bruker.roller.includes(KursadminRolle.REDIGERE);
+export function kanRedigere(bruker: KursadminBruker | undefined): boolean {
+  return bruker?.roller.includes(KursadminRolle.REDIGERE)?? false;
 }
 
-export function kanLese(bruker: KursadminBruker): boolean {
-  return bruker.roller.includes(KursadminRolle.LESE) || kanRedigere(bruker);
+export function kanLese(bruker: KursadminBruker | undefined): boolean {
+  return bruker?.roller.includes(KursadminRolle.LESE) || kanRedigere(bruker);
 }
