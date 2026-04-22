@@ -8,29 +8,34 @@ const ThemeSwitcher = () => {
 	const { theme, setTheme } = useThemeContext();
 
 	return (
-		<Tooltip
-			content={
-				theme === ThemeType.DARK
-					? 'Endre til lyst tema'
-					: 'Endre til mørkt tema'
-			}
-		>
-			<Button
-				variant="tertiary"
-				size="small"
-				icon={<ThemeIcon aria-label="Tema ikon" />}
-				aria-label={
+		<>
+			<Tooltip
+				content={
 					theme === ThemeType.DARK
 						? 'Endre til lyst tema'
 						: 'Endre til mørkt tema'
 				}
-				onClick={() => {
-					const valgtTema =
-						theme === ThemeType.DARK ? ThemeType.LIGHT : ThemeType.DARK;
-					setTheme(valgtTema);
-				}}
-			/>
-		</Tooltip>
+			>
+				<Button
+					variant="tertiary"
+					size="small"
+					icon={<ThemeIcon aria-label="Tema ikon" />}
+					aria-label={
+						theme === ThemeType.DARK
+							? 'Endre til lyst tema'
+							: 'Endre til mørkt tema'
+					}
+					onClick={() => {
+						const valgtTema =
+							theme === ThemeType.DARK ? ThemeType.LIGHT : ThemeType.DARK;
+						setTheme(valgtTema);
+					}}
+				/>
+			</Tooltip>
+			<div role="status" aria-live="polite" className="sr-only">
+				{theme === ThemeType.DARK ? 'Mørkt tema valgt' : 'Lyst tema valgt'}
+			</div>
+		</>
 	);
 };
 
