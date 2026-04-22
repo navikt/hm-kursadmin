@@ -20,7 +20,6 @@ const Sok = ({ sokeverdi, setSokeverdi }: Props) => {
 				label="Søk på navn eller e-post"
 				variant="primary"
 				hideLabel={false}
-				autoFocus
 				autoComplete="off"
 				htmlSize={sokBredde}
 				value={sokeverdi}
