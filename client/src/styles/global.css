@@ -25,3 +25,18 @@ body {
 #root {
 	min-height: 100vh;
 }
+
+.sr-only-focusable:focus {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 9999;
+	padding: 0.5rem 1rem;
+	background: var(--ax-bg-default);
+	color: var(--ax-text-default);
+	clip: auto;
+	width: auto;
+	height: auto;
+	overflow: visible;
+	white-space: nowrap;
+}

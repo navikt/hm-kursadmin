@@ -77,6 +77,7 @@ function App() {
 
 	if (isPendingBruker) {
 		return <main>
+			<a href="#hovedinnhold" className="sr-only sr-only-focusable">Hopp til hovedinnhold</a>
 			<InternalHeader>
 				<InternalHeader.Title as="h1">
 					Godkjenningskurs - fullførte kurs
@@ -95,13 +96,14 @@ function App() {
 
 	return (
 		<main>
+			<a href="#hovedinnhold" className="sr-only sr-only-focusable">Hopp til hovedinnhold</a>
 			<InternalHeader>
 				<InternalHeader.Title as="h1">
 					Godkjenningskurs - fullførte kurs
 				</InternalHeader.Title>
 			</InternalHeader>
 
-			<VStack margin="space-20" gap="space-16">
+			<VStack margin="space-20" gap="space-16" id="hovedinnhold">
 				<HStack
 					align="start"
 					justify="space-between"

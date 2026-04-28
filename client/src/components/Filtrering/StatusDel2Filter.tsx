@@ -8,8 +8,7 @@ interface Props {
 const StatusDel2Filter = ({ statusDel2Verdi, setStatusDel2Verdi }: Props) => {
 	return (
 		<Select
-			label="Velg status for Del 2"
-			hideLabel
+			label="Status for del 2"
 			value={statusDel2Verdi}
 			onChange={(e) => setStatusDel2Verdi(e.target.value)}
 			autoComplete="off"
