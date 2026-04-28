@@ -21,7 +21,7 @@ interface Props {
 	onError: (errorMessage: string) => void;
 	onClearErrors: () => void;
 	valgtkurs: Kurs;
-	bruker: KursadminBruker | undefined
+	bruker: KursadminBruker | undefined;
 }
 
 const RADER_PER_SIDE = 10;
@@ -74,6 +74,9 @@ const Tabell = ({
 					handleSort(sorteringsnøkkel as ScopedSortState['orderBy'])
 				}
 			>
+				<caption className="sr-only">
+					{`Personer som har fullført ${valgtkurs.title}`}
+				</caption>
 				<TabellHeader
 					isMobile={isMobile}
 					erElektriskRullestol={erElektriskRullestol}
@@ -90,7 +93,7 @@ const Tabell = ({
 											: ANTALL_KOLONNER_STANDARD
 								}
 							>
-								Laster personer...
+								<output>Laster personer...</output>
 							</Table.DataCell>
 						</Table.Row>
 					)}
@@ -105,7 +108,7 @@ const Tabell = ({
 											: ANTALL_KOLONNER_STANDARD
 								}
 							>
-								Ingen personer funnet
+								<output>Ingen personer funnet</output>
 							</Table.DataCell>
 						</Table.Row>
 					)}
