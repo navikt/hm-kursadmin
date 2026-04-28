@@ -25,7 +25,7 @@ test('kan bytte kurs med chips', async ({ page }) => {
 	});
 
 	await test.step('Verifiser ARIA live region oppdatering', async () => {
-		const liveRegion = page.locator('[role="status"][aria-live="polite"]');
+		const liveRegion = page.locator('[role="status"][aria-live="polite"]').filter({ hasText: 'er valgt' });
 		await expect(liveRegion).toContainText('Personløfter og seil');
 	});
 
