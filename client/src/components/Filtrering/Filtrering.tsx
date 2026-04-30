@@ -46,7 +46,7 @@ const Filtrering = ({
 					icon={<XMarkIcon aria-hidden />}
 					onClick={handleReset}
 				>
-					Nullstill filtre
+					Nullstill filter
 				</Button>
 			)}
 		</HStack>
