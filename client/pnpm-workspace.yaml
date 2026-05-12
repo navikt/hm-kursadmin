@@ -7,3 +7,7 @@ minimumReleaseAge: 10080 # 10080 minutter = 7 dager
 
 minimumReleaseAgeExclude:
   - '@navikt/*'
+
+allowBuilds:
+  - esbuild
+  - msw
