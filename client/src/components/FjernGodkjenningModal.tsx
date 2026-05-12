@@ -3,6 +3,7 @@ import { useMutation } from '@tanstack/react-query';
 import { queryClient } from '../queryClient';
 import type { Person } from '../types/person';
 import { BASE_URL, beskrivFeil } from '../helpers/utils';
+import { useVarsel } from '../hooks/useVarsel';
 
 interface Props {
 	person: Person;
@@ -21,6 +22,8 @@ const FjernGodkjenningModal = ({
 	onError,
 	onClearErrors,
 }: Props) => {
+	const { visVarsel } = useVarsel();
+
 	const fjernDel2Mutation = useMutation({
 		mutationFn: async () => {
 			const response = await fetch(
@@ -41,6 +44,7 @@ const FjernGodkjenningModal = ({
 			queryClient.invalidateQueries({ queryKey: ['personer'] });
 			onClearErrors();
 			onConfirm();
+			visVarsel(`Fjernet godkjenning for ${person.navn}`);
 		},
 		onError: (error) => {
 			onError(error.message);

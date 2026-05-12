@@ -7,6 +7,7 @@ import { useMutation } from '@tanstack/react-query';
 import { queryClient } from '../queryClient';
 import { formaterTilISODato, BASE_URL, beskrivFeil } from '../helpers/utils';
 import { useMobile } from '../helpers/useResponsive';
+import { useVarsel } from '../hooks/useVarsel';
 
 interface Props {
 	person: Person;
@@ -24,6 +25,7 @@ const GodkjennEllerFjernGodkjenning = ({
 	const [modalOpen, setModalOpen] = useState(false);
 	const [datePickerOpen, setDatePickerOpen] = useState(false);
 	const isMobile = useMobile();
+	const { visVarsel } = useVarsel();
 
 	const erDatoIFremtiden = (date: Date) => {
 		const today = new Date();
@@ -53,6 +55,7 @@ const GodkjennEllerFjernGodkjenning = ({
 			queryClient.invalidateQueries({ queryKey: ['personer'] });
 			setDatePickerOpen(false);
 			onClearErrors();
+			visVarsel(`Del 2 godkjent for ${person.navn}`);
 		},
 		onError: (error) => {
 			onError(error.message);

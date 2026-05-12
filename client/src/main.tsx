@@ -4,6 +4,7 @@ import App from './App.tsx';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from './queryClient';
 import { ThemeProvider } from './contexts/ThemeContext';
+import VarselProvider from './components/VarselProvider';
 
 import './styles/global.css';
 import '@navikt/ds-css/darkside';
@@ -40,10 +41,12 @@ enableMocking().then(() => {
 	createRoot(document.getElementById('root')!).render(
 		<StrictMode>
 			<ThemeProvider>
-				<QueryClientProvider client={queryClient}>
-					<App />
-				</QueryClientProvider>
+				<VarselProvider>
+					<QueryClientProvider client={queryClient}>
+						<App />
+					</QueryClientProvider>
+				</VarselProvider>
 			</ThemeProvider>
-		</StrictMode>
+		</StrictMode>,
 	);
 });

@@ -12,7 +12,9 @@ body,
 #root {
 	background-color: var(--ax-bg-default);
 	color: var(--ax-text-default);
-	transition: background-color 0.2s ease, color 0.2s ease;
+	transition:
+		background-color 0.2s ease,
+		color 0.2s ease;
 }
 
 html,
@@ -39,4 +41,31 @@ body {
 	height: auto;
 	overflow: visible;
 	white-space: nowrap;
+}
+
+.varsel-container {
+	position: fixed;
+	bottom: 1rem;
+	right: 1rem;
+	z-index: 10000;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	max-width: 400px;
+}
+
+.varsel {
+	animation: varsel-slide-in 0.3s ease-out;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+@keyframes varsel-slide-in {
+	from {
+		transform: translateX(100%);
+		opacity: 0;
+	}
+	to {
+		transform: translateX(0);
+		opacity: 1;
+	}
 }
