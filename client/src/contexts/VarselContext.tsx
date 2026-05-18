@@ -2,7 +2,7 @@ import { createContext } from 'react';
 
 export type VarselType = 'success' | 'error';
 
-export interface VarselContextType {
+interface VarselContextType {
 	visVarsel: (melding: string, type?: VarselType) => void;
 }
 
