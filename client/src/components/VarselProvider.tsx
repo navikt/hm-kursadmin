@@ -30,15 +30,18 @@ const VarselProvider = ({ children }: PropsWithChildren) => {
 
 	const contextValue = useMemo(() => ({ visVarsel }), [visVarsel]);
 
+	const backgroundMap = {
+		success: 'success-soft',
+		info: 'info-soft',
+	} as const;
+
 	return (
 		<VarselContext.Provider value={contextValue}>
 			{children}
 			{varsel && (
 				<div className="varsel-container">
 					<Box.New
-						background={
-							varsel.type === 'success' ? 'success-soft' : 'danger-soft'
-						}
+						background={backgroundMap[varsel.type]}
 						padding="4"
 						borderRadius="8"
 						className="varsel"

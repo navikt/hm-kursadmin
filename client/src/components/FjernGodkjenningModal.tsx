@@ -44,7 +44,7 @@ const FjernGodkjenningModal = ({
 			queryClient.invalidateQueries({ queryKey: ['personer'] });
 			onClearErrors();
 			onConfirm();
-			visVarsel(`Fjernet godkjenning for ${person.navn}`);
+			visVarsel(`Fjernet godkjenning for ${person.navn}`, 'info');
 		},
 		onError: (error) => {
 			onError(error.message);
