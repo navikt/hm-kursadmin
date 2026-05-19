@@ -3,7 +3,7 @@ import { formaterNorskDato } from '../../helpers/utils';
 import Del2Tag from '../Del2Tag';
 import GodkjennEllerFjernGodkjenning from '../GodkjennEllerFjernGodkjenning';
 import { kanRedigere, type KursadminBruker } from '../../types/kursadminbruker';
-import type { Person} from '../../types/person';
+import type { Person } from '../../types/person';
 import Epost from '../Epost';
 
 interface Props {
@@ -12,7 +12,7 @@ interface Props {
 	onError: (errorMessage: string) => void;
 	onClearErrors: () => void;
 	erElektriskRullestol: boolean;
-	bruker: KursadminBruker | undefined
+	bruker: KursadminBruker | undefined;
 }
 
 const TabellRad = ({
@@ -33,9 +33,7 @@ const TabellRad = ({
 					<VStack gap="3" align="start">
 						<HStack gap="2" align="center">
 							<Label>E-post:</Label>
-							<BodyShort>
-								<Epost epost={epost} />
-							</BodyShort>
+							<Epost epost={epost} />
 						</HStack>
 						<HStack gap="2" align="center">
 							<Label>Arbeidssted:</Label>
@@ -61,9 +59,8 @@ const TabellRad = ({
 										del2Dato={del2Dato}
 										onError={onError}
 										onClearErrors={onClearErrors}
-								/>)}  
-
-								
+									/>
+								)}
 							</>
 						)}
 					</VStack>
@@ -111,17 +108,18 @@ const TabellRad = ({
 			<Table.DataCell>
 				<Del2Tag del2Dato={del2Dato} />
 			</Table.DataCell>
-			<Table.DataCell>
-				<div className="flex-content-right">
-					{kanRedigere(bruker) && (
+			{kanRedigere(bruker) && (
+				<Table.DataCell>
+					<div className="flex-content-right">
 						<GodkjennEllerFjernGodkjenning
 							person={person}
 							del2Dato={del2Dato}
 							onError={onError}
 							onClearErrors={onClearErrors}
-					/>)}  
-				</div>
-			</Table.DataCell>
+						/>
+					</div>
+				</Table.DataCell>
+			)}
 		</Table.Row>
 	);
 };

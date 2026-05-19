@@ -1,9 +1,17 @@
 import { useState } from 'react';
-import { BodyShort, HStack, InternalHeader, Loader, LocalAlert, VStack } from '@navikt/ds-react';
+import {
+	BodyShort,
+	HStack,
+	InternalHeader,
+	Loader,
+	LocalAlert,
+	VStack,
+} from '@navikt/ds-react';
 import Tabell from './components/Tabell/Tabell';
 import Filtrering from './components/Filtrering/Filtrering';
 import KursChips from './components/KursChips';
 import ThemeSwitcher from './components/ThemeSwitcher';
+import RolleSwitcher from './components/RolleSwitcher/RolleSwitcher';
 import { useQuery } from '@tanstack/react-query';
 import type { Person } from './types/person';
 import { kursliste, type Kurs } from './types/kurs';
@@ -34,7 +42,6 @@ function App() {
 			const data = await response.json();
 			return data.personer;
 		},
-
 	});
 
 	const {
@@ -42,7 +49,8 @@ function App() {
 		error: errorBruker,
 		data: bruker,
 	} = useQuery<KursadminBruker>({
-		queryKey: ['meg'], retry : false,
+		queryKey: ['meg'],
+		retry: false,
 		queryFn: async () => {
 			const response = await fetch(`${BASE_URL}/meg`);
 			if (!response.ok) {
@@ -53,7 +61,6 @@ function App() {
 			const data = await response.json();
 			return data;
 		},
-
 	});
 
 	const addError = (errorMessage: string) => {
@@ -70,38 +77,45 @@ function App() {
 	};
 
 	const allErrors = [
-		...(errorPersoner ? [{ id: 'query-personer-error', message: errorPersoner.message }] : []),
-		...(errorBruker ? [{ id: 'query-meg-error', message: errorBruker.message }] : []),
+		...(errorPersoner
+			? [{ id: 'query-personer-error', message: errorPersoner.message }]
+			: []),
+		...(errorBruker
+			? [{ id: 'query-meg-error', message: errorBruker.message }]
+			: []),
 		...errors,
 	];
 
 	if (isPendingBruker) {
-		return <main>
-			<a href="#hovedinnhold" className="sr-only sr-only-focusable">Hopp til hovedinnhold</a>
-			<InternalHeader>
-				<InternalHeader.Title as="h1">
-					Godkjenningskurs - fullførte kurs
-				</InternalHeader.Title>
-			</InternalHeader>
-				<VStack gap="space-16" align="center" padding={"space-32"}>
-					<Loader size="3xlarge" title="Laster..."/> 
+		return (
+			<main>
+				<a href="#hovedinnhold" className="sr-only sr-only-focusable">
+					Hopp til hovedinnhold
+				</a>
+				<InternalHeader>
+					<InternalHeader.Title as="h1">
+						Godkjenningskurs - fullførte kurs
+					</InternalHeader.Title>
+				</InternalHeader>
+				<VStack gap="space-16" align="center" padding={'space-32'}>
+					<Loader size="3xlarge" title="Laster..." />
 					<BodyShort>Laster...</BodyShort>
-			</VStack>
-			
-		</main>
+				</VStack>
+			</main>
+		);
 	}
-
-
-
 
 	return (
 		<main>
-			<a href="#hovedinnhold" className="sr-only sr-only-focusable">Hopp til hovedinnhold</a>
+			<a href="#hovedinnhold" className="sr-only sr-only-focusable">
+				Hopp til hovedinnhold
+			</a>
 			<InternalHeader>
 				<InternalHeader.Title as="h1">
 					Godkjenningskurs - fullførte kurs
 				</InternalHeader.Title>
 			</InternalHeader>
+			<RolleSwitcher />
 
 			<VStack margin="space-20" gap="space-16" id="hovedinnhold">
 				<HStack

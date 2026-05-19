@@ -1,11 +1,13 @@
 import { Table } from '@navikt/ds-react';
+import { kanRedigere, type KursadminBruker } from '../../types/kursadminbruker';
 
 interface Props {
 	isMobile: boolean;
 	erElektriskRullestol: boolean;
+	bruker: KursadminBruker | undefined;
 }
 
-const TabellHeader = ({ isMobile, erElektriskRullestol }: Props) => {
+const TabellHeader = ({ isMobile, erElektriskRullestol, bruker }: Props) => {
 	// Mobil / små skjermer
 	if (isMobile) {
 		return (
@@ -60,10 +62,12 @@ const TabellHeader = ({ isMobile, erElektriskRullestol }: Props) => {
 					Dato for del 2
 				</Table.ColumnHeader>
 				<Table.HeaderCell scope="col">Status del 2</Table.HeaderCell>
-				<Table.HeaderCell
-					scope="col"
-					aria-label="Handlinger"
-				></Table.HeaderCell>
+				{kanRedigere(bruker) && (
+					<Table.HeaderCell
+						scope="col"
+						aria-label="Handlinger"
+					></Table.HeaderCell>
+				)}
 			</Table.Row>
 		</Table.Header>
 	);
