@@ -1,0 +1,53 @@
+apiVersion: 'nais.io/v1alpha1'
+kind: 'Application'
+metadata:
+  name: hm-kursadmin
+  namespace: teamdigihot
+  labels:
+    team: teamdigihot
+spec:
+  image: {{ image }}
+  port: 5000
+  replicas:
+    min: 2
+    max: 4
+    cpuThresholdPercentage: 90
+  accessPolicy:
+    outbound:
+      rules:
+        - application: hm-godkjenningskurs
+  azure:
+    application:
+      enabled: true
+      claims: 
+        extra:
+          - "NAVident"
+        groups:
+          - id: "88956569-f23d-455c-ace4-001b56e94602" # hotsak bruker (lesetilgang)
+          - id: "824e7509-e198-4cfc-bc9a-366b154a8f48" # redigeringstilgang
+    sidecar:
+      enabled: true
+  vault:
+    enabled: false
+  ingresses:
+    - - https://hotkurs.intern.nav.no
+  liveness:
+    path: /isalive
+    initialDelay: 5
+  readiness:
+    path: /isready
+    initialDelay: 5
+  prometheus:
+    enabled: false
+    path: /metrics
+  env:
+    - name: USE_MSW
+      value: 'false'
+    - name: GIT_COMMIT
+      value: {{ commit }}
+    - name: HM_GODKJENNINGSKURS_URL
+      value: http://hm-godkjenningskurs.teamdigihot.svc.cluster.local
+    - name: HM_GODKJENNINGSKURS_SCOPE
+      value: api://prod-gcp.teamdigihot.hm-godkjenningskurs/.default
+    - name: DEBUG_LOG
+      value: 'false'
