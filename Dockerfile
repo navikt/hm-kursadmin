@@ -4,7 +4,7 @@ ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
 
 WORKDIR /app
-COPY client/package.json client/pnpm-lock.yaml .npmrc ./
+COPY client/package.json client/pnpm-lock.yaml client/pnpm-workspace.yaml .npmrc ./
 RUN pnpm install --frozen-lockfile
 COPY client .
 # Upgrade grep to support the --include option, required for i18n tests
