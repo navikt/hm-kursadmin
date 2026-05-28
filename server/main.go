@@ -21,7 +21,7 @@ func init() {
 
 func main() {
 	opts := &hotbff.Options{
-		BasePath: "/hjelpemidler/kursadmin/",
+		BasePath: "/",
 		RootDir:  "dist",
 		Proxy: proxy.Map{
 			"/api/": &proxy.Options{
