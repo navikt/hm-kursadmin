@@ -30,7 +30,7 @@ spec:
   vault:
     enabled: false
   ingresses:
-    - https://hotkurs.intern.nav.no
+    - https://hotkurs.intern.nav.no/hjelpemidler/kursadmin
   liveness:
     path: /isalive
     initialDelay: 5
