@@ -64,7 +64,7 @@ describe('beskrivFeil', () => {
 describe('formaterNorskDato', () => {
 	it('formaterer ISO-dato til norsk datoformat', () => {
 		const dato = formaterNorskDato('2024-03-15');
-		expect(dato).toBe('15.3.2024');
+		expect(dato).toBe('15.03.2024');
 	});
 
 	it('håndterer dato med tidspunkt', () => {
@@ -74,7 +74,7 @@ describe('formaterNorskDato', () => {
 
 	it('håndterer første dag i måneden', () => {
 		const dato = formaterNorskDato('2024-01-01');
-		expect(dato).toBe('1.1.2024');
+		expect(dato).toBe('01.01.2024');
 	});
 });
 
