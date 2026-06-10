@@ -15,16 +15,16 @@ spec:
   vault:
     enabled: false
   ingresses:
-    - https://hjelpemidler.ekstern.dev.nav.no/hjelpemidler/kursadmin
+    - https://hotkurs.ekstern.dev.nav.no
   liveness:
-    path: /hjelpemidler/kursadmin/internal/isAlive
+    path: /internal/isAlive
     initialDelay: 5
   readiness:
-    path: /hjelpemidler/kursadmin/internal/isReady
+    path: /internal/isReady
     initialDelay: 5
   prometheus:
     enabled: true
-    path: /hjelpemidler/kursadmin/internal/metrics
+    path: /internal/metrics
   env:
     - name: USE_MSW
       value: 'true'

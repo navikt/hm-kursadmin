@@ -1,9 +1,10 @@
-onlyBuiltDependencies:
-  - es5-ext
-  - esbuild
-  - msw
-
 minimumReleaseAge: 10080 # 10080 minutter = 7 dager
 
 minimumReleaseAgeExclude:
   - '@navikt/*'
+  - pnpm
+  - '@pnpm/*'
+
+allowBuilds:
+  esbuild: true
+  msw: true

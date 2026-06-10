@@ -31,7 +31,7 @@ function htmlPlugin({ development }: { development?: boolean }): Plugin {
 					{
 						tag: 'script',
 						attrs: {
-							src: '/hjelpemidler/kursadmin/settings.js',
+							src: '/settings.js',
 						},
 					}
 				);
@@ -46,7 +46,7 @@ function htmlPlugin({ development }: { development?: boolean }): Plugin {
 
 // https://vite.dev/config/
 export default defineConfig((env) => ({
-	base: '/hjelpemidler/kursadmin/',
+	base: '/',
 	plugins: [react(), htmlPlugin({ development: env.mode === 'development' })],
 	test: {
 		include: ['tests/unit/**/*.test.ts'],

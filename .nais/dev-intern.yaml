@@ -29,7 +29,8 @@ spec:
   vault:
     enabled: false
   ingresses:
-    - https://hjelpemidler.intern.dev.nav.no/hjelpemidler/kursadmin
+    - https://hotkurs.intern.dev.nav.no
+    - https://hotkurs.ansatt.dev.nav.no
   liveness:
     path: /isalive
     initialDelay: 5

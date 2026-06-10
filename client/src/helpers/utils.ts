@@ -1,6 +1,6 @@
 import type { Kurs } from '../types/kurs';
 
-export const BASE_URL = '/hjelpemidler/kursadmin/api';
+export const BASE_URL = '/api';
 
 export function beskrivFeil(status: number, feilmelding: string): string {
 	switch (status) {
@@ -22,8 +22,8 @@ export function beskrivFeil(status: number, feilmelding: string): string {
 
 export const formaterNorskDato = (dato: string) =>
 	new Date(dato).toLocaleString('no', {
-		day: 'numeric',
-		month: 'numeric',
+		day: '2-digit',
+		month: '2-digit',
 		year: 'numeric',
 	});
 
