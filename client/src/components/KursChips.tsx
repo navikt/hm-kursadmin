@@ -6,7 +6,7 @@ interface Props {
 	setValgtkurs: (kurs: Kurs) => void;
 }
 
-function KursChips({ valgtkurs, setValgtkurs }: Props) {
+function KursChips({ valgtkurs, setValgtkurs }: Readonly<Props>) {
 	return (
 		<>
 			<Chips>

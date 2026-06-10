@@ -110,8 +110,8 @@ function App() {
 			<a href="#hovedinnhold" className="sr-only sr-only-focusable">
 				Hopp til hovedinnhold
 			</a>
-			{(window.appSettings.USE_MSW ||
-				window.appSettings.NAIS_CLUSTER_NAME === 'dev-gcp') && (
+			{(globalThis.appSettings.USE_MSW ||
+				globalThis.appSettings.NAIS_CLUSTER_NAME === 'dev-gcp') && (
 				<RolleSwitcher />
 			)}
 			<InternalHeader>

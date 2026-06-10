@@ -10,19 +10,17 @@ import './styles/global.css';
 import '@navikt/ds-css/darkside';
 
 declare global {
-	interface Window {
-		msw: unknown;
-		appSettings: {
-			NAIS_CLUSTER_NAME?: 'dev-gcp' | 'prod-gcp';
-			GIT_COMMIT?: string;
-			USE_MSW?: boolean;
-			DELBESTILLING_URL: string;
-		};
-	}
+	var msw: unknown;
+	var appSettings: {
+		NAIS_CLUSTER_NAME?: 'dev-gcp' | 'prod-gcp';
+		GIT_COMMIT?: string;
+		USE_MSW?: boolean;
+		DELBESTILLING_URL: string;
+	};
 }
 
 async function enableMocking() {
-	if (window.appSettings.USE_MSW !== true) {
+	if (globalThis.appSettings.USE_MSW !== true) {
 		return;
 	}
 
@@ -37,16 +35,16 @@ async function enableMocking() {
 	});
 }
 
-enableMocking().then(() => {
-	createRoot(document.getElementById('root')!).render(
-		<StrictMode>
-			<ThemeProvider>
-				<VarselProvider>
-					<QueryClientProvider client={queryClient}>
-						<App />
-					</QueryClientProvider>
-				</VarselProvider>
-			</ThemeProvider>
-		</StrictMode>,
-	);
-});
+await enableMocking();
+
+createRoot(document.getElementById('root')!).render(
+	<StrictMode>
+		<ThemeProvider>
+			<VarselProvider>
+				<QueryClientProvider client={queryClient}>
+					<App />
+				</QueryClientProvider>
+			</VarselProvider>
+		</ThemeProvider>
+	</StrictMode>,
+);
