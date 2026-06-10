@@ -1,0 +1,9 @@
+.wrapper {
+	position: fixed;
+	z-index: 999999;
+	bottom: var(--ax-space-12);
+	right: var(--ax-space-12);
+	padding: var(--ax-space-12);
+	border: 2px dashed var(--ax-border-neutral);
+	background: var(--ax-bg-neutral-moderate);
+}
