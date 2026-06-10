@@ -110,12 +110,15 @@ function App() {
 			<a href="#hovedinnhold" className="sr-only sr-only-focusable">
 				Hopp til hovedinnhold
 			</a>
+			{(window.appSettings.USE_MSW ||
+				window.appSettings.NAIS_CLUSTER_NAME === 'dev-gcp') && (
+				<RolleSwitcher />
+			)}
 			<InternalHeader>
 				<InternalHeader.Title as="h1">
 					Godkjenningskurs - fullførte kurs
 				</InternalHeader.Title>
 			</InternalHeader>
-			<RolleSwitcher />
 
 			<VStack margin="space-20" gap="space-16" id="hovedinnhold">
 				<HStack
