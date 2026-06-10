@@ -1,6 +1,7 @@
 # hm-kursadmin
 
-Adminverktøy for registrering av godkjenningskurs ERS (elektriske rullestoler) del2
+Frontend for visning av hjelpemiddelformidlere med godkjent kurs for personløftere, senger eller elektriske rullestoler og registrering av praktisk del for elektriske rullestoler.
+
 
 Koden er delt i to separate moduler:
 
