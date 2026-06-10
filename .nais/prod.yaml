@@ -31,6 +31,7 @@ spec:
     enabled: false
   ingresses:
     - https://hotkurs.intern.nav.no
+    - https://hotkurs.ansatt.nav.no
   liveness:
     path: /isalive
     initialDelay: 5
