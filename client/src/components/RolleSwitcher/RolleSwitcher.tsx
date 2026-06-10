@@ -25,7 +25,7 @@ const RolleSwitcher = () => {
 				onChange={(e) => handleEndring(e.target.checked)}
 				tabIndex={-1}
 			>
-				HotKurs
+				Kan redigere
 			</Checkbox>
 		</div>
 	);
