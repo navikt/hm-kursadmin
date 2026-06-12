@@ -110,6 +110,7 @@ const GodkjennEllerFjernGodkjenning = ({
 					godkjennDel2Mutation.mutate(kursDato);
 				}
 			}}
+			dropdownCaption
 			mode="single"
 			dropdownCaption
 			onClose={() => setDatePickerOpen(false)}
@@ -118,7 +119,7 @@ const GodkjennEllerFjernGodkjenning = ({
 		>
 			<Button
 				size="small"
-				variant="primary-neutral"
+				variant={datePickerOpen ? 'secondary-neutral' : 'primary-neutral'}
 				onClick={() => setDatePickerOpen(!datePickerOpen)}
 				loading={godkjennDel2Mutation.isPending}
 			>
