@@ -111,6 +111,7 @@ const GodkjennEllerFjernGodkjenning = ({
 				}
 			}}
 			mode="single"
+			dropdownCaption
 			onClose={() => setDatePickerOpen(false)}
 			open={datePickerOpen}
 			disabled={[erDatoIFremtiden]}
