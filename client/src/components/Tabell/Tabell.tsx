@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Pagination, Table, VStack } from '@navikt/ds-react';
+import { HStack, Pagination, Select, Table, VStack } from '@navikt/ds-react';
 import type { Person } from '../../types/person';
 import type { Kurs } from '../../types/kurs';
 import { useMobile } from '../../helpers/useResponsive';
@@ -24,7 +24,9 @@ interface Props {
 	bruker: KursadminBruker | undefined;
 }
 
-const RADER_PER_SIDE = 15;
+const RADER_PER_SIDE_KEY = 'raderPerSide';
+const STANDARD_RADER_PER_SIDE = 15;
+
 const ANTALL_KOLONNER_STANDARD = 4;
 const ANTALL_KOLONNER_ERS = 6;
 const ANTALL_KOLONNER_ERS_MED_HANDLINGER = 7;
@@ -41,6 +43,10 @@ const Tabell = ({
 	bruker,
 }: Props) => {
 	const [tabellside, setTabellside] = useState(1);
+	const [raderPerSide, setRaderPerSide] = useState(() => {
+		const lagretVerdi = localStorage.getItem(RADER_PER_SIDE_KEY);
+		return lagretVerdi ? Number(lagretVerdi) : STANDARD_RADER_PER_SIDE;
+	});
 	const [sort, setSort] = useState<ScopedSortState | undefined>();
 	const isMobile = useMobile();
 
@@ -62,8 +68,8 @@ const Tabell = ({
 
 	const sorterteData = sortData(filtrerteData, sort);
 	const paginertData = sorterteData.slice(
-		(tabellside - 1) * RADER_PER_SIDE,
-		tabellside * RADER_PER_SIDE,
+		(tabellside - 1) * raderPerSide,
+		tabellside * raderPerSide,
 	);
 
 	const handleSort = (kolonnenavn: ScopedSortState['orderBy']) => {
@@ -120,14 +126,33 @@ const Tabell = ({
 					))}
 				</Table.Body>
 			</Table>
-			{filtrerteData.length > 0 && (
-				<Pagination
-					page={tabellside}
-					onPageChange={setTabellside}
-					count={Math.max(Math.ceil(filtrerteData.length / RADER_PER_SIDE), 1)}
+			<HStack justify="space-between" align="start">
+				{filtrerteData.length > 0 && (
+					<Pagination
+						page={tabellside}
+						onPageChange={setTabellside}
+						count={Math.max(Math.ceil(filtrerteData.length / raderPerSide), 1)}
+						size="small"
+					/>
+				)}
+				<Select
+					label="Rader per side"
+					value={raderPerSide}
 					size="small"
-				/>
-			)}
+					onChange={(e) => {
+						const raderPerSide = Number(e.target.value);
+						setRaderPerSide(raderPerSide);
+						localStorage.setItem(RADER_PER_SIDE_KEY, String(raderPerSide));
+						setTabellside(1);
+					}}
+				>
+					<option value={10}>10</option>
+					<option value={15}>15</option>
+					<option value={20}>20</option>
+					<option value={25}>25</option>
+					<option value={30}>30</option>
+				</Select>
+			</HStack>
 		</VStack>
 	);
 };
