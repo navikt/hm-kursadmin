@@ -118,7 +118,7 @@ const GodkjennEllerFjernGodkjenning = ({
 		>
 			<Button
 				size="small"
-				variant="primary-neutral"
+				variant={datePickerOpen ? 'secondary-neutral' : 'primary-neutral'}
 				onClick={() => setDatePickerOpen(!datePickerOpen)}
 				loading={godkjennDel2Mutation.isPending}
 			>
