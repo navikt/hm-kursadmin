@@ -24,7 +24,7 @@ interface Props {
 	bruker: KursadminBruker | undefined;
 }
 
-const RADER_PER_SIDE = 10;
+const RADER_PER_SIDE = 15;
 const ANTALL_KOLONNER_STANDARD = 4;
 const ANTALL_KOLONNER_ERS = 6;
 const ANTALL_KOLONNER_ERS_MED_HANDLINGER = 7;
