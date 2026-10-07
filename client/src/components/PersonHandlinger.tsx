@@ -61,7 +61,7 @@ const PersonHandlinger = ({
 						icon={<PersonCrossIcon aria-hidden />}
 						onSelect={() => setFjernPersonModalOpen(true)}
 					>
-						Fjern person fra Hotkurs
+						Slett person fra Hotkurs
 					</ActionMenu.Item>
 				</ActionMenu.Content>
 			</ActionMenu>

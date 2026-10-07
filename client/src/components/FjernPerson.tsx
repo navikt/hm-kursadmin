@@ -53,7 +53,7 @@ export const FjernPersonModal = ({
 			queryClient.invalidateQueries({ queryKey: ['personer'] });
 			onClearErrors();
 			lukkModal();
-			visVarsel(`${person.navn} er fjernet fra Hotkurs`, 'info');
+			visVarsel(`${person.navn} er slettet fra Hotkurs`, 'info');
 		},
 		onError: (error) => {
 			onError(error.message);
@@ -81,7 +81,7 @@ export const FjernPersonModal = ({
 					checked={bekreftet}
 					onChange={(event) => setBekreftet(event.target.checked)}
 				>
-					Jeg bekrefter at personen skal fjernes fra Hotkurs
+					Jeg bekrefter at personen skal slettes fra Hotkurs
 				</Checkbox>
 			</Modal.Body>
 			<Modal.Footer>
@@ -92,7 +92,7 @@ export const FjernPersonModal = ({
 					onClick={() => fjernPersonMutation.mutate()}
 					loading={fjernPersonMutation.isPending}
 				>
-					Fjern person
+					Slett person
 				</Button>
 				<Button type="button" variant="secondary-neutral" onClick={lukkModal}>
 					Avbryt
