@@ -20,6 +20,22 @@ const updateDel2Status = (id: string, del2Dato: string | null) => {
 	return HttpResponse.text('OK', { status: 200 });
 };
 
+const fjernPerson = (id: string) => {
+	const personIndex = mockPersoner.findIndex(
+		(person) => person.id === Number(id),
+	);
+
+	if (personIndex === -1) {
+		return HttpResponse.json(
+			{ message: 'Person ikke funnet' },
+			{ status: 404 },
+		);
+	}
+
+	mockPersoner.splice(personIndex, 1);
+	return new HttpResponse(null, { status: 204 });
+};
+
 const kursConfig: Record<
 	string,
 	{ del1: keyof MockPerson; del2?: keyof MockPerson }
@@ -54,6 +70,10 @@ const personerHandler = [
 	http.patch(`${BASE_URL}/personer/:id/fjern-del2`, (req) => {
 		const { id } = req.params;
 		return updateDel2Status(id as string, null);
+	}),
+	http.delete(`${BASE_URL}/personer/:id`, (req) => {
+		const { id } = req.params;
+		return fjernPerson(id as string);
 	}),
 ];
 

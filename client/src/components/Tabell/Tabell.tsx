@@ -28,6 +28,7 @@ const RADER_PER_SIDE_KEY = 'raderPerSide';
 const STANDARD_RADER_PER_SIDE = 15;
 
 const ANTALL_KOLONNER_STANDARD = 4;
+const ANTALL_KOLONNER_STANDARD_MED_HANDLINGER = 5;
 const ANTALL_KOLONNER_ERS = 6;
 const ANTALL_KOLONNER_ERS_MED_HANDLINGER = 7;
 const ANTALL_KOLONNER_MOBIL = 3;
@@ -58,7 +59,11 @@ const Tabell = ({
 
 	const getAntallKolonner = () => {
 		if (isMobile) return ANTALL_KOLONNER_MOBIL;
-		if (!erElektriskRullestol) return ANTALL_KOLONNER_STANDARD;
+		if (!erElektriskRullestol) {
+			return kanRedigere(bruker)
+				? ANTALL_KOLONNER_STANDARD_MED_HANDLINGER
+				: ANTALL_KOLONNER_STANDARD;
+		}
 		return visHandlingskolonne
 			? ANTALL_KOLONNER_ERS_MED_HANDLINGER
 			: ANTALL_KOLONNER_ERS;

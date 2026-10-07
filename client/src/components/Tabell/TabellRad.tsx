@@ -2,6 +2,8 @@ import { Table, VStack, HStack, BodyShort, Label } from '@navikt/ds-react';
 import { formaterNorskDato } from '../../helpers/utils';
 import Del2Tag from '../Del2Tag';
 import GodkjennEllerFjernGodkjenning from '../GodkjennEllerFjernGodkjenning';
+import FjernPerson from '../FjernPerson';
+import PersonHandlinger from '../PersonHandlinger';
 import { kanRedigere, type KursadminBruker } from '../../types/kursadminbruker';
 import type { Person } from '../../types/person';
 import Epost from '../Epost';
@@ -53,10 +55,19 @@ const TabellRad = ({
 										{del2Dato ? formaterNorskDato(del2Dato) : '-'}
 									</BodyShort>
 								</HStack>
+								{erElektriskRullestol && kanRedigere(bruker) && (
+									<>
+										<GodkjennEllerFjernGodkjenning
+											person={person}
+											del2Dato={del2Dato}
+											onError={onError}
+											onClearErrors={onClearErrors}
+										/>
+									</>
+								)}
 								{kanRedigere(bruker) && (
-									<GodkjennEllerFjernGodkjenning
+									<FjernPerson
 										person={person}
-										del2Dato={del2Dato}
 										onError={onError}
 										onClearErrors={onClearErrors}
 									/>
@@ -89,6 +100,18 @@ const TabellRad = ({
 				</Table.DataCell>
 				<Table.DataCell>{arbeidssted}</Table.DataCell>
 				<Table.DataCell>{formaterNorskDato(del1Dato)}</Table.DataCell>
+				{kanRedigere(bruker) && (
+					<Table.DataCell>
+						<div className="flex-content-right">
+							<PersonHandlinger
+								person={person}
+								erElektriskRullestol={erElektriskRullestol}
+								onError={onError}
+								onClearErrors={onClearErrors}
+							/>
+						</div>
+					</Table.DataCell>
+				)}
 			</Table.Row>
 		);
 	}
@@ -111,12 +134,29 @@ const TabellRad = ({
 			{kanRedigere(bruker) && (
 				<Table.DataCell>
 					<div className="flex-content-right">
-						<GodkjennEllerFjernGodkjenning
-							person={person}
-							del2Dato={del2Dato}
-							onError={onError}
-							onClearErrors={onClearErrors}
-						/>
+						{del2Dato ? (
+							<PersonHandlinger
+								person={person}
+								erElektriskRullestol={erElektriskRullestol}
+								onError={onError}
+								onClearErrors={onClearErrors}
+							/>
+						) : (
+							<>
+								<GodkjennEllerFjernGodkjenning
+									person={person}
+									del2Dato={del2Dato}
+									onError={onError}
+									onClearErrors={onClearErrors}
+								/>
+								<PersonHandlinger
+									person={person}
+									erElektriskRullestol={erElektriskRullestol}
+									onError={onError}
+									onClearErrors={onClearErrors}
+								/>
+							</>
+						)}
 					</div>
 				</Table.DataCell>
 			)}
