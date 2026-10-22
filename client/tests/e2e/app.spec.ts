@@ -18,7 +18,7 @@ test('Viser header', async ({ page }) => {
 	await test.step('Viser header for siden', async () => {
 		await expect(
 			page.getByRole('heading', {
-				name: /Hotkurs/i,
+				name: /Godkjenningskurs - fullførte kurs/i,
 			}),
 		).toBeVisible();
 	});
