@@ -6,7 +6,7 @@ test('har korrekt tittel', async ({ page }) => {
 	});
 
 	await test.step('Verifiser tittel', async () => {
-		await expect(page).toHaveTitle(/Godkjenningskurs - fullførte kurs/);
+		await expect(page).toHaveTitle(/Hotkurs/);
 	});
 });
 
@@ -18,7 +18,7 @@ test('Viser header', async ({ page }) => {
 	await test.step('Viser header for siden', async () => {
 		await expect(
 			page.getByRole('heading', {
-				name: /Godkjenningskurs - fullførte kurs/i,
+				name: /Hotkurs/i,
 			}),
 		).toBeVisible();
 	});
