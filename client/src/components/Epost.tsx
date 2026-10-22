@@ -1,10 +1,14 @@
 import { BodyShort, HStack } from '@navikt/ds-react';
 
 interface Props {
-	epost: string;
+	epost: string | null;
 }
 
 const Epost = ({ epost }: Props) => {
+	if (epost === null) {
+		return <BodyShort>–</BodyShort>;
+	}
+
 	const parts = epost.split(/([@.])/).map((part, index) => {
 		const shouldBreak = part === '@' || part === '.';
 		return (

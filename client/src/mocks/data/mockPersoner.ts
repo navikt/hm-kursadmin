@@ -1,7 +1,7 @@
 export interface MockPerson {
 	id: number;
 	navn: string;
-	epost: string;
+	epost: string | null;
 	arbeidssted: string;
 	ersDel1Dato: string | null;
 	ersDel2Dato: string | null;
@@ -12,6 +12,17 @@ export interface MockPerson {
 }
 
 export const mockPersoner: MockPerson[] = [
+	{
+		id: 21,
+		navn: 'Testperson Uten Epost',
+		epost: null,
+		arbeidssted: 'Testkommune',
+		ersDel1Dato: null,
+		ersDel2Dato: null,
+		personløfterDato: null,
+		elektriskSengDato: null,
+		bestillingDato: '2024-05-15T10:00:00.000Z',
+	},
 	{
 		id: 14,
 		navn: 'Siri Marie Testberg',
