@@ -7,6 +7,8 @@ export interface MockPerson {
 	ersDel2Dato: string | null;
 	personløfterDato: string | null;
 	elektriskSengDato: string | null;
+	bestillingDato?: string | null;
+	batteriDato?: string | null;
 }
 
 export const mockPersoner: MockPerson[] = [
@@ -19,6 +21,7 @@ export const mockPersoner: MockPerson[] = [
 		ersDel2Dato: null,
 		personløfterDato: '2025-04-15T10:00:00.000Z',
 		elektriskSengDato: null,
+		bestillingDato: '2025-05-15T10:00:00.000Z',
 	},
 	{
 		id: 18,
@@ -29,6 +32,7 @@ export const mockPersoner: MockPerson[] = [
 		ersDel2Dato: '2025-03-05T12:00:00.000Z',
 		personløfterDato: null,
 		elektriskSengDato: null,
+		batteriDato: '2025-06-05T12:00:00.000Z',
 	},
 	{
 		id: 12,

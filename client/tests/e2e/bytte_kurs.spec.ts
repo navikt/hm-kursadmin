@@ -37,4 +37,22 @@ test('kan bytte kurs med chips', async ({ page }) => {
 		const chip = page.getByRole('button', { name: 'Elektrisk seng' });
 		await expect(chip).toHaveAttribute('aria-pressed', 'true');
 	});
+
+	await test.step('Velg Bestilling og Batteri', async () => {
+		await page.getByRole('button', { name: 'Bestilling' }).click();
+		await expect(
+			page.getByRole('table').getByText('Siri Marie Testberg'),
+		).toBeVisible();
+		await expect(page.getByRole('cell', { name: '15.05.2025', exact: true })).toBeVisible();
+		await expect(page.getByRole('table').getByRole('row')).toHaveCount(2);
+		await expect(page.getByText('Invalid Date')).toHaveCount(0);
+
+		await page.getByRole('button', { name: 'Batteri' }).click();
+		await expect(
+			page.getByRole('table').getByText('Berit Elise Mockdal'),
+		).toBeVisible();
+		await expect(page.getByRole('cell', { name: '05.06.2025', exact: true })).toBeVisible();
+		await expect(page.getByRole('table').getByRole('row')).toHaveCount(2);
+		await expect(page.getByText('Invalid Date')).toHaveCount(0);
+	});
 });
