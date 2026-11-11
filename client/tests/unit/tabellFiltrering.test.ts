@@ -75,6 +75,14 @@ describe('tabellFiltrering', () => {
 			const resultat = filtrerPersoner(mockPersoner, 'xyz123', '');
 			expect(resultat).toHaveLength(0);
 		});
+
+		it('håndterer personer uten epost ved søk og filtrering', () => {
+			const person = { ...mockPersoner[0], epost: null };
+			expect(filtrerPersoner([person], '', '')).toEqual([person]);
+			expect(filtrerPersoner([person], 'siri testberg', '')).toEqual([person]);
+			expect(filtrerPersoner([person], 'siri', 'ikke-fullført')).toEqual([person]);
+			expect(filtrerPersoner([person], 'testdata.no', '')).toEqual([]);
+		});
 	});
 
 	describe('statusDel2-filter', () => {

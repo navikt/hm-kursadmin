@@ -1,15 +1,28 @@
 export interface MockPerson {
 	id: number;
 	navn: string;
-	epost: string;
+	epost: string | null;
 	arbeidssted: string;
 	ersDel1Dato: string | null;
 	ersDel2Dato: string | null;
 	personløfterDato: string | null;
 	elektriskSengDato: string | null;
+	bestillingDato?: string | null;
+	batteriDato?: string | null;
 }
 
 export const mockPersoner: MockPerson[] = [
+	{
+		id: 21,
+		navn: 'Testperson Uten Epost',
+		epost: null,
+		arbeidssted: 'Testkommune',
+		ersDel1Dato: null,
+		ersDel2Dato: null,
+		personløfterDato: null,
+		elektriskSengDato: null,
+		bestillingDato: '2024-05-15T10:00:00.000Z',
+	},
 	{
 		id: 14,
 		navn: 'Siri Marie Testberg',
@@ -19,6 +32,7 @@ export const mockPersoner: MockPerson[] = [
 		ersDel2Dato: null,
 		personløfterDato: '2025-04-15T10:00:00.000Z',
 		elektriskSengDato: null,
+		bestillingDato: '2025-05-15T10:00:00.000Z',
 	},
 	{
 		id: 18,
@@ -29,6 +43,7 @@ export const mockPersoner: MockPerson[] = [
 		ersDel2Dato: '2025-03-05T12:00:00.000Z',
 		personløfterDato: null,
 		elektriskSengDato: null,
+		batteriDato: '2025-06-05T12:00:00.000Z',
 	},
 	{
 		id: 12,

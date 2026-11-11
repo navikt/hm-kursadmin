@@ -11,7 +11,7 @@ export const tabellFiltrering = () => {
 			const matcherSok =
 				!sok ||
 				person.navn.toLowerCase().includes(sok) ||
-				person.epost.toLowerCase().includes(sok);
+				(person.epost?.toLowerCase().includes(sok) ?? false);
 
 			const matcherStatusDel2 =
 				!statusDel2Verdi ||
@@ -28,7 +28,7 @@ export const tabellFiltrering = () => {
 		const sokOrd = sok.split(/\s+/);
 		const rekkefriFilter = (person: Person) => {
 			const navn = person.navn.toLowerCase();
-			const epost = person.epost.toLowerCase();
+			const epost = person.epost?.toLowerCase() ?? '';
 			const matcherAlleOrd = sokOrd.every(
 				(ord) => navn.includes(ord) || epost.includes(ord),
 			);

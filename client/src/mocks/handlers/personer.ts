@@ -43,6 +43,8 @@ const kursConfig: Record<
 	'7': { del1: 'personløfterDato' },
 	'8': { del1: 'elektriskSengDato' },
 	'5': { del1: 'ersDel1Dato', del2: 'ersDel2Dato' },
+	'4': { del1: 'bestillingDato' },
+	'9': { del1: 'batteriDato' },
 };
 
 const personerHandler = [
@@ -51,7 +53,10 @@ const personerHandler = [
 		const config = kursConfig[kursid as string];
 		if (!config) return HttpResponse.json([]);
 		const personer = mockPersoner
-			.filter((person) => person[config.del1] !== null)
+			.filter(
+				(person) =>
+					person[config.del1] !== null && person[config.del1] !== undefined,
+			)
 			.map(
 				(person) =>
 					({
