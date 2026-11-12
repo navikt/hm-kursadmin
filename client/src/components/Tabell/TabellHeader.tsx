@@ -41,6 +41,12 @@ const TabellHeader = ({ isMobile, erElektriskRullestol, bruker }: Props) => {
 					<Table.ColumnHeader scope="col" sortKey="del1Dato" sortable>
 						Dato gjennomført
 					</Table.ColumnHeader>
+					{kanRedigere(bruker) && (
+						<Table.HeaderCell
+							scope="col"
+							aria-label="Handlinger"
+						></Table.HeaderCell>
+					)}
 				</Table.Row>
 			</Table.Header>
 		);

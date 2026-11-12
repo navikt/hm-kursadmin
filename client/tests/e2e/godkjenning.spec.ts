@@ -17,14 +17,16 @@ test('kan godkjenne del 2 for ERS kurs', async ({ page }) => {
 
 	await test.step('Velg dato i datepicker', async () => {
 		const datePicker = page.locator('[role="dialog"]');
-		
+
 		if (await datePicker.isVisible()) {
 			await expect(datePicker).toBeVisible();
 
-			const todayButton = page.getByRole('button', {
-				name: new RegExp(new Date().getDate().toString()),
-			}).first();
-			
+			const todayButton = page
+				.getByRole('button', {
+					name: new RegExp(new Date().getDate().toString()),
+				})
+				.first();
+
 			await todayButton.click();
 		}
 	});
@@ -74,4 +76,39 @@ test('kan fjerne godkjenning for ERS kurs', async ({ page }) => {
 	await test.step('Verifiser at modal lukkes', async () => {
 		await expect(page.getByRole('dialog')).not.toBeVisible();
 	});
+});
+
+test('viser begge fjernehandlingene i én meny for en godkjent person', async ({
+	page,
+}) => {
+	await page.goto('/');
+
+	const personRad = page.getByRole('row', { name: /knut testli/i });
+	await expect(personRad).toBeVisible();
+	await expect(
+		personRad.getByRole('button', { name: /handlinger for knut/i }),
+	).toHaveCount(1);
+
+	await personRad.getByRole('button', { name: /handlinger for knut/i }).click();
+	await expect(
+		page.getByRole('menuitem', { name: /fjern godkjenning/i }),
+	).toBeVisible();
+	await expect(
+		page.getByRole('menuitem', { name: /slett person fra hotkurs/i }),
+	).toBeVisible();
+	await page
+		.getByRole('menuitem', { name: /slett person fra hotkurs/i })
+		.click();
+	const fjernPersonModal = page.getByRole('dialog', {
+		name: /slett person fra hotkurs/i,
+	});
+	await expect(fjernPersonModal).toBeVisible();
+	await fjernPersonModal.getByLabel(/jeg bekrefter at personen skal slettes/i).check();
+	await page.getByRole('button', { name: /^slett person$/i }).click();
+	await expect(personRad).not.toBeVisible();
+
+	await page.getByRole('button', { name: 'Personløfter og seil' }).click();
+	await expect(
+		page.getByRole('row', { name: /knut testli/i }),
+	).not.toBeVisible();
 });
