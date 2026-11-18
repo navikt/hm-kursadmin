@@ -12,7 +12,7 @@ RUN apk add --no-cache --upgrade grep
 RUN pnpm run build
 
 # build server
-FROM golang:1.25.1-alpine AS server-builder
+FROM golang:1.26.11-alpine AS server-builder
 WORKDIR /app
 COPY server ./
 RUN go build .
