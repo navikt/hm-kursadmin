@@ -1,7 +1,7 @@
 FROM node:lts-alpine AS client-builder
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
-RUN corepack enable
+RUN npm install --global corepack@0.36.0 && corepack enable
 
 WORKDIR /app
 COPY client/package.json client/pnpm-lock.yaml client/pnpm-workspace.yaml .npmrc ./
@@ -12,7 +12,7 @@ RUN apk add --no-cache --upgrade grep
 RUN pnpm run build
 
 # build server
-FROM golang:1.25.1-alpine AS server-builder
+FROM golang:1.26.11-alpine AS server-builder
 WORKDIR /app
 COPY server ./
 RUN go build .
