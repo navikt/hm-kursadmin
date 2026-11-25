@@ -49,7 +49,7 @@ test('kan bytte kurs med chips', async ({ page }) => {
 
 		await page.getByRole('button', { name: 'Batteri' }).click();
 		await expect(
-			page.getByRole('table').getByText('Berit Elise Mockdal'),
+			page.getByRole('rowheader', { name: 'Berit Elise Mockdal', exact: true }),
 		).toBeVisible();
 		await expect(page.getByRole('cell', { name: '05.06.2025', exact: true })).toBeVisible();
 		await expect(page.getByRole('table').getByRole('row')).toHaveCount(2);
