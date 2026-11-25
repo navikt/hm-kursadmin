@@ -9,7 +9,7 @@ on:
       - 'CODEOWNERS'
     branches:
       - main
-      - fikse-pw-tester
+      - oppdatere-pakker
 
 env:
   IMAGE: ghcr.io/${{ github.repository }}:${{ github.sha }}
