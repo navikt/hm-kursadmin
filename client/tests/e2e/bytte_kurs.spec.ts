@@ -41,7 +41,7 @@ test('kan bytte kurs med chips', async ({ page }) => {
 	await test.step('Velg Bestilling og Batteri', async () => {
 		await page.getByRole('button', { name: 'Bestilling' }).click();
 		await expect(
-			page.getByRole('table').getByText('Siri Marie Testberg'),
+			page.getByRole('rowheader', { name: 'Siri Marie Testberg', exact: true }),
 		).toBeVisible();
 		await expect(page.getByRole('cell', { name: '15.05.2025', exact: true })).toBeVisible();
 		await expect(page.getByRole('table').getByRole('row')).toHaveCount(3);
@@ -49,7 +49,7 @@ test('kan bytte kurs med chips', async ({ page }) => {
 
 		await page.getByRole('button', { name: 'Batteri' }).click();
 		await expect(
-			page.getByRole('table').getByText('Berit Elise Mockdal'),
+			page.getByRole('rowheader', { name: 'Berit Elise Mockdal', exact: true }),
 		).toBeVisible();
 		await expect(page.getByRole('cell', { name: '05.06.2025', exact: true })).toBeVisible();
 		await expect(page.getByRole('table').getByRole('row')).toHaveCount(2);
@@ -64,7 +64,9 @@ for (const mobil of [false, true]) {
 		}
 		await page.goto('/');
 		await page.getByRole('button', { name: 'Bestilling' }).click();
-		const rad = page.getByRole('row').filter({ hasText: 'Testperson Uten Epost' });
+		const rad = page
+			.getByRole('rowheader', { name: 'Testperson Uten Epost', exact: true })
+			.locator('xpath=ancestor::tr');
 		await expect(rad).toBeVisible();
 		if (mobil) {
 			await rad.getByRole('button').click();
