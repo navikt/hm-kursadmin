@@ -65,14 +65,14 @@ const TabellRad = ({
 										/>
 									</>
 								)}
-								{kanRedigere(bruker) && (
-									<FjernPerson
-										person={person}
-										onError={onError}
-										onClearErrors={onClearErrors}
-									/>
-								)}
 							</>
+						)}
+						{kanRedigere(bruker) && (
+							<FjernPerson
+								person={person}
+								onError={onError}
+								onClearErrors={onClearErrors}
+							/>
 						)}
 					</VStack>
 				}

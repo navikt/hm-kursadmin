@@ -71,6 +71,17 @@ const Tabell = ({
 
 	const filtrerteData = filtrerPersoner(personer, sokeverdi, statusDel2Verdi);
 
+	const antallSider = Math.max(
+		Math.ceil(filtrerteData.length / raderPerSide),
+		1,
+	);
+
+	useEffect(() => {
+		if (tabellside > antallSider) {
+			setTabellside(antallSider);
+		}
+	}, [tabellside, antallSider]);
+
 	const sorterteData = sortData(filtrerteData, sort);
 	const paginertData = sorterteData.slice(
 		(tabellside - 1) * raderPerSide,
@@ -136,7 +147,7 @@ const Tabell = ({
 					<Pagination
 						page={tabellside}
 						onPageChange={setTabellside}
-						count={Math.max(Math.ceil(filtrerteData.length / raderPerSide), 1)}
+						count={antallSider}
 						size="small"
 					/>
 				)}

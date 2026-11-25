@@ -56,6 +56,7 @@ export const FjernPersonModal = ({
 			visVarsel(`${person.navn} er slettet fra Hotkurs`, 'info');
 		},
 		onError: (error) => {
+			lukkModal();
 			onError(error.message);
 		},
 	});
