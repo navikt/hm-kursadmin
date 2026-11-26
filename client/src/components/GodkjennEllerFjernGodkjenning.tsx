@@ -1,12 +1,9 @@
 import { useState } from 'react';
-import { Button, DatePicker } from '@navikt/ds-react';
+import { Button } from '@navikt/ds-react';
 import FjernGodkjenningModal from './FjernGodkjenningModal';
+import GodkjennDel2Modal from './GodkjennDel2Modal';
 import type { Person } from '../types/person';
-import { useMutation } from '@tanstack/react-query';
-import { queryClient } from '../queryClient';
-import { formaterTilISODato, BASE_URL, beskrivFeil } from '../helpers/utils';
 import { useMobile } from '../helpers/useResponsive';
-import { useVarsel } from '../hooks/useVarsel';
 
 interface Props {
 	person: Person;
@@ -22,44 +19,8 @@ const GodkjennEllerFjernGodkjenning = ({
 	onClearErrors,
 }: Props) => {
 	const [modalOpen, setModalOpen] = useState(false);
-	const [datePickerOpen, setDatePickerOpen] = useState(false);
+	const [godkjennModalOpen, setGodkjennModalOpen] = useState(false);
 	const isMobile = useMobile();
-	const { visVarsel } = useVarsel();
-
-	const erDatoIFremtiden = (date: Date) => {
-		const today = new Date();
-		today.setHours(0, 0, 0, 0);
-		return date > today;
-	};
-
-	const godkjennDel2Mutation = useMutation({
-		mutationFn: async (kursDato: string) => {
-			const response = await fetch(
-				`${BASE_URL}/personer/${person.id}/godkjenn-del2`,
-				{
-					method: 'PATCH',
-					headers: { 'Content-Type': 'application/json' },
-					body: JSON.stringify({ kursDato }),
-				},
-			);
-			if (!response.ok) {
-				const errorData = await response.json().catch(() => null);
-				throw new Error(
-					errorData?.message ||
-						beskrivFeil(response.status, 'Kunne ikke godkjenne del 2'),
-				);
-			}
-		},
-		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ['personer'] });
-			setDatePickerOpen(false);
-			onClearErrors();
-			visVarsel(`Del 2 godkjent for ${person.navn}`);
-		},
-		onError: (error) => {
-			onError(error.message);
-		},
-	});
 
 	if (del2Dato) {
 		return (
@@ -86,28 +47,25 @@ const GodkjennEllerFjernGodkjenning = ({
 	}
 
 	return (
-		<DatePicker
-			onSelect={(date) => {
-				if (date) {
-					const kursDato = formaterTilISODato(date);
-					godkjennDel2Mutation.mutate(kursDato);
-				}
-			}}
-			dropdownCaption
-			mode="single"
-			onClose={() => setDatePickerOpen(false)}
-			open={datePickerOpen}
-			disabled={[erDatoIFremtiden]}
-		>
+		<>
+			{godkjennModalOpen && (
+				<GodkjennDel2Modal
+					person={person}
+					onClose={() => setGodkjennModalOpen(false)}
+					onClearErrors={onClearErrors}
+				/>
+			)}
 			<Button
 				size="small"
-				variant={datePickerOpen ? 'secondary-neutral' : 'primary-neutral'}
-				onClick={() => setDatePickerOpen(!datePickerOpen)}
-				loading={godkjennDel2Mutation.isPending}
+				variant="primary-neutral"
+				onClick={() => {
+					onClearErrors();
+					setGodkjennModalOpen(true);
+				}}
 			>
-				{datePickerOpen ? 'Avbryt' : 'Godkjenn del 2'}
+				Godkjenn del 2
 			</Button>
-		</DatePicker>
+		</>
 	);
 };
 export default GodkjennEllerFjernGodkjenning;
