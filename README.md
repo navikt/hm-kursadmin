@@ -39,4 +39,9 @@ pnpm install
 2. Start applikasjonen med `pnpm run dev`. Da brukes [Mock Service Worker](https://mswjs.io/) for å mocke API-endepunkter, slik at man ikke trenger å starte noen backend.
 3. Gå til `localhost:5173`
 
-For å prøve gjenoppretting med mockede data, bruk Siri Marie Testberg, dato `10.03.2025` og kode `BBNU-BDXH-4QPF`. Dette er en fast testkode, ikke et ekte kursbevis.
+# Gjenoppretting av kursbevis med mockdata
+Klikk Godkjenn del 2, på Siri Marie Testbergm og velg «Gjenopprett fra kursbevis». 
+Fyll inn kursbevisets dato og verifikasjonskode:
+dato: `10.03.2025` 
+verifiseringskode: `BBNU-BDXH-4QPF`. 
+
