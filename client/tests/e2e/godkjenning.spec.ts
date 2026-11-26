@@ -11,6 +11,16 @@ const åpneGodkjenning = async (page: Page) => {
 
 test('vanlig registrering er forhåndsvalgt og lagres først ved bekreftelse', async ({ page }) => {
 	const { rad, modal } = await åpneGodkjenning(page);
+	const navn = modal.getByRole('heading', { name: 'Siri Marie Testberg', level: 2 });
+	const overskrift = modal.getByRole('heading', { name: 'Godkjenn del 2', exact: true });
+	await expect(navn).toBeVisible();
+	expect(await navn.evaluate((element) => getComputedStyle(element).fontSize))
+		.toBe(await overskrift.evaluate((element) => getComputedStyle(element).fontSize));
+	const navnBounds = await navn.boundingBox();
+	const spørsmålBounds = await modal.getByRole('group', { name: 'Hvordan skal del 2 godkjennes?' }).boundingBox();
+	expect(navnBounds).not.toBeNull();
+	expect(spørsmålBounds).not.toBeNull();
+	expect(spørsmålBounds!.y - (navnBounds!.y + navnBounds!.height)).toBeGreaterThan(16);
 	await expect(modal.getByRole('radio', { name: 'Registrer gjennomført kurs' })).toBeChecked();
 	await expect(modal.getByLabel('Verifikasjonskode', { exact: true })).toHaveCount(0);
 
@@ -19,7 +29,7 @@ test('vanlig registrering er forhåndsvalgt og lagres først ved bekreftelse', a
 		if (request.method() === 'PATCH') requests.push({ url: request.url(), body: request.postDataJSON() });
 	});
 	await modal.getByLabel('Dato for gjennomføring', { exact: true }).fill('10.03.2025');
-	await modal.getByRole('heading').click();
+	await overskrift.click();
 	await expect(modal).toBeVisible();
 	expect(requests).toHaveLength(0);
 	await modal.getByRole('button', { name: /^godkjenn del 2$/i }).click();
@@ -31,6 +41,7 @@ test('vanlig registrering er forhåndsvalgt og lagres først ved bekreftelse', a
 test('kan verifisere kursbevis og gjenopprette del 2', async ({ page }) => {
 	const { rad, modal } = await åpneGodkjenning(page);
 	await modal.getByRole('radio', { name: 'Gjenopprett fra kursbevis' }).check();
+	await expect(modal.getByLabel('Verifikasjonskode', { exact: true })).toHaveAttribute('size', '22');
 	await expect(modal.getByText('Bruk datoen som står på kursbeviset (DD.MM.ÅÅÅÅ).')).toBeVisible();
 	await modal.getByLabel('Dato for gjennomføring', { exact: true }).fill('10.03.2025');
 	await modal.getByLabel('Verifikasjonskode', { exact: true }).fill('  bbnu-bdxh-4qpf  ');

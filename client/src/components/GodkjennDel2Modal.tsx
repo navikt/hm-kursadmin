@@ -1,9 +1,9 @@
 import { useEffect, useId, useRef, useState } from 'react';
 import {
-	BodyShort,
 	Button,
 	DatePicker,
 	ErrorSummary,
+	Heading,
 	Modal,
 	Radio,
 	RadioGroup,
@@ -162,7 +162,9 @@ const GodkjennDel2Modal = ({ person, onClose, onClearErrors }: Props) => {
 					}}
 				>
 					<VStack gap="4">
-						<BodyShort>{person.navn}</BodyShort>
+						<Heading size="medium" level="2" spacing>
+							{person.navn}
+						</Heading>
 						<RadioGroup
 							legend="Hvordan skal del 2 godkjennes?"
 							value={metode}
@@ -196,6 +198,7 @@ const GodkjennDel2Modal = ({ person, onClose, onClearErrors }: Props) => {
 						{metode === 'kursbevis' && (
 							<TextField
 								id={kodeId}
+								htmlSize={22}
 								label="Verifikasjonskode"
 								description="Skriv koden fra kursbeviset, for eksempel BBNU-BDXH-4QPF."
 								value={verifikasjonskode}
