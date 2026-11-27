@@ -76,6 +76,44 @@ const personerHandler = [
 		const { id } = req.params;
 		return updateDel2Status(id as string, null);
 	}),
+	http.patch(
+		`${BASE_URL}/personer/:id/gjenopprett-del2`,
+		async ({ params, request }) => {
+			const body = (await request.json()) as {
+				kursDato: string;
+				verifikasjonskode: string;
+			};
+			const person = mockPersoner.find(
+				(person) => person.id === Number(params.id),
+			);
+			if (!person) {
+				return HttpResponse.json(
+					{ detail: 'Personen finnes ikke lenger. Last inn listen på nytt.' },
+					{ status: 404 },
+				);
+			}
+			if (
+				person.id !== 14 ||
+				body.kursDato !== '2025-03-10' ||
+				body.verifikasjonskode !== 'BBNU-BDXH-4QPF'
+			) {
+				return HttpResponse.json(
+					{
+						detail:
+							'Kursbeviset stemmer ikke med personen og datoen. Kontroller kursbeviset og prøv igjen.',
+					},
+					{ status: 422 },
+				);
+			}
+			if (person.ersDel2Dato) {
+				return HttpResponse.json(
+					{ detail: 'Del 2 er allerede registrert. Last inn listen på nytt.' },
+					{ status: 409 },
+				);
+			}
+			return updateDel2Status(String(params.id), body.kursDato);
+		},
+	),
 	http.delete(`${BASE_URL}/personer/:id`, (req) => {
 		const { id } = req.params;
 		return fjernPerson(id as string);
